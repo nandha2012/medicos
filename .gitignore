@@ -1,0 +1,85 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+env/
+venv/
+ENV/
+.venv/
+.ENV/
+
+# VS Code settings
+.vscode/
+
+# PyInstaller
+*.spec
+dist/
+build/
+
+# Python eggs
+*.egg
+*.egg-info/
+.eggs/
+
+# pip environment
+pip-log.txt
+pip-delete-this-directory.txt
+
+# pytest
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Pytype
+.pytype/
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Test results
+htmlcov/
+.coverage
+.tox/
+
+# dotenv
+.env
+.env.*
+
+# Sphinx documentation
+docs/_build/
+
+# Other build tools
+*.mo
+*.pot
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
