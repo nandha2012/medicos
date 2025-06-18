@@ -16,12 +16,25 @@ class TemplateService:
         self.output_dir = "output"+"/"+generate_dir_name()
         os.makedirs(self.output_dir, exist_ok=True)
 
+    def _replace_placeholders_in_paragraph(self, para, data):
+        text = para.text
+        for key, value in data.items():
+            text = text.replace(f"#{key}#", str(value))
+
+        # Remove all runs cleanly
+        for i in reversed(range(len(para.runs))):
+            para._element.remove(para.runs[i]._element)
+
+        # Add cleaned run
+        para.add_run(text)
+
+
     def fill_template(self, output_path: str, output_filename: str, data: dict):
         print(f"📄 Using template: {self.template_path}")
         self.output_path_docx = os.path.join(self.output_dir, f"{output_filename}.docx")
         if not os.path.exists(self.template_path):
             raise FileNotFoundError(f"❌ Template not found at: {self.template_path}")
-        print(data)
+        print(f"data: {data}")
         doc = Document(self.template_path)
         # Replace in paragraphs (runs preserve formatting)
         for para in doc.paragraphs:

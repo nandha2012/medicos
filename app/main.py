@@ -8,23 +8,7 @@ import os
 # template_path = os.path.join(os.getcwd(), "assets/templates/invoice_template.docx")
 # print(f"📄 Using template: {template_path}")
 
-def generate_invoice_pdf():
-    print("Generating invoice PDF...")
-    # Setup
-    template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
-    output_dir = "output"
-    os.makedirs(output_dir, exist_ok=True)
-
-
-    # Data input
-    data = RedcapResponseFirst(
-        timestamp="2025-06-17 09:06",
-        username="dc49dqm",
-        action="Update record TNSC022038654",
-        details="",
-        record="TNSC022038654"
-    )
-
+def generate_invoice_pdf(data):
 
 
     data2 = RedcapResponseSecond(
@@ -73,9 +57,29 @@ def generate_invoice_pdf():
         mr_rec_needs_inf___13="0",
         mr_rec_needs_inf___88="0"
     )
-    print(data2.to_dict())
     template_service = TemplateService(template_path)
     template_service.fill_template(output_dir,data.record, data2.to_dict())
 
 if __name__ == "__main__":
-    generate_invoice_pdf()
+    print("Generating invoice PDF...")
+    # Setup
+    template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
+    output_dir = "output"
+    os.makedirs(output_dir, exist_ok=True)
+        # Data input
+    data_list = [RedcapResponseFirst(
+        timestamp="2025-06-17 09:06",
+        username="user1",
+        action="Update record TNSC022038654",
+        details="",
+        record="TNSC022038655"
+    ),
+    RedcapResponseFirst(
+        timestamp="2025-06-17 09:06",
+        username="user2",
+        action="Update record TNSC022038654",
+        details="",
+        record="TNSC022038656"
+    )]
+    for data in data_list:
+        generate_invoice_pdf(data)
