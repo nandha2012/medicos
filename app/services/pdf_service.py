@@ -1,9 +1,16 @@
 import os
 from docx2pdf import convert
+from datetime import datetime
+
+def generate_dir_name():
+    now = datetime.now()
+    return now.strftime("%Y%m%d%H")
 
 class PDFService:
-    def __init__(self, output_dir: str):
-        self.output_dir = output_dir
+    
+    def __init__(self):
+        self.output_dir = "output"+"/"+generate_dir_name()
+        print(f"output_dir {self.output_dir}")
         os.makedirs(self.output_dir, exist_ok=True)
 
     def convert_to_pdf(self, docx_path: str, output_filename: str):
