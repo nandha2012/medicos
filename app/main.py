@@ -120,7 +120,7 @@ def handle_pdf_generation(data:RedcapResponseSecond):
             data.mr_rec_needs___13 = 1
             data = replace(data)
             template_service = TemplateService(template_path)
-            template_service.fill_template(folder,data.to_dict())
+            template_service.fill_template("firstrequest",data.to_dict())
     elif mr_request and mr_request_dt and mr_request_2 and mr_request_dt_2:
         folder = os.path.join(base_output, "secondrequest")
         os.makedirs(folder, exist_ok=True)
@@ -142,12 +142,12 @@ def handle_pdf_generation(data:RedcapResponseSecond):
             data.mr_rec_needs___13 = 1
             data = replace(data)
             template_service = TemplateService(template_path)
-            template_service.fill_template(folder,data.to_dict())
+            template_service.fill_template("secondrequest",data.to_dict())
         elif mr_received == "1":
             if mr_rec_all == '0':
                 print("Second Request received with partial. action needed.")
                 template_service = TemplateService(template_path)
-                template_service.fill_template(folder,data.to_dict())
+                template_service.fill_template("secondrequest",data.to_dict())
             elif mr_rec_all == '1':
                 print("Second request already received. No action needed.")
             else:
