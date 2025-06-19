@@ -2,14 +2,20 @@ import os
 from models.redcap_response_first import RedcapResponseFirst
 from models.redcap_response_second import RedcapResponseSecond
 from services.template_service import TemplateService
-from services.pdf_service import PDFService
+from services.api_instance import api
+
 import os
 
 # template_path = os.path.join(os.getcwd(), "assets/templates/invoice_template.docx")
 # print(f"📄 Using template: {template_path}")
 
-def generate_invoice_pdf(data):
+def get_data_from_api(data):
+    response = api.get(f"posts/")
+    return response
 
+def generate_invoice_pdf(data):
+    data_from_api = get_data_from_api(data)
+    print(data_from_api)
 
     data2 = RedcapResponseSecond(
         mg_idpreg="dfsfsdf",
@@ -57,8 +63,8 @@ def generate_invoice_pdf(data):
         mr_rec_needs_inf___13="0",
         mr_rec_needs_inf___88="0"
     )
-    template_service = TemplateService(template_path)
-    template_service.fill_template(output_dir,data.record, data2.to_dict())
+    # template_service = TemplateService(template_path)
+    # template_service.fill_template(output_dir,data.record, data2.to_dict())
 
 if __name__ == "__main__":
     print("Generating invoice PDF...")
