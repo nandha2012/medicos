@@ -74,7 +74,7 @@ def get_log_detail_data_from_api(data):
         print(f"❌ Error getting detailed data from API: {e}")
         return None
 
-def generate_invoice_pdf(data):
+def generate_pdf(data):
     details = get_log_detail_data_from_api(data)
     if details is not None:
         details_data_class =[ RedcapResponseSecond(**item) for item in details]
@@ -170,7 +170,7 @@ if __name__ == "__main__":
         print(f"🔎 {len(result)} records found.")
         data_list = [RedcapResponseFirst(**item) for item in result]
         for data in data_list:
-            generate_invoice_pdf(data)
+            generate_pdf(data)
     else:
         print("⚠️ No records received from API.")
     exit()

@@ -35,7 +35,7 @@ class TemplateService:
         mg_idpreg = data.get('mg_idpreg')
         if mg_idpreg is None:
             raise KeyError("❌ 'mg_idpreg' key not found in data dictionary")
-        self.output_path_docx = os.path.join(self.output_dir, f"{mg_idpreg}.docx")
+        self.output_path_docx = os.path.join(self.output_dir+"/"+output_path, f"{mg_idpreg}.docx")
         if not os.path.exists(self.template_path):
             raise FileNotFoundError(f"❌ Template not found at: {self.template_path}")
         print(f"data: {data}")
