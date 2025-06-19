@@ -267,9 +267,7 @@ class RedcapResponseSecond:
     ifu_record_2: Optional[str] = None
     mr_ifu_rec_date_2: Optional[str] = None
     ifu_requester_notes: Optional[str] = None
-    mr_request_dt: Optional[str] = None
-    mr_request_days: Optional[str] = None
-    mr_received: Optional[str] = None
+
     
     # File uploads
     file_upload_v2: Optional[str] = None
@@ -687,11 +685,18 @@ class RedcapResponseSecond:
             "bc_momssn": self.bc_momssn,
             "inf_dob_mom_tr": self.inf_dob_mom_tr,
             "hos_name_cat_2": self.hos_name_cat_2,
+
+            "mr_request": self.mr_request,
             "mr_request_dt": self.mr_request_dt,
             "mr_request_days": self.mr_request_days,
             "mr_received": self.mr_received,
+            "mr_rec_all": self.mr_rec_all,
+
             "mr_request_2": self.mr_request_2,
             "mr_request_dt_2": self.mr_request_dt_2,
+            'mr_received_2': self.mr_received_2,
+            "mr_rec_all_2": self.mr_rec_all_2,
+
             "mr_rec_needs___1": self.mr_rec_needs___1,
             "mr_rec_needs___2": self.mr_rec_needs___2,
             "mr_rec_needs___3": self.mr_rec_needs___3,
