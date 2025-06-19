@@ -10,7 +10,11 @@ import os
 # print(f"📄 Using template: {template_path}")
 
 def get_data_from_api(data):
-    response = api.get(f"posts/")
+    try:
+        response = api.get(f"posts/")
+    except Exception as e:
+        print(f"Error getting data from API: {e}")
+        return None
     return response
 
 def generate_invoice_pdf(data):
@@ -63,8 +67,8 @@ def generate_invoice_pdf(data):
         mr_rec_needs_inf___13="0",
         mr_rec_needs_inf___88="0"
     )
-    # template_service = TemplateService(template_path)
-    # template_service.fill_template(output_dir,data.record, data2.to_dict())
+    template_service = TemplateService(template_path)
+    template_service.fill_template(output_dir,data.record, data2.to_dict())
 
 if __name__ == "__main__":
     print("Generating invoice PDF...")
