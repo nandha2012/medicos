@@ -1,5 +1,6 @@
 import os
 import requests
+from dataclasses import replace 
 from models.redcap_response_first import RedcapResponseFirst
 from models.redcap_response_second import RedcapResponseSecond
 from services.template_service import TemplateService
@@ -17,7 +18,7 @@ def get_log_data_from_api():
                 'logtype': 'record',
                 'user': '',
                 'record': '',
-                'beginTime':get_one_hour_before_str(),
+                'beginTime':'2025-06-19 01:00',
                 'endTime': get_current_time_str(),
                 'format': 'json',
                 'returnFormat': 'json'
@@ -51,12 +52,13 @@ def get_log_detail_data_from_api(data):
     'fields[10]': 'mr_rec_needs_inf',
     'fields[11]': 'mr_request',
     'fields[12]': 'mr_request_dt',
-    'fields[13]': 'mr_request_2',
-    'fields[14]': 'mr_request_dt_2',
-    'fields[15]':'mr_received_2',
-    'fields[16]': 'mr_rec_needs_2',
-    'fields[17]': 'mr_rec_needs_inf_2', 
-    'fields[18]': 'mr_rec_all',
+    'fields[13]':'mr_received',
+    'fields[14]': 'mr_request_2',
+    'fields[15]': 'mr_request_dt_2',
+    'fields[16]':'mr_received_2',
+    'fields[17]': 'mr_rec_needs_2',
+    'fields[18]': 'mr_rec_needs_inf_2', 
+    'fields[19]': 'mr_rec_all',
     'rawOrLabel': 'raw',
     'rawOrLabelHeaders': 'raw',
     'exportCheckboxLabel': 'false',
@@ -74,7 +76,6 @@ def get_log_detail_data_from_api(data):
 
 def generate_invoice_pdf(data):
     details = get_log_detail_data_from_api(data)
-    print(details)
     if details is not None:
         details_data_class =[ RedcapResponseSecond(**item) for item in details]
         for record in details_data_class:    
@@ -86,38 +87,71 @@ def generate_invoice_pdf(data):
 
 # TODO: This is a temporary function to handle the PDF generation logic.
 # TODO: This should be removed once the logic is implemented in the RedcapResponseSecond class.
-def handle_pdf_generation(data):
-    mr_request = data.get("mr_request") == "1"
-    mr_request_dt = data.get("mr_request_dt")
-    mr_request_dt_2 = data.get("mr_request_dt_2")
-    mr_received_2 = data.get("mr_received_2")
-    mr_rec_all = data.get("mr_rec_all")
-    mr_rec_all_2 = data.get("mr_rec_all_2")
+def handle_pdf_generation(data:RedcapResponseSecond):
+    print(data)
+    mr_request = data.mr_request == "1"
+    mr_request_dt = data.mr_request_dt
+    mr_request_2 = data.mr_request_2
+    mr_request_dt_2 = data.mr_request_dt_2
+    mr_received = data.mr_received
+    mr_rec_all = data.mr_rec_all
+    mr_rec_all_2 = data.mr_rec_all_2
 
     base_output = os.path.join(os.getcwd(), "output")
     os.makedirs(base_output, exist_ok=True)
 
     if mr_request and mr_request_dt and not mr_request_dt_2:
-        if mr_rec_all == "0":
             print("First request received with fields missing. action needed.")
             folder = os.path.join(base_output, "firstrequest")
             os.makedirs(folder, exist_ok=True)
             print("First request received with fields missing. action needed.")
-            #template_service = TemplateService(template_path)
-            #template_service.fill_template(folder,data.to_dict())
-        else:
-            print("First request already received. No action needed.")
-    elif mr_request_dt_2:
-        if mr_received_2 == "0":
+            data.mr_rec_needs___1 = 1
+            data.mr_rec_needs___2 = 1
+            data.mr_rec_needs___3 = 1
+            data.mr_rec_needs___4 = 1
+            data.mr_rec_needs___5 = 1
+            data.mr_rec_needs___6 = 1
+            data.mr_rec_needs___7 = 1
+            data.mr_rec_needs___8 = 1
+            data.mr_rec_needs___9 = 1
+            data.mr_rec_needs___10 = 1
+            data.mr_rec_needs___11 = 1
+            data.mr_rec_needs___12 = 1
+            data.mr_rec_needs___13 = 1
+            data = replace(data)
+            template_service = TemplateService(template_path)
+            template_service.fill_template(folder,data.to_dict())
+    elif mr_request and mr_request_dt and mr_request_2 and mr_request_dt_2:
+        folder = os.path.join(base_output, "secondrequest")
+        os.makedirs(folder, exist_ok=True)
+        if mr_received in ("0", ""):
             # Second request logic
-            folder = os.path.join(base_output, "secondrequest")
-            os.makedirs(folder, exist_ok=True)
-            print("Second request received with fields missing. action needed.")
-            #template_service = TemplateService(template_path)
-            #template_service.fill_template(folder,data.to_dict())
-        elif mr_received_2 == "1":
-            # Third request logic
-            print("Second request already received. No action needed.")
+            print("Second request send no response. action needed.")
+            data.mr_rec_needs___1 = 1
+            data.mr_rec_needs___2 = 1
+            data.mr_rec_needs___3 = 1
+            data.mr_rec_needs___4 = 1
+            data.mr_rec_needs___5 = 1
+            data.mr_rec_needs___6 = 1
+            data.mr_rec_needs___7 = 1
+            data.mr_rec_needs___8 = 1
+            data.mr_rec_needs___9 = 1
+            data.mr_rec_needs___10 = 1
+            data.mr_rec_needs___11 = 1
+            data.mr_rec_needs___12 = 1
+            data.mr_rec_needs___13 = 1
+            data = replace(data)
+            template_service = TemplateService(template_path)
+            template_service.fill_template(folder,data.to_dict())
+        elif mr_received == "1":
+            if mr_rec_all == '0':
+                print("Second Request received with partial. action needed.")
+                template_service = TemplateService(template_path)
+                template_service.fill_template(folder,data.to_dict())
+            elif mr_rec_all == '1':
+                print("Second request already received. No action needed.")
+            else:
+                 print("Invalid or missing value for 'mr_rec_all'.")
         else:
             print("Invalid or missing value for 'mr_received_2'.")
     else:
