@@ -3,13 +3,23 @@ from models.redcap_response_first import RedcapResponseFirst
 from models.redcap_response_second import RedcapResponseSecond
 from services.template_service import TemplateService
 from services.api_instance import api
-
+from utils import get_current_time_str, get_one_hour_before_str
 import os
 
 # template_path = os.path.join(os.getcwd(), "assets/templates/invoice_template.docx")
 # print(f"📄 Using template: {template_path}")
 
-def get_data_from_api(data):
+def get_log_data_from_api():
+    start_time = get_current_time_str()
+    end_time = get_one_hour_before_str()
+    try:
+        response = api.get(f"posts/?start_time={start_time}&end_time={end_time}")
+    except Exception as e:
+        print(f"Error getting data from API: {e}")
+        return None
+    return response
+
+def get_log_detail_data_from_api(data):
     try:
         response = api.get(f"posts/")
     except Exception as e:
@@ -18,7 +28,7 @@ def get_data_from_api(data):
     return response
 
 def generate_invoice_pdf(data):
-    data_from_api = get_data_from_api(data)
+    data_from_api = get_log_detail_data_from_api(data)
     print(data_from_api)
 
     data2 = RedcapResponseSecond(
@@ -67,8 +77,8 @@ def generate_invoice_pdf(data):
         mr_rec_needs_inf___13="0",
         mr_rec_needs_inf___88="0"
     )
-    template_service = TemplateService(template_path)
-    template_service.fill_template(output_dir,data.record, data2.to_dict())
+    # template_service = TemplateService(template_path)
+    # template_service.fill_template(output_dir,data.record, data2.to_dict())
 
 if __name__ == "__main__":
     print("Generating invoice PDF...")
@@ -76,20 +86,32 @@ if __name__ == "__main__":
     template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
+
+
+    result = [
+        {
+            "timestamp": "2025-06-17 09:06",
+            "username": "user1",
+            "action": "Update record TNSC022038654",
+            "details": "",
+            "record": "TNSC022038655"
+        },
+        {
+            "timestamp": "2025-06-17 09:06",
+            "username": "user2",
+            "action": "Update record TNSC022038654",
+            "details": "",
+            "record": "TNSC022038656"
+        }
+    ]
+    if result is not None:
+        data_list = [RedcapResponseFirst(**item) for item in result]
+        print(f"data_list: {data_list}")
+        for data in data_list:
+            generate_invoice_pdf(data)
+    else:
+        print("No data received from API.")
+    exit()
+
         # Data input
-    data_list = [RedcapResponseFirst(
-        timestamp="2025-06-17 09:06",
-        username="user1",
-        action="Update record TNSC022038654",
-        details="",
-        record="TNSC022038655"
-    ),
-    RedcapResponseFirst(
-        timestamp="2025-06-17 09:06",
-        username="user2",
-        action="Update record TNSC022038654",
-        details="",
-        record="TNSC022038656"
-    )]
-    for data in data_list:
-        generate_invoice_pdf(data)
+
