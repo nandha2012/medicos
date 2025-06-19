@@ -20,7 +20,20 @@ class ExternalAPIService:
     def post(self, endpoint, data=None, json=None):
         url = f"{self.base_url}/{endpoint}"
         try:
-            response = requests.post(url, headers=self.headers, data=data, json=json)
+            print(f'url calling...{url}')
+            print(f'payload {data}')
+            datat = {
+                'token': 'E2CAE892A6D129154430EF07AE11EFE7',
+                'content': 'log',
+                'logtype': 'record',
+                'user': '',
+                'record': '',
+                'beginTime': '2024-09-30 10:43',
+                'endTime': '',
+                'format': 'json',
+                'returnFormat': 'json'
+            }
+            response = requests.post('https://redcap.health.tn.gov/redcap/api/',headers=self.headers,json=json,data=data)
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:

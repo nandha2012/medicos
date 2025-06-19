@@ -1,4 +1,5 @@
 import os
+import requests
 from models.redcap_response_first import RedcapResponseFirst
 from models.redcap_response_second import RedcapResponseSecond
 from services.template_service import TemplateService
@@ -10,103 +11,82 @@ import os
 # print(f"📄 Using template: {template_path}")
 
 def get_log_data_from_api():
-    start_time = get_current_time_str()
-    end_time = get_one_hour_before_str()
+    data = {
+                'token': 'E2CAE892A6D129154430EF07AE11EFE7',
+                'content': 'log',
+                'logtype': 'record',
+                'user': '',
+                'record': '',
+                'beginTime':get_one_hour_before_str(),
+                'endTime': get_current_time_str(),
+                'format': 'json',
+                'returnFormat': 'json'
+            }
     try:
-        response = api.get(f"posts/?start_time={start_time}&end_time={end_time}")
+        response= requests.post('https://redcap.health.tn.gov/redcap/api/',data=data)
+        response.raise_for_status()
+        return response.json()
     except Exception as e:
         print(f"Error getting data from API: {e}")
         return None
-    return response
 
 def get_log_detail_data_from_api(data):
+    data = {
+    'token': 'E2CAE892A6D129154430EF07AE11EFE7',
+    'content': 'record',
+    'action': 'export',
+    'format': 'json',
+    'type': 'flat',
+    'csvDelimiter': '',
+    'records[0]': data.record,
+    'fields[0]': 'mg_idpreg',
+    'fields[1]': 'bc_momnamefirst',
+    'fields[2]': 'bc_momnamelast',
+    'fields[3]': 'bc_momssn',
+    'fields[4]': 'hos_name_cat_2',
+    'fields[5]': 'mr_request_dt',
+    'fields[6]': 'ifu_fac_num',
+    'fields[7]': 'ifu_fac_phone',
+    'fields[8]': 'inf_dob_mom_tr',
+    'fields[9]': 'mr_request_dt',
+    'fields[10]': 'mr_rec_needs',
+    'fields[11]': 'mr_rec_needs_inf',
+    'rawOrLabel': 'raw',
+    'rawOrLabelHeaders': 'raw',
+    'exportCheckboxLabel': 'false',
+    'exportSurveyFields': 'false',
+    'exportDataAccessGroups': 'false',
+    'returnFormat': 'json'
+}
     try:
-        response = api.get(f"posts/")
+        response= requests.post('https://redcap.health.tn.gov/redcap/api/',data=data)
+        response.raise_for_status()
+        return response.json()
     except Exception as e:
         print(f"Error getting data from API: {e}")
         return None
-    return response
 
 def generate_invoice_pdf(data):
-    data_from_api = get_log_detail_data_from_api(data)
-    print(data_from_api)
-
-    data2 = RedcapResponseSecond(
-        mg_idpreg="dfsfsdf",
-        DELIVERY_DATE="2022-01-04",
-        redcap_repeat_instrument="",
-        redcap_repeat_instance="",
-        ifu_fac_phone="",
-        ifu_fac_num="",
-        bc_momnamefirst="SHELBY",
-        bc_momnamelast="ROBINSON",
-        bc_momssn="412810789",
-        inf_dob_mom_tr="2022-01-04",
-        hos_name_cat_2="9",
-        bc_mom_dob="2022-01-04",
-        mr_request_dt="2024-11-04",
-        hospital_fax_num="615-523-1525",
-        hospital_phone_num="615-523-1525",
-        mr_rec_needs___1="1",
-        mr_rec_needs___2="0",
-        mr_rec_needs___3="0",
-        mr_rec_needs___4="0",
-        mr_rec_needs___6="0",
-        mr_rec_needs___7="0",
-        mr_rec_needs___8="0",
-        mr_rec_needs___9="0",
-        mr_rec_needs___10="0",
-        mr_rec_needs___11="0",
-        mr_rec_needs___12="0",
-        mr_rec_needs___13="0",
-        mr_rec_needs___14="0",
-        mr_rec_needs___15="0",
-        mr_rec_needs___88="0",
-        mr_rec_needs_inf___1="0",
-        mr_rec_needs_inf___2="0",
-        mr_rec_needs_inf___3="0",
-        mr_rec_needs_inf___4="0",
-        mr_rec_needs_inf___5="0",
-        mr_rec_needs_inf___6="0",
-        mr_rec_needs_inf___7="0",
-        mr_rec_needs_inf___8="0",
-        mr_rec_needs_inf___9="0",
-        mr_rec_needs_inf___10="0",
-        mr_rec_needs_inf___11="0",
-        mr_rec_needs_inf___12="0",
-        mr_rec_needs_inf___13="0",
-        mr_rec_needs_inf___88="0"
-    )
-    # template_service = TemplateService(template_path)
-    # template_service.fill_template(output_dir,data.record, data2.to_dict())
-
+    details = get_log_detail_data_from_api(data)
+    print(details)
+    if details is not None:
+        details_data_class =[ RedcapResponseSecond(**item) for item in details]
+        for record in details_data_class:        
+            template_service = TemplateService(template_path)
+            template_service.fill_template(output_dir,data.record, record.to_dict())
+    else:
+        print("No data received from API")
+    exit()    
 if __name__ == "__main__":
     print("Generating invoice PDF...")
     # Setup
     template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
-
-
-    result = [
-        {
-            "timestamp": "2025-06-17 09:06",
-            "username": "user1",
-            "action": "Update record TNSC022038654",
-            "details": "",
-            "record": "TNSC022038655"
-        },
-        {
-            "timestamp": "2025-06-17 09:06",
-            "username": "user2",
-            "action": "Update record TNSC022038654",
-            "details": "",
-            "record": "TNSC022038656"
-        }
-    ]
+    result = get_log_data_from_api()
     if result is not None:
+        print(f'result {len(result)}')
         data_list = [RedcapResponseFirst(**item) for item in result]
-        print(f"data_list: {data_list}")
         for data in data_list:
             generate_invoice_pdf(data)
     else:
@@ -114,4 +94,3 @@ if __name__ == "__main__":
     exit()
 
         # Data input
-
