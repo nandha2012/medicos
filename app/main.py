@@ -76,7 +76,8 @@ def generate_invoice_pdf(data):
     if details is not None:
         details_data_class =[ RedcapResponseSecond(**item) for item in details]
         for record in details_data_class: 
-            print(f'details{record}')       
+            print(f'details{record}')  
+            #if record.mr_request      
             #template_service = TemplateService(template_path)
             #emplate_service.fill_template(output_dir,data.record, record.to_dict())
     else:
