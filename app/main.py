@@ -17,7 +17,7 @@ def get_log_data_from_api():
                 'logtype': 'record',
                 'user': '',
                 'record': '',
-                'beginTime':get_one_hour_before_str(),
+                'beginTime':'2025-06-19 01:00',
                 'endTime': get_current_time_str(),
                 'format': 'json',
                 'returnFormat': 'json'
@@ -48,9 +48,13 @@ def get_log_detail_data_from_api(data):
     'fields[6]': 'ifu_fac_num',
     'fields[7]': 'ifu_fac_phone',
     'fields[8]': 'inf_dob_mom_tr',
-    'fields[9]': 'mr_request_dt',
-    'fields[10]': 'mr_rec_needs',
-    'fields[11]': 'mr_rec_needs_inf',
+    'fields[9]': 'mr_rec_needs',
+    'fields[10]': 'mr_rec_needs_inf',
+    'fields[11]': 'mr_request_days',
+    'fields[12]': 'mr_received',
+    'fields[13]': 'mr_request_2',
+    'fields[14]': 'mr_request_dt_2',
+    'fields[13]': 'mr_request',
     'rawOrLabel': 'raw',
     'rawOrLabelHeaders': 'raw',
     'exportCheckboxLabel': 'false',
@@ -71,12 +75,14 @@ def generate_invoice_pdf(data):
     print(details)
     if details is not None:
         details_data_class =[ RedcapResponseSecond(**item) for item in details]
-        for record in details_data_class:        
-            template_service = TemplateService(template_path)
-            template_service.fill_template(output_dir,data.record, record.to_dict())
+        for record in details_data_class: 
+            print(f'details{record}')       
+            #template_service = TemplateService(template_path)
+            #emplate_service.fill_template(output_dir,data.record, record.to_dict())
     else:
         print("No data received from API")
-    exit()    
+    exit()  
+
 if __name__ == "__main__":
     print("Generating invoice PDF...")
     # Setup
