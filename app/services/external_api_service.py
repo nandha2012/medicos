@@ -416,7 +416,7 @@ def get_log_data_from_api():
         'returnFormat': 'json'
     }
     try:
-        response = requests.post(end_point,data=data)
+        response = requests.post(f'{end_point}',data=data)
         response.raise_for_status()
         return response.json()
     except Exception as e:
@@ -431,7 +431,6 @@ def get_log_detail_data_from_api(records, batch_size=5):
         print(f"📦 Processing batch {i//batch_size + 1}: records {i+1}-{min(i+batch_size, len(records))}")
         data = get_batch_record_data_from_api(batch)
         # data = generate_fake_detail_record(batch,1)
-        print(f'{len(data)} found for {batch}')
         if data is None:
             print(f"❌ Error getting single record data from API")
             continue

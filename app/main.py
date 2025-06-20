@@ -7,11 +7,13 @@ from services.template_service import TemplateService
 from services.api_instance import api
 from services.external_api_service import get_log_data_from_api, get_log_detail_data_from_api
 from utils.dates import get_current_time_str, get_one_hour_before_str
+from utils.filters import filter_records
 from fake_responses import generate_fake_detail_responses, generate_fake_log_responses
 import time
 
 # template_path = os.path.join(os.getcwd(), "assets/templates/invoice_template.docx")
 # print(f"📄 Using template: {template_path}")
+base_output = os.path.join(os.getcwd(), "output")
 
 def generate_pdf(data_list, batch_size=5):
     data_to_process = []
@@ -20,7 +22,7 @@ def generate_pdf(data_list, batch_size=5):
         details = get_log_detail_data_from_api(batch,5)
         data_to_process.extend(details)
         print(f'{len(details)} found for batch {i+1} to {i+batch_size}')
-        time.sleep(10)
+        time.sleep(2)
     print(f'{len(data_to_process)} found for total')
     handle_pdf_genration_batch(data_to_process,5,10)
 
@@ -29,7 +31,8 @@ def generate_pdf(data_list, batch_size=5):
 def handle_pdf_genration_batch(data_list, batch_size=5, delay_between_batches=3):
     for i in range(0, len(data_list), batch_size):
         batch = data_list[i:i + batch_size]
-        for j, item in enumerate(batch):
+        formatted_barch = filter_records(batch,RedcapResponseSecond)
+        for j, item in enumerate(formatted_barch):
             handle_pdf_generation(item,j)
 
         # Add delay after each batch (except last one)
@@ -47,7 +50,6 @@ def handle_pdf_generation(data:RedcapResponseSecond,j):
     mr_rec_all = data.mr_rec_all
     mr_rec_all_2 = data.mr_rec_all_2
 
-    base_output = os.path.join(os.getcwd(), "output")
     os.makedirs(base_output, exist_ok=True)
     print(f' conditons mr_request:{mr_request} - mr_request_dt:{mr_request_dt} - mr_request_dt_2:{mr_request_dt_2}')
     print(f' condtions mr_request_2:{mr_request_2} - mr_received:{mr_received}')
@@ -55,7 +57,6 @@ def handle_pdf_generation(data:RedcapResponseSecond,j):
             print("First request received with fields missing. action needed.")
             folder = os.path.join(base_output, "firstrequest")
             os.makedirs(folder, exist_ok=True)
-            print("First request received with fields missing. action needed.")
             data.mr_rec_needs___1 = "1"
             data.mr_rec_needs___2 = "1"
             data.mr_rec_needs___3 = "1"
@@ -70,8 +71,8 @@ def handle_pdf_generation(data:RedcapResponseSecond,j):
             data.mr_rec_needs___12 = "1"
             data.mr_rec_needs___13 = "1"
             data = replace(data)
-            # template_service = TemplateService(template_path)
-            # template_service.fill_template("firstrequest",data.to_dict(),j)
+            template_service = TemplateService(template_path)
+            template_service.fill_template("firstrequest",data.to_dict(),j)
     elif mr_request and mr_request_dt and mr_request_2 and mr_request_dt_2:
         folder = os.path.join(base_output, "secondrequest")
         os.makedirs(folder, exist_ok=True)
@@ -90,13 +91,13 @@ def handle_pdf_generation(data:RedcapResponseSecond,j):
             data.mr_rec_needs___12 = "1"
             data.mr_rec_needs___13 = "1"
             data = replace(data)
-            # template_service = TemplateService(template_path)
-            # template_service.fill_template("secondrequest",data.to_dict(),j)
+            template_service = TemplateService(template_path)
+            template_service.fill_template("secondrequest",data.to_dict(),j)
         elif mr_received == "1":
             if mr_rec_all == '0':
                 print("Second Request received with partial. action needed.")
-                # template_service = TemplateService(template_path)
-                # template_service.fill_template("secondrequest",data.to_dict(),j)
+                template_service = TemplateService(template_path)
+                template_service.fill_template("secondrequest",data.to_dict(),j)
             elif mr_rec_all == '1':
                 print("Second request already received. No action needed.")
             else:
@@ -114,12 +115,13 @@ if __name__ == "__main__":
     template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
-    # result = get_log_data_from_api()
-    result = generate_fake_log_responses(1)
+    result = get_log_data_from_api()
+    #result = generate_fake_log_responses(1)
     if result is not None:
         print(f"🔎 {len(result)} records found.")
         data_list = [RedcapResponseFirst(**item) for item in result]
         generate_pdf(data_list)
+        print(f"✅PDF Genration Completed")
     else:
         print("⚠️ No records received from API.")
     exit()
