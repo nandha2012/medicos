@@ -5,88 +5,27 @@ from models.redcap_response_first import RedcapResponseFirst
 from models.redcap_response_second import RedcapResponseSecond
 from services.template_service import TemplateService
 from services.api_instance import api
+from services.external_api_service import get_log_data_from_api, get_log_detail_data_from_api
 from utils import get_current_time_str, get_one_hour_before_str
 import os
 
 # template_path = os.path.join(os.getcwd(), "assets/templates/invoice_template.docx")
 # print(f"📄 Using template: {template_path}")
 
-def get_log_data_from_api():
-    data = {
-                'token': 'E2CAE892A6D129154430EF07AE11EFE7',
-                'content': 'log',
-                'logtype': 'record',
-                'user': '',
-                'record': '',
-                'beginTime':'2025-06-19 01:00',
-                'endTime': get_current_time_str(),
-                'format': 'json',
-                'returnFormat': 'json'
-            }
-    try:
-        response= requests.post('https://redcap.health.tn.gov/redcap/api/',data=data)
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        print(f"❌ Error getting detailed data from API: {e}")
-        return None
-
-def get_log_detail_data_from_api(data):
-    data = {
-    'token': 'E2CAE892A6D129154430EF07AE11EFE7',
-    'content': 'record',
-    'action': 'export',
-    'format': 'json',
-    'type': 'flat',
-    'csvDelimiter': '',
-    'records[0]': data.record,
-    'fields[0]': 'mg_idpreg',
-    'fields[1]': 'bc_momnamefirst',
-    'fields[2]': 'bc_momnamelast',
-    'fields[3]': 'bc_momssn',
-    'fields[4]': 'hos_name_cat_2',
-    'fields[6]': 'ifu_fac_num',
-    'fields[7]': 'ifu_fac_phone',
-    'fields[8]': 'inf_dob_mom_tr',
-    'fields[9]': 'mr_rec_needs',
-    'fields[10]': 'mr_rec_needs_inf',
-    'fields[11]': 'mr_request',
-    'fields[12]': 'mr_request_dt',
-    'fields[13]':'mr_received',
-    'fields[14]': 'mr_request_2',
-    'fields[15]': 'mr_request_dt_2',
-    'fields[16]':'mr_received_2',
-    'fields[17]': 'mr_rec_needs_2',
-    'fields[18]': 'mr_rec_needs_inf_2', 
-    'fields[19]': 'mr_rec_all',
-    'fields[20]': 'hos_name',
-    'fields[21]': 'dob_inf',
-    'rawOrLabel': 'raw',
-    'rawOrLabelHeaders': 'raw',
-    'exportCheckboxLabel': 'false',
-    'exportSurveyFields': 'false',
-    'exportDataAccessGroups': 'false',
-    'returnFormat': 'json'
-}
-    try:
-        response= requests.post('https://redcap.health.tn.gov/redcap/api/',data=data)
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        print(f"❌ Error getting detailed data from API: {e}")
-        return None
-
 def generate_pdf(data):
-    details = get_log_detail_data_from_api(data)
+    print(f'processing for record: {data.record}')
+    details = get_log_detail_data_from_api(data.record)
     print(details)
+    if details is None:
+        print("No data received from API")
+        return
     print(f'{len(details)} fround for {data.record}')
     if details is not None:
         details_data_class =[ RedcapResponseSecond(**item) for item in details]
         for record in details_data_class:    
             handle_pdf_generation(record)
     else:
-        print("No data received from API")
-    exit()   
+        print("No data received from API") 
 
 
 # TODO: This is a temporary function to handle the PDF generation logic.
