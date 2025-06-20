@@ -429,26 +429,21 @@ def get_log_detail_data_from_api(records, batch_size=5):
     for i in range(0, len(records), batch_size):
         batch = records[i:i + batch_size]
         print(f"📦 Processing batch {i//batch_size + 1}: records {i+1}-{min(i+batch_size, len(records))}")
-        
-        data = details_data.copy()
-        # Add records for this batch
-        for j, record in enumerate(batch):
-            data[f'records[{j}]'] = record.record
-    for record in records:
-        # data = get_single_record_data_from_api(record)
-        data = generate_fake_detail_record(record.record,1)
-        print(f'{len(data)} found for {record.record}')
+        data = get_batch_record_data_from_api(batch)
+        # data = generate_fake_detail_record(batch,1)
+        print(f'{len(data)} found for {batch}')
         if data is None:
-            print(f"❌ Error getting single record data from API: {record}")
+            print(f"❌ Error getting single record data from API")
             continue
         for item in data:
             details.append(item)
     return details
 
 
-def get_single_record_data_from_api(record):
+def get_batch_record_data_from_api(records):
     data = details_data.copy()
-    data['records[0]'] = record
+    for j, record in enumerate(records):
+        data[f'records[{j}]'] = record.record
     try:
         response = requests.post(end_point,data=data)
         response.raise_for_status()
