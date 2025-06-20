@@ -1,0 +1,492 @@
+[
+    {
+        "timestamp": "2025-06-20 10:55",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022060736",
+        "details": "mr_upload = '1382031'",
+        "record": "TNSC022060736"
+    },
+    {
+        "timestamp": "2025-06-20 09:59",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022081637",
+        "details": "",
+        "record": "TNSC022081637"
+    },
+    {
+        "timestamp": "2025-06-20 09:58",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022080935",
+        "details": "mr_received = '1', record_rec_via = '1'",
+        "record": "TNSC022080935"
+    },
+    {
+        "timestamp": "2025-06-20 09:58",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022078533",
+        "details": "mr_received = '1', record_rec_via = '2'",
+        "record": "TNSC022078533"
+    },
+    {
+        "timestamp": "2025-06-20 09:58",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022078295",
+        "details": "mr_received = '1', record_rec_via = '1'",
+        "record": "TNSC022078295"
+    },
+    {
+        "timestamp": "2025-06-20 09:58",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022077990",
+        "details": "mr_received = '1', record_rec_via = '1'",
+        "record": "TNSC022077990"
+    },
+    {
+        "timestamp": "2025-06-20 09:57",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022075546",
+        "details": "mr_request_days = '10', mr_received = '1', record_rec_via = '1'",
+        "record": "TNSC022075546"
+    },
+    {
+        "timestamp": "2025-06-20 09:57",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022075239",
+        "details": "mr_request_days = '10', mr_received = '1', record_rec_via = '1', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022075239"
+    },
+    {
+        "timestamp": "2025-06-20 09:57",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022073729",
+        "details": "mr_request_days = '10', mr_received = '1', record_rec_via = '1'",
+        "record": "TNSC022073729"
+    },
+    {
+        "timestamp": "2025-06-20 09:56",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022071780",
+        "details": "mr_request_days = '10', mr_received = '1', record_rec_via = '1'",
+        "record": "TNSC022071780"
+    },
+    {
+        "timestamp": "2025-06-20 09:56",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022070368",
+        "details": "mr_request_days = '10', mr_received = '1', record_rec_via = '1'",
+        "record": "TNSC022070368"
+    },
+    {
+        "timestamp": "2025-06-20 09:54",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022081637",
+        "details": "mr_received = '1', record_rec_via = '1', mr_upload_2 = '1382000', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022081637"
+    },
+    {
+        "timestamp": "2025-06-20 09:53",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022081637",
+        "details": "mr_request_days = '10', mr_upload = '1381999'",
+        "record": "TNSC022081637"
+    },
+    {
+        "timestamp": "2025-06-20 09:51",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022080935",
+        "details": "mr_upload_2 = '1381998', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022080935"
+    },
+    {
+        "timestamp": "2025-06-20 09:49",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022080935",
+        "details": "mr_request_days = '10', mr_upload = '1381996'",
+        "record": "TNSC022080935"
+    },
+    {
+        "timestamp": "2025-06-20 09:39",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022078533",
+        "details": "mr_upload_2 = '1381986', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022078533"
+    },
+    {
+        "timestamp": "2025-06-20 09:37",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022078533",
+        "details": "mr_request_days = '10', mr_upload = '1381984'",
+        "record": "TNSC022078533"
+    },
+    {
+        "timestamp": "2025-06-20 09:35",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022078295",
+        "details": "mr_upload_2 = '1381983', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022078295"
+    },
+    {
+        "timestamp": "2025-06-20 09:33",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022078295",
+        "details": "mr_request_days = '10', mr_upload = '1381982'",
+        "record": "TNSC022078295"
+    },
+    {
+        "timestamp": "2025-06-20 09:30",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022077990",
+        "details": "mr_request_days = '10', mr_upload_2 = '1381979', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022077990"
+    },
+    {
+        "timestamp": "2025-06-20 08:24",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023022842",
+        "details": "mr_emr = '0', mr_request = '0', attestation = '0'",
+        "record": "TNSC023022842"
+    },
+    {
+        "timestamp": "2025-06-20 08:23",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023022842",
+        "details": "mr_emr = '', mr_request = '', mr_request_dt = '', mr_request_days = ''",
+        "record": "TNSC023022842"
+    },
+    {
+        "timestamp": "2025-06-20 08:08",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023022842",
+        "details": "mr_emr = '0', mr_request = '1', mr_request_dt = '2025-06-20', mr_request_days = '0', medical_records_request_for_pregnancy_and_birth_complete = '0'",
+        "record": "TNSC023022842"
+    },
+    {
+        "timestamp": "2025-06-20 07:58",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023078014",
+        "details": "mr_received = '', mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
+        "record": "TNSC023078014"
+    },
+    {
+        "timestamp": "2025-06-20 07:37",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023078014",
+        "details": "mr_received = '0', mr_request_2 = '1', mr_request_dt_2 = '2025-06-20', mr_request_days_2 = '0'",
+        "record": "TNSC023078014"
+    },
+    {
+        "timestamp": "2025-06-20 07:26",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023078014",
+        "details": "mr_emr = '0', mr_request = '1', mr_request_dt = '2025-06-20', mr_request_days = '0', medical_records_request_for_pregnancy_and_birth_complete = '0'",
+        "record": "TNSC023078014"
+    },
+    {
+        "timestamp": "2025-06-20 00:46",
+        "username": "dc49dqw",
+        "action": "Update record TNSC022061100",
+        "details": "mr_request_days = '93', mr_received = '0', mr_request_2 = '1', mr_request_dt_2 = '2025-06-20', mr_request_days_2 = '0'",
+        "record": "TNSC022061100"
+    },
+    {
+        "timestamp": "2025-06-20 00:45",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023084754",
+        "details": "mr_request_days = '93', mr_received = '', mr_rec_all = '', mr_rec_needs(4) = unchecked, mr_rec_needs(6) = unchecked, mr_rec_needs(7) = unchecked, mr_rec_needs(8) = unchecked, mr_rec_needs(9) = unchecked, mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
+        "record": "TNSC023084754"
+    },
+    {
+        "timestamp": "2025-06-20 00:44",
+        "username": "dc49dqw",
+        "action": "Update record TNSC022001146",
+        "details": "mr_request_days = '227', mr_rec_all = '0', mr_rec_needs(4) = checked, mr_rec_needs(6) = checked, mr_rec_needs(7) = checked, mr_rec_needs(8) = checked, mr_rec_needs(9) = checked, mr_rec_needs(10) = checked, mr_rec_needs(11) = checked, mr_rec_needs(12) = checked, mr_rec_needs(13) = checked, mr_rec_needs(14) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-20', mr_request_days_2 = '0'",
+        "record": "TNSC022001146"
+    },
+    {
+        "timestamp": "2025-06-20 00:42",
+        "username": "dc49dqw",
+        "action": "Update record TNSC022000371",
+        "details": "mr_request_days = '228', mr_rec_all = '1', mr_rec_needs(1) = unchecked, mr_rec_needs(2) = unchecked, mr_rec_needs(3) = unchecked, mr_rec_needs(4) = unchecked, mr_rec_needs(6) = unchecked, mr_rec_needs(7) = unchecked, mr_rec_needs(8) = unchecked, mr_rec_needs(9) = unchecked, mr_rec_needs(10) = unchecked, mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
+        "record": "TNSC022000371"
+    },
+    {
+        "timestamp": "2025-06-19 16:52",
+        "username": "dc49dqw",
+        "action": "Update record TNSC022000371",
+        "details": "mr_request_days = '227', mr_rec_all = '0', mr_rec_needs(1) = checked, mr_rec_needs(2) = checked, mr_rec_needs(3) = checked, mr_rec_needs(4) = checked, mr_rec_needs(6) = checked, mr_rec_needs(7) = checked, mr_rec_needs(8) = checked, mr_rec_needs(9) = checked, mr_rec_needs(10) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-19', mr_request_days_2 = '0'",
+        "record": "TNSC022000371"
+    },
+    {
+        "timestamp": "2025-06-19 06:44",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023084754",
+        "details": "mr_request_days = '92', mr_received = '1', mr_rec_all = '0', mr_rec_needs(4) = checked, mr_rec_needs(6) = checked, mr_rec_needs(7) = checked, mr_rec_needs(8) = checked, mr_rec_needs(9) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-19', mr_request_days_2 = '0'",
+        "record": "TNSC023084754"
+    },
+    {
+        "timestamp": "2025-06-18 14:16",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022077990",
+        "details": "mr_request_days = '8', mr_upload = '1381157'",
+        "record": "TNSC022077990"
+    },
+    {
+        "timestamp": "2025-06-18 14:13",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022075546",
+        "details": "mr_upload_2 = '1381155', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022075546"
+    },
+    {
+        "timestamp": "2025-06-18 14:11",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022075546",
+        "details": "mr_request_days = '8', mr_upload = '1381151'",
+        "record": "TNSC022075546"
+    },
+    {
+        "timestamp": "2025-06-18 14:09",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022075239",
+        "details": "mr_upload_2 = '1381149'",
+        "record": "TNSC022075239"
+    },
+    {
+        "timestamp": "2025-06-18 12:18",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022075239",
+        "details": "mr_request_days = '8', mr_upload = '1381058'",
+        "record": "TNSC022075239"
+    },
+    {
+        "timestamp": "2025-06-18 12:15",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022073729",
+        "details": "mr_upload_2 = '1381056', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022073729"
+    },
+    {
+        "timestamp": "2025-06-18 12:13",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022073729",
+        "details": "mr_request_days = '8', mr_upload = '1381046'",
+        "record": "TNSC022073729"
+    },
+    {
+        "timestamp": "2025-06-18 10:25",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022070368",
+        "details": "medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022070368"
+    },
+    {
+        "timestamp": "2025-06-18 10:25",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022071780",
+        "details": "mr_upload_2 = '1380886', medical_records_request_for_pregnancy_and_birth_complete = '1'",
+        "record": "TNSC022071780"
+    },
+    {
+        "timestamp": "2025-06-18 10:23",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022071780",
+        "details": "mr_request_days = '8', mr_upload = '1380883'",
+        "record": "TNSC022071780"
+    },
+    {
+        "timestamp": "2025-06-18 10:21",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022070368",
+        "details": "mr_upload_2 = '1380881'",
+        "record": "TNSC022070368"
+    },
+    {
+        "timestamp": "2025-06-18 10:18",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022070368",
+        "details": "mr_request_days = '8', mr_upload = '1380879'",
+        "record": "TNSC022070368"
+    },
+    {
+        "timestamp": "2025-06-17 09:06",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022038654",
+        "details": "",
+        "record": "TNSC022038654"
+    },
+    {
+        "timestamp": "2025-06-17 09:04",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022038654",
+        "details": "mr_request_days = '28', mr_upload = '1380072', mr_upload_2 = '1380073'",
+        "record": "TNSC022038654"
+    },
+    {
+        "timestamp": "2025-06-16 11:00",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022068993",
+        "details": "mr_request_days = '10', mr_upload = '1379487'",
+        "record": "TNSC022068993"
+    },
+    {
+        "timestamp": "2025-06-16 10:15",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022052797",
+        "details": "mr_request_days = '10', medical_records_request_for_pregnancy_and_birth_complete = '2'",
+        "record": "TNSC022052797"
+    },
+    {
+        "timestamp": "2025-06-16 10:15",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022052797",
+        "details": "bg_mra_done = '1', bg_exm_yn = '1', bg_exm_gen = '1', bg_exm_heent = '0', bg_exm_cardio = '0', bg_exm_lung = '0', bg_exm_abd = '1', bg_exm_abd_sp = 'difficulty feeding, slow feed', bg_exm_gu = '0', bg_exm_muske = '0', bg_exm_neuro_sp = 'increased tone and tremulous, shaking head side to side,', bg_exm_skin = '0', bg_dis_dt = '2022-08-16', bg_dischargecare = '0', bg_icudis_dt = '2022-08-16', pregnancy_outcomes_and_birth_form_complete = '2'",
+        "record": "TNSC022052797"
+    },
+    {
+        "timestamp": "2025-06-16 10:08",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022052797",
+        "details": "bg_exm_neuro = '1', bg_exm_neuro_sp = 'increased tone and tremulous', bg_lt = '45.7', bg_cps = '1', bg_notes = 'maternal UDS+ buprenorphine. Infant UDS+ buprenorphine (further tested). Cord+ buprenorphine. '",
+        "record": "TNSC022052797"
+    },
+    {
+        "timestamp": "2025-06-16 10:03",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022052797",
+        "details": "mg_mra_done = '1', mg_sub_alc = '0', mg_edd = '2022-08-18', mg_pregcon_fgr = '0', mg_hosp_yn = '0', mg_decon_icu = '0', mc_drugs = '1', mc_sub_mj = '0', mc_sub_op_rx = '0', mc_sub_op_il = '0', mc_sub_op_moud = '0', mc_sub_meth = '0', mc_sub_coc = '0', mc_sub_oth = '0', mc_homeless = '88', mc_dpdx = '0', mc_tx = '0', mc_chol = '0', mc_test_amnio = '0', mc_fetalmonitor = '0', mc_de_prolong = '0', mc_laceration = '0', mg_notes = 'Per NBS, hepC+ chronic 9.1.25. Incarceration per vine. Prenatal UDS 3.31.22 + buprenorphine. hx IVDU clean x 3 years.  ', pregnant_person_form_complete = '2'",
+        "record": "TNSC022052797"
+    },
+    {
+        "timestamp": "2025-06-16 09:36",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022052797",
+        "details": "mc_jail = '1', mg_notes = 'Per NBS, hepC+ chronic 9.1.25. Incarceration per vine. '",
+        "record": "TNSC022052797"
+    },
+    {
+        "timestamp": "2025-06-16 09:32",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022049661",
+        "details": "mr_request_days = '10', medical_records_request_for_pregnancy_and_birth_complete = '2'",
+        "record": "TNSC022049661"
+    },
+    {
+        "timestamp": "2025-06-16 09:32",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022049661",
+        "details": "mg_mra_done = '1', mg_sub_alc = '88', mg_pregcon_fgr = '0', mg_hosp_yn = '88', mg_decon_icu = '0', mc_sub_mj = '0', mc_sub_op_rx = '0', mc_sub_op_moud = '1', mc_sub_coc = '0', mc_sub_oth = '0', mg_notes = 'NBS hepC+ chronic 2.23.21. incarcerated per nbs as well. Prenatal H&P +heroin and meth use daily for multiple years, UDS+ meth on 4/5/22. Adm. UDS+ methamphetamine. Infant Cord+ amphetamine/methamphetamine, buprenorphine, and fentanyl.', pregnant_person_form_complete = '2'",
+        "record": "TNSC022049661"
+    },
+    {
+        "timestamp": "2025-06-16 09:30",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022049661",
+        "details": "bg_mra_done = '1', bg_exm_yn = '1', bg_exm_gen = '1', bg_exm_heent = '0', bg_exm_cardio = '0', bg_exm_lung_sp = 'required cpap>NC. cxr low normal volume with moderate radiating peribronchial interstitial opacity and atelectasis; RDS vs. TTN.', bg_exm_abd = '0', bg_exm_gu = '0', bg_exm_muske = '0', bg_exm_neuro = '1', bg_exm_neuro_sp = 'increased moro reflex', bg_exm_skin = '1', bg_exm_skin_sp = 'mild jaundice', bg_dis_dt = '2022-07-29', bg_dischargecare = '1', bg_dischargecare_sp = '3', bg_cps = '1', bg_notes = 'UDS+ amphetamine. Cord+ amphetamine/ meth, buprenorphine, fentanyl, ', pregnancy_outcomes_and_birth_form_complete = '2'",
+        "record": "TNSC022049661"
+    },
+    {
+        "timestamp": "2025-06-16 09:26",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022049661",
+        "details": "bg_exm_lung = '1', bg_exm_lung_sp = 'required cpap>NC. cxr low normal volume with moderate radiating peribronchial interstitial opacity and atelectasis', bg_lt = '44.5', bg_hc = '31.5'",
+        "record": "TNSC022049661"
+    },
+    {
+        "timestamp": "2025-06-16 09:22",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022049661",
+        "details": "mg_sub_tobacco = '1', mc_homeless = '88', mc_chol = '0', mc_test_amnio = '0', mc_fetalmonitor = '0', mc_de_h = '0', mc_de_prolong = '0', mc_laceration = '0', mg_notes = 'NBS hepC+ chronic 2.23.21. incarcerated per nbs as well. Prenatal H&P +heroin and meth use daily for multiple years, UDS+ meth on 4/5/22. Adm. UDS+ methamphetamine.'",
+        "record": "TNSC022049661"
+    },
+    {
+        "timestamp": "2025-06-16 09:13",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022049661",
+        "details": "bg_ga_d = '1'",
+        "record": "TNSC022049661"
+    },
+    {
+        "timestamp": "2025-06-16 09:13",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022049661",
+        "details": "mg_edd = '2022-08-21', mc_drugs = '1', mc_sub_op_il = '1', mc_sub_meth = '1', mc_jail = '1', mc_dpdx = '0', mc_tx = '0', mg_notes = 'NBS hepC+ chronic 2.23.21. incarcerated per nbs as well. Prenatal H&P +heroin and meth use daily for multiple years, UDS+ meth on 4/5/22. '",
+        "record": "TNSC022049661"
+    },
+    {
+        "timestamp": "2025-06-16 08:50",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022065185",
+        "details": "medical_records_request_for_pregnancy_and_birth_complete = '2'",
+        "record": "TNSC022065185"
+    },
+    {
+        "timestamp": "2025-06-16 08:50",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022065185",
+        "details": "bg_exm_gen = '1', bg_exm_cardio = '1', bg_exm_cardio_sp = 'grade I/VI murmur; patent foramen ovale with left to right shunt', bg_exm_neuro = '1', bg_exm_neuro_sp = 'disorganized UE and LE movements, hypertonic, ', bg_exm_sp = 'transferred to ETCH on DOL 2', bg_dis_dt = '2022-10-23', bg_dischargecare = '0', bg_cps = '1', bg_icu = '1', bg_icudis_dt = '2022-10-23', bg_notes = 'UDS+ buprenorphine. Cord+ buprenorphine. Unable to access ETCH to determine if infant was transferred. Able to review some records in ethin. '",
+        "record": "TNSC022065185"
+    },
+    {
+        "timestamp": "2025-06-16 08:42",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022065185",
+        "details": "bg_mra_done = '1', bg_exm_yn = '1', bg_exm_gen = '0', bg_exm_heent = '0', bg_exm_cardio = '0', bg_exm_lung = '0', bg_exm_abd = '0', bg_exm_gu = '0', bg_exm_muske = '0', bg_exm_neuro = '0', bg_exm_skin = '0', bg_lt = '51', bg_hc = '35', bg_dis_dt = '2022-10-01', bg_dischargecare = '88', bg_cps = '88', bg_notes = 'UDS+ buprenorphine. Cord+ buprenorphine. Unable to access ETCH to determine if infant was transferred. ', pregnancy_outcomes_and_birth_form_complete = '2'",
+        "record": "TNSC022065185"
+    },
+    {
+        "timestamp": "2025-06-16 08:35",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022065185",
+        "details": "pregnant_person_form_complete = '2'",
+        "record": "TNSC022065185"
+    },
+    {
+        "timestamp": "2025-06-16 08:35",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022065185",
+        "details": "mg_mra_done = '1', mg_sub_alc = '0', mg_edd = '2022-10-04', mg_pregcon_fgr = '0', mg_hosp_yn = '0', mg_decon_icu = '0', mc_drugs = '1', mc_sub_mj = '0', mc_sub_op_rx = '0', mc_sub_op_il = '1', mc_sub_op_moud = '1', mc_sub_meth = '1', mc_sub_coc = '0', mc_sub_oth = '1', mc_sub_oth_sp = 'benzodiazepines', mc_homeless = '88', mc_chol = '0', mc_test_amnio = '0', mc_fetalmonitor = '0', mc_de_prolong = '88', mc_laceration = '0', mg_notes = 'Per NBS, hepC+ chronic 9.10.20. Also, hepC virus RNA not detected on 6.28.24. No hx of incarceration per vine or foi. H&P UDS+subutex and Benzo. Prenatal notes hx of meth and heroin use 1/2022. Admission UDS+ buprenorphine. '",
+        "record": "TNSC022065185"
+    },
+    {
+        "timestamp": "2025-06-16 08:21",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022065185",
+        "details": "mc_jail = '0', mc_dpdx = '0', mc_tx = '0', mg_notes = 'Per NBS, hepC+ chronic 9.10.20. Also, hepC virus RNA not detected on 6.28.24. No hx of incarceration per vine or foi. '",
+        "record": "TNSC022065185"
+    },
+    {
+        "timestamp": "2025-06-16 08:17",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022065185",
+        "details": "mr_request_days = '10', mr_upload_2 = '1379369'",
+        "record": "TNSC022065185"
+    },
+    {
+        "timestamp": "2025-06-16 07:46",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022005675",
+        "details": "medical_records_request_for_pregnancy_and_birth_complete = '2'",
+        "record": "TNSC022005675"
+    },
+    {
+        "timestamp": "2025-06-16 07:46",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022005675",
+        "details": "bg_mra_done = '1', bg_ltfu = '', bg_ltfu_why = '', bg_exm_yn = '1', bg_exm_gen = '0', bg_exm_heent = '0', bg_exm_cardio = '0', bg_exm_lung = '0', bg_exm_abd = '0', bg_exm_gu = '0', bg_exm_muske = '0', bg_exm_neuro = '0', bg_exm_skin = '0', bg_lt = '43.2', bg_hc = '32', bg_dis_dt = '2022-01-25', bg_dischargecare = '1', bg_dischargecare_sp = '2', bg_cps = '1', pregnancy_outcomes_and_birth_form_complete = '2'",
+        "record": "TNSC022005675"
+    },
+    {
+        "timestamp": "2025-06-16 07:33",
+        "username": "dc49dqm",
+        "action": "Update record TNSC022005675",
+        "details": "mr_request_days = '220', mr_request_days_2 = '4', mr_upload_3 = '1379345'",
+        "record": "TNSC022005675"
+    },
+    {
+        "timestamp": "2025-06-16 06:04",
+        "username": "dc49dqw",
+        "action": "Update record TNSC022081660",
+        "details": "mr_request_days = '76', mr_received = '', mr_rec_all = '', mr_rec_needs(2) = unchecked, mr_rec_needs(3) = unchecked, mr_rec_needs(4) = unchecked, mr_rec_needs(6) = unchecked, mr_rec_needs(7) = unchecked, mr_rec_needs(8) = unchecked, mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
+        "record": "TNSC022081660"
+    }
+]
