@@ -59,6 +59,8 @@ def get_log_detail_data_from_api(data):
     'fields[17]': 'mr_rec_needs_2',
     'fields[18]': 'mr_rec_needs_inf_2', 
     'fields[19]': 'mr_rec_all',
+    'fields[20]': 'hos_name',
+    'fields[21]': 'dob_inf',
     'rawOrLabel': 'raw',
     'rawOrLabelHeaders': 'raw',
     'exportCheckboxLabel': 'false',
@@ -76,6 +78,8 @@ def get_log_detail_data_from_api(data):
 
 def generate_pdf(data):
     details = get_log_detail_data_from_api(data)
+    print(details)
+    print(f'{len(details)} fround for {data.record}')
     if details is not None:
         details_data_class =[ RedcapResponseSecond(**item) for item in details]
         for record in details_data_class:    
@@ -88,7 +92,6 @@ def generate_pdf(data):
 # TODO: This is a temporary function to handle the PDF generation logic.
 # TODO: This should be removed once the logic is implemented in the RedcapResponseSecond class.
 def handle_pdf_generation(data:RedcapResponseSecond):
-    print(data)
     mr_request = data.mr_request == "1"
     mr_request_dt = data.mr_request_dt
     mr_request_2 = data.mr_request_2
@@ -99,7 +102,8 @@ def handle_pdf_generation(data:RedcapResponseSecond):
 
     base_output = os.path.join(os.getcwd(), "output")
     os.makedirs(base_output, exist_ok=True)
-
+    print(f' conditons mr_request:{mr_request} - mr_request_dt:{mr_request_dt} - mr_request_dt_2:{mr_request_dt_2}')
+    print(f' condtions mr_request_2:{mr_request_2} - mr_received:{mr_received}')
     if mr_request and mr_request_dt and not mr_request_dt_2:
             print("First request received with fields missing. action needed.")
             folder = os.path.join(base_output, "firstrequest")

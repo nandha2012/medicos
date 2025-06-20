@@ -730,6 +730,9 @@ class RedcapResponseSecond:
             "mr_rec_needs_inf___11": self.mr_rec_needs_inf___11,
             "mr_rec_needs_inf___12": self.mr_rec_needs_inf___12,
             "mr_rec_needs_inf___13": self.mr_rec_needs_inf___13,
-            "mr_rec_needs_inf___88": self.mr_rec_needs_inf___88
+            "mr_rec_needs_inf___88": self.mr_rec_needs_inf___88,
+
+            "hos_name": self.hos_name,
+            "dob_inf" :self.dob_inf
 }
     
