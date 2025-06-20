@@ -7,7 +7,7 @@ class RedcapResponseFirst:
     timestamp: str
     username: str
     action: str
-    details: str
+    details: dict
     record: str
 
     def to_dict(self):

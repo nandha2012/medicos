@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from models.redcap_response_second import RedcapResponseSecond
 from models.redcap_response_first import RedcapResponseFirst
 from utils.filters import filter_records
-
+from typing import List
 fake = Faker()
 
 def generate_fake_detail_responses(mg_idpreg,count: int):
@@ -25,7 +25,7 @@ def generate_fake_log_responses(count: int):
 
 
 
-def generate_fake_detail_record(mg_idpreg, count=1):
+def generate_fake_detail_record(mg_idpreg, count=1) -> List[RedcapResponseSecond]:
     """
     Generate fake records for REDCap maternal-infant health surveillance system
     """

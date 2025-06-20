@@ -3,7 +3,7 @@ from services.pdf_service import PDFService
 import os
 from datetime import datetime
 
-
+output_dir = os.getenv("OUTPUT_DIR") or "output"
 def generate_dir_name():
     now = datetime.now()
     return now.strftime("%Y%m%d%H")
@@ -13,7 +13,7 @@ class TemplateService:
     def __init__(self, template_path: str):
         self.template_path = template_path
         self.output_path_docx = None
-        self.output_dir = "output"+"/"+generate_dir_name()
+        self.output_dir = output_dir+"/"+generate_dir_name()
         os.makedirs(self.output_dir, exist_ok=True)
     def merge_runs(self, paragraph):
         full_text = ''.join(run.text for run in paragraph.runs)
@@ -63,6 +63,4 @@ class TemplateService:
                                     run.text = run.text.replace(f"#{key}#", str(value))
 
         doc.save(self.output_path_docx)
-        print(f"✅ Template saved to: {self.output_path_docx}")
-        pdf_service = PDFService()
-        pdf_service.convert_to_pdf(self.output_path_docx,file_path, f"{mg_idpreg}_{j}.pdf")
+        return self.output_path_docx

@@ -11,6 +11,6 @@ data = {
     'format': 'json',
     'returnFormat': 'json'
 }
-r = requests.post('https://redcap.health.tn.gov/redcap/api/',data=data)
+r = requests.post("end_point",data=data)
 print('HTTP Status: ' + str(r.status_code))
 print(r.json())
