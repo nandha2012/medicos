@@ -3,3 +3,5 @@ requests
 python-docx
 docx2pdf
 python-dotenv
+faker
+pydantic

@@ -15,6 +15,11 @@ class TemplateService:
         self.output_path_docx = None
         self.output_dir = "output"+"/"+generate_dir_name()
         os.makedirs(self.output_dir, exist_ok=True)
+    def merge_runs(self, paragraph):
+        full_text = ''.join(run.text for run in paragraph.runs)
+        for run in paragraph.runs:
+            run.text = ''
+        paragraph.runs[0].text = full_text
 
     def _replace_placeholders_in_paragraph(self, para, data):
         text = para.text
@@ -29,14 +34,14 @@ class TemplateService:
         para.add_run(text)
 
 
-    def fill_template(self, output_path: str, data: dict):
+    def fill_template(self, output_path: str, data: dict,j):
         print(f"📄 Using template: {self.template_path}")
         mg_idpreg = data.get('mg_idpreg')
         if mg_idpreg is None:
             raise KeyError("❌ 'mg_idpreg' key not found in data dictionary")
         file_path = self.output_dir+"/"+output_path
         os.makedirs(file_path, exist_ok=True)
-        self.output_path_docx = os.path.join(file_path, f"{mg_idpreg}.docx")
+        self.output_path_docx = os.path.join(file_path, f"{mg_idpreg}_{j}.docx")
         if not os.path.exists(self.template_path):
             raise FileNotFoundError(f"❌ Template not found at: {self.template_path}")
         doc = Document(self.template_path)
@@ -60,4 +65,4 @@ class TemplateService:
         doc.save(self.output_path_docx)
         print(f"✅ Template saved to: {self.output_path_docx}")
         pdf_service = PDFService()
-        pdf_service.convert_to_pdf(self.output_path_docx,file_path, mg_idpreg)
+        pdf_service.convert_to_pdf(self.output_path_docx,file_path, f"{mg_idpreg}_{j}.pdf")
