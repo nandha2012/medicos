@@ -156,4 +156,12 @@ def get_latest_records(records):
         rec['timestamp'] = rec['timestamp'].strftime("%Y-%m-%d %H:%M")
 
     return list(latest_records.values())
+
+def merge_records(records: List[Dict]) -> Dict:
+    merged = {}
+    for record in records:
+        for key, value in record.items():
+            if value not in ("", None):
+                merged[key] = value
+    return merged
     
