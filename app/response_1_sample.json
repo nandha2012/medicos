@@ -61,5 +61,19 @@
         "action": "Manage/Design ",
         "details": "Export Logging (API)",
         "record": ""
+    },
+    {
+        "timestamp": "2025-06-20 00:45",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023084754",
+        "details": "mr_request_days = '93', mr_received = '', mr_rec_all = '', mr_rec_needs(4) = unchecked, mr_rec_needs(6) = unchecked, mr_rec_needs(7) = unchecked, mr_rec_needs(8) = unchecked, mr_rec_needs(9) = unchecked, mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
+        "record": "TNSC023084754"
+    },
+    {
+        "timestamp": "2025-06-20 00:44",
+        "username": "dc49dqw",
+        "action": "Update record TNSC022001146",
+        "details": "mr_request_days = '227', mr_rec_all = '0', mr_rec_needs(4) = checked, mr_rec_needs(6) = checked, mr_rec_needs(7) = checked, mr_rec_needs(8) = checked, mr_rec_needs(9) = checked, mr_rec_needs(10) = checked, mr_rec_needs(11) = checked, mr_rec_needs(12) = checked, mr_rec_needs(13) = checked, mr_rec_needs(14) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-20', mr_request_days_2 = '0'",
+        "record": "TNSC022001146"
     }
 ]
