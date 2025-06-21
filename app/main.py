@@ -37,7 +37,7 @@ if __name__ == "__main__":
         for record in filtered_records:
             logger.log({
                 "record": record.record,
-                "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                "timestamp": record.timestamp,
                 "username": record.username,
                 "status": "processing",
                 "details": ", ".join(f"{key} = {value}" for key, value in record.details.items()) + ","
