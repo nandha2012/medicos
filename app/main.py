@@ -7,6 +7,7 @@ from services.record_service import process_first_request, process_complete_seco
 from utils.counter import Counter
 from utils.validators import is_first_request, is_second_request_manual_not_received, is_second_request_partial_received
 from utils.logger import PandasCSVLogger
+from services.external_api_service import get_log_data_from_api
 # Initialize logger
 logger = PandasCSVLogger(f"logs/logs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv", ["record", "timestamp", "username", "status", "details"])
 
@@ -23,9 +24,9 @@ if __name__ == "__main__":
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
 
-    # result = get_log_data_from_api()
+    result = get_log_data_from_api()
     # Load result
-    result = json.load(open('app/response_1_sample.json'))
+    #result = json.load(open('app/response_1_sample.json'))
     print(len(result))
 
     # Get latest records

@@ -413,7 +413,7 @@ def get_log_data_from_api():
         'logtype': 'record',
         'user': '',
         'record': '',
-        'beginTime': get_one_hour_before_str(),
+        'beginTime': '2025-06-21 08:34',
         'endTime': get_current_time_str(),
         'format': 'json',
         'returnFormat': 'json'
@@ -427,9 +427,9 @@ def get_log_data_from_api():
         return None
 
 def get_log_detail_data_from_api(record:RedcapResponseFirst):
-        # data = get_record_data_from_api(record)
+        data = get_record_data_from_api(record)
         #filter_records(data, RedcapResponseSecond)
-        data = generate_fake_detail_record(record.record,1)
+        # data = generate_fake_detail_record(record.record,1)
         if data is None:
             print(f"❌ no record data found for {record.record}")
             return []
