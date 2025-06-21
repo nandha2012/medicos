@@ -36,6 +36,7 @@ if __name__ == "__main__":
         print(f"🔎 {len(latest_records)} records found.")
         filtered_records:list[RedcapResponseFirst] = filter_records(latest_records, RedcapResponseFirst)
         for record in filtered_records:
+            print(record.details)
             logger.log({
                 "record": record.record,
                 "timestamp": record.timestamp,
@@ -43,7 +44,6 @@ if __name__ == "__main__":
                 "status": "processing",
                 "details": ", ".join(f"{key} = {value}" for key, value in record.details.items()) + ","
             })
-
             if is_first_request(record):
                 process_first_request(record,counter)
             elif is_second_request_manual_not_received(record):

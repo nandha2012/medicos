@@ -424,7 +424,7 @@ def get_log_data_from_api():
         return response.json()
     except Exception as e:
         print(f"❌ Error getting log data from API: {e}")
-        return None
+        return []
 
 def get_log_detail_data_from_api(record:RedcapResponseFirst):
         data = get_record_data_from_api(record)
