@@ -5,3 +5,4 @@ docx2pdf
 python-dotenv
 faker
 pydantic
+pandas
