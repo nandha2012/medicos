@@ -3,6 +3,8 @@ import requests
 from dotenv import load_dotenv
 import os
 from models.redcap_response_first import RedcapResponseFirst
+from models.redcap_response_second import RedcapResponseSecond
+from utils.filters import filter_records, get_latest_records
 from utils.dates import get_current_time_str, get_one_hour_before_str
 from fake_responses import generate_fake_detail_record
 from typing import List
@@ -428,7 +430,7 @@ def get_log_data_from_api():
 
 def get_log_detail_data_from_api(record:RedcapResponseFirst):
         data = get_record_data_from_api(record)
-        #filter_records(data, RedcapResponseSecond)
+        data = filter_records(data, RedcapResponseSecond)
         # data = generate_fake_detail_record(record.record,1)
         if data is None:
             print(f"❌ no record data found for {record.record}")

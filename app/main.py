@@ -52,7 +52,7 @@ if __name__ == "__main__":
                 process_partial_second_request(record,counter)
             else:
                 print(f"❌ No action needed for {record.record}")
-            print(f"✅ PDF Generation Completed {counter.value()}")
+        print(f"✅ PDF Generation Completed {counter.value()}")
     else:
         print("⚠️ No records received from API.")
 

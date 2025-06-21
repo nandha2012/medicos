@@ -15,9 +15,9 @@ template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx
 
 def process_first_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing first request for {data.record}")
-    data_to_process = get_log_detail_data_from_api(data)
-    for j, item in enumerate(data_to_process):
-        try:
+    try:
+        data_to_process = get_log_detail_data_from_api(data)
+        for j, item in enumerate(data_to_process):
             print(f"📄 Processing {j+1} of {item.mg_idpreg}")
             item.mr_rec_needs___1 = "1"
             item.mr_rec_needs___2 = "1"
@@ -36,10 +36,9 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
             handle_pdf_generation(item,"first",j)
             time.sleep(1)
             counter.inc()
-    
-        except Exception as e:
-            print(f"❌ Error processing {item.mg_idpreg}: {e}")
-            continue
+    except Exception as e:
+        print(f"❌ Error processing {data.record}: {e}")
+        return
 
 def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing complete second request for {data.record}")
