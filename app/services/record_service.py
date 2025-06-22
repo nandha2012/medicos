@@ -9,7 +9,6 @@ import os
 from services.pdf_service import PDFService
 from models.redcap_response_first import RedcapResponseFirst
 from utils.counter import Counter
-template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
 
 
 
@@ -32,6 +31,20 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
             item.mr_rec_needs___11 = "1"
             item.mr_rec_needs___12 = "1"
             item.mr_rec_needs___13 = "1"
+            item.mr_emr_needs_inf___1 = "1"
+            item.mr_emr_needs_inf___2 = "1"
+            item.mr_emr_needs_inf___3 = "1"
+            item.mr_emr_needs_inf___4 = "1"
+            item.mr_emr_needs_inf___5 = "1"
+            item.mr_emr_needs_inf___6 = "1"
+            item.mr_emr_needs_inf___7 = "1"
+            item.mr_emr_needs_inf___8 = "1"
+            item.mr_emr_needs_inf___9 = "1"
+            item.mr_emr_needs_inf___10 = "1"
+            item.mr_emr_needs_inf___11 = "1"
+            item.mr_emr_needs_inf___12 = "1"
+            item.mr_emr_needs_inf___13 = "1"
+            item.mr_emr_needs_inf___88 = "1"
             item = replace(item)
             handle_pdf_generation(item,"first",j)
             time.sleep(1)
@@ -78,8 +91,12 @@ def process_partial_second_request(data:RedcapResponseFirst,counter:Counter):
 
 def handle_pdf_generation(data,request_type,j):
     try:
+        print(f"🔍 Data: {data}")
+        request_for = data.mr_req_for
+
         mg_idpreg = data.mg_idpreg
         print(f"📄 Generating PDF for {mg_idpreg}_{j}")
+        template_path = get_template_path(request_for)
         template_service = TemplateService(template_path)
         docx_path = template_service.fill_template(request_type,data.to_dict(),j)  
         print(f"📄 Docx path test: {docx_path}")
@@ -89,3 +106,12 @@ def handle_pdf_generation(data,request_type,j):
     except Exception as e:
         print(f"❌ Error generating PDF for {mg_idpreg}_{j}: {e}")
         return
+
+
+def get_template_path(request_for):
+    if request_for == "1":
+        return os.path.join(os.getcwd(), "assets/templates/mother_template.docx")
+    elif request_for == "2":
+        return os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
+    else:
+        return os.path.join(os.getcwd(), "assets/templates/combined_template.docx")

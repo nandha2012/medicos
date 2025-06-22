@@ -25,10 +25,6 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
 
     result = get_log_data_from_api()
-    # Load result
-    #result = json.load(open('app/response_1_sample.json'))
-    print(len(result))
-
     # Get latest records
     latest_records = get_latest_records(result)
 
@@ -36,7 +32,6 @@ if __name__ == "__main__":
         print(f"🔎 {len(latest_records)} records found.")
         filtered_records:list[RedcapResponseFirst] = filter_records(latest_records, RedcapResponseFirst)
         for record in filtered_records:
-            print(record.details)
             logger.log({
                 "record": record.record,
                 "timestamp": record.timestamp,

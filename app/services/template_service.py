@@ -58,6 +58,7 @@ class TemplateService:
                 for cell in row.cells:
                     for para in cell.paragraphs:
                         for run in para.runs:
+                            print(f"🔍 Run: {run.text}")
                             for key, value in data.items():
                                 if f"#{key}#" in run.text:
                                     run.text = run.text.replace(f"#{key}#", str(value))

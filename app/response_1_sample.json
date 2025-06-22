@@ -17,7 +17,7 @@
         "timestamp": "2025-06-21 09:27",
         "username": "dc49dqw",
         "action": "Update record TNSC023022842",
-        "details": "mr_request = '1', mr_request_dt = '2025-06-21', mr_request_days = '0', mr_received = '1', mr_rec_all = '1'",
+        "details": "mr_request = '1', mr_request_dt = '2025-06-21', mr_request_days = '0', mr_received = '0', mr_rec_all = '0'",
         "record": "TNSC023022842"
     },
     {

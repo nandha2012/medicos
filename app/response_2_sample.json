@@ -11,7 +11,8 @@
     "bc_mom_dob": "1988-09-16",
     "bc_momssn": "224535379",
     "dob_inf": "",
-    "mr_request_dt": "2025-06-21"
+    "mr_request_dt": "2025-06-21",
+    "mr_req_for": "2"
   },
   {
     "mg_idpreg": "TNSC023022842",
@@ -37,6 +38,11 @@
     "bc_momnamefirst": "",
     "bc_momnamelast": "",
     "bc_mom_dob": "",
+    "bc_childnamefirst": "JACK",
+    "bc_childnamelast": "MYERS",
+    "bc_childssn": "123456789",
+    "bc_momnamemaidenfirst": "MARIA",
+    "bc_momnamemaidenlast": "MYERS",
     "bc_momssn": "",
     "dob_inf": "2023-04-06",
     "mr_request_dt": ""
