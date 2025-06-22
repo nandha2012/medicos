@@ -9,6 +9,10 @@ import os
 from services.pdf_service import PDFService
 from models.redcap_response_first import RedcapResponseFirst
 from utils.counter import Counter
+from utils.logger import PandasCSVLogger
+from datetime import datetime
+
+pdf_logger = PandasCSVLogger(f"logs/pdfs/logs_{datetime.now().strftime('%Y%m%d')}.csv", ["record", "timestamp", "username", "request_type","process_type", "status", "details"])
 
 
 
@@ -48,6 +52,15 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
             item.mr_emr_needs_inf___88 = "1"
             item = replace(item)
             handle_pdf_generation(item,"first",j)
+            pdf_logger.log({
+                "record": item.mg_idpreg,
+                "timestamp": data.timestamp,
+                "username": data.username,
+                "request_type": item.mr_req_for,
+                "process_type": "first",
+                "status": "generated",
+                "details": ", ".join(f"{key} = {value}" for key, value in data.details.items())
+            })
             time.sleep(1)
             counter.inc()
     except Exception as e:
@@ -73,6 +86,15 @@ def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
             item.mr_rec_needs___13 = data.details.get("mr_rec_needs(13)")
             item = replace(item)
             handle_pdf_generation(item,"second",j)
+            pdf_logger.log({
+                "record": item.mg_idpreg,
+                "timestamp": data.timestamp,
+                "username": data.username,
+                "request_type": item.mr_req_for,
+                "process_type": "second",
+                "status": "generated",
+                "details": ", ".join(f"{key} = {value}" for key, value in data.details.items())
+            })
             counter.inc()
             time.sleep(1)
     except Exception as e:
@@ -86,6 +108,15 @@ def process_partial_second_request(data:RedcapResponseFirst,counter:Counter):
     for j, item in enumerate(data_to_process):
         print(f"📄 Processing {j+1} of {item.mg_idpreg}")
         handle_pdf_generation(item,"second-partial",j)
+        pdf_logger.log({
+                "record": item.mg_idpreg,
+                "timestamp": data.timestamp,
+                "username": data.username,
+                "request_type": item.mr_req_for,
+                "process_type": "second-partial",
+                "status": "generated",
+                "details": ", ".join(f"{key} = {value}" for key, value in data.details.items())
+            })
         counter.inc()
         time.sleep(1)
 
