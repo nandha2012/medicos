@@ -115,6 +115,32 @@ def process_partial_second_request(data:RedcapResponseFirst,counter:Counter):
     data_to_process = get_log_detail_data_from_api(data)
     for j, item in enumerate(data_to_process):
         print(f"📄 Processing {j+1} of {item.mg_idpreg}")
+        item.mr_rec_needs___1 = item.mr_rec_needs___1 if item.mr_rec_needs___1 else "☐"
+        item.mr_rec_needs___2 = item.mr_rec_needs___2 if item.mr_rec_needs___2 else "☐"
+        item.mr_rec_needs___3 = item.mr_rec_needs___3 if item.mr_rec_needs___3 else "☐"
+        item.mr_rec_needs___4 = item.mr_rec_needs___4 if item.mr_rec_needs___4 else "☐"
+        item.mr_rec_needs___6 = item.mr_rec_needs___6 if item.mr_rec_needs___6 else "☐"
+        item.mr_rec_needs___7 = item.mr_rec_needs___7 if item.mr_rec_needs___7 else "☐"
+        item.mr_rec_needs___8 = item.mr_rec_needs___8 if item.mr_rec_needs___8 else "☐"
+        item.mr_rec_needs___9 = item.mr_rec_needs___9 if item.mr_rec_needs___9 else "☐"
+        item.mr_rec_needs___10 = item.mr_rec_needs___10 if item.mr_rec_needs___10 else "☐"
+        item.mr_rec_needs___11 = item.mr_rec_needs___11 if item.mr_rec_needs___11 else "☐"
+        item.mr_rec_needs___12 = item.mr_rec_needs___12 if item.mr_rec_needs___12 else "☐"
+        item.mr_rec_needs___13 = item.mr_rec_needs___13 if item.mr_rec_needs___13 else "☐"
+        item.mr_rec_needs___14 = item.mr_rec_needs___14 if item.mr_rec_needs___14 else "☐"
+        item.mr_rec_needs___15 = item.mr_rec_needs___15 if item.mr_rec_needs___15 else "☐"
+        item.mr_rec_needs_inf___1 = item.mr_rec_needs_inf___1 if item.mr_rec_needs_inf___1 else "☐"
+        item.mr_rec_needs_inf___2 = item.mr_rec_needs_inf___2 if item.mr_rec_needs_inf___2 else "☐"
+        item.mr_rec_needs_inf___3 = item.mr_rec_needs_inf___3 if item.mr_rec_needs_inf___3 else "☐"
+        item.mr_rec_needs_inf___4 = item.mr_rec_needs_inf___4 if item.mr_rec_needs_inf___4 else "☐"
+        item.mr_rec_needs_inf___5 = item.mr_rec_needs_inf___5 if item.mr_rec_needs_inf___5 else "☐"
+        item.mr_rec_needs_inf___6 = item.mr_rec_needs_inf___6 if item.mr_rec_needs_inf___6 else "☐"
+        item.mr_rec_needs_inf___7 = item.mr_rec_needs_inf___7 if item.mr_rec_needs_inf___7 else "☐"
+        item.mr_rec_needs_inf___8 = item.mr_rec_needs_inf___8 if item.mr_rec_needs_inf___8 else "☐"
+        item.mr_rec_needs_inf___9 = item.mr_rec_needs_inf___9 if item.mr_rec_needs_inf___9 else "☐"
+        item.mr_rec_needs_inf___10 = item.mr_rec_needs_inf___10 if item.mr_rec_needs_inf___10 else "☐"
+        item.mr_rec_needs_inf___13 = item.mr_rec_needs_inf___13 if item.mr_rec_needs_inf___13 else "☐"
+        item.mr_rec_needs_inf___88 = item.mr_rec_needs_inf___88 if item.mr_rec_needs_inf___88 else "☐"
         handle_pdf_generation(item,"second-partial",data,j)
         counter.inc()
         time.sleep(1)
