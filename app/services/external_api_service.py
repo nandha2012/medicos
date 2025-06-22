@@ -5,7 +5,7 @@ import os
 from models.redcap_response_first import RedcapResponseFirst
 from models.redcap_response_second import RedcapResponseSecond
 from utils.filters import filter_records, get_latest_records, merge_records
-from utils.dates import get_current_time_str, get_one_hour_before_str
+from utils.dates import get_current_time_str, get_one_hour_before_str, get_start_of_today_str
 from fake_responses import generate_fake_detail_record
 from typing import List
 import json
@@ -80,11 +80,12 @@ def get_log_data_from_api():
         'logtype': 'record',
         'user': '',
         'record': '',
-        'beginTime': '2025-06-21 08:34',
+        'beginTime': get_start_of_today_str(),
         'endTime': get_current_time_str(),
         'format': 'json',
         'returnFormat': 'json'
     }
+    print(f'🔍 Begin Time: {data}')
     try:
         if env == 'local':
             print(f'logs fetching from local...')
