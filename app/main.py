@@ -25,12 +25,11 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
 
     result = get_log_data_from_api()
-    print(f'records{result}')
-    print(f'totl records:{len(result)}')
-
+    # Filter records with non-empty details
+    filtered = [entry for entry in result if entry["details"].strip()]
     # Get latest records
-    latest_records = get_latest_records(result)
-
+    latest_records = get_latest_records(filtered)
+    print(f"🔍 latest_records: {latest_records}")
     if latest_records:
         print(f"🔎 {len(latest_records)} records found.")
         filtered_records:list[RedcapResponseFirst] = filter_records(latest_records, RedcapResponseFirst)

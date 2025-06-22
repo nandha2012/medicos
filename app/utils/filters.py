@@ -132,7 +132,6 @@ def get_latest_records(records):
     for rec in records:
         record_id = rec.get("record")
         timestamp_str = rec.get("timestamp")
-
         # Convert string to datetime object
         timestamp = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M")
 
@@ -140,13 +139,13 @@ def get_latest_records(records):
             rec_copy = rec.copy()
             rec_copy['timestamp'] = timestamp
             parsed_details = parse_details(rec.get('details', ''))
-                        # Default required fields to "0" if not present
-            required_fields = [
-                "mr_request", "mr_request_dt", "mr_request_2", "mr_request_dt_2",
-                "mr_received", "mr_rec_all", "mr_rec_all_2","mr_request_days","mr_request_days_2"
-            ]
-            for key in required_fields:
-                if key not in parsed_details:  # Only set if key doesn't exist
+
+            for key, value in parsed_details.items():
+                if value is None:
+                    parsed_details[key] = "0"
+                if value == "checked":
+                    parsed_details[key] = "1"
+                if value == "unchecked":
                     parsed_details[key] = "0"
             rec_copy['details'] = parsed_details
             latest_records[record_id] = rec_copy
