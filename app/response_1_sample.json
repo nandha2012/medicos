@@ -1,79 +1,72 @@
 [
     {
-        "timestamp": "2025-06-21 09:32",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:27",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:27",
+        "timestamp": "2025-06-22 10:40",
         "username": "dc49dqw",
         "action": "Update record TNSC023022842",
-        "details": "mr_request = '1', mr_request_dt = '2025-06-21', mr_request_days = '0', mr_received = '0', mr_rec_all = '0'",
+        "details": "",
         "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-21 09:25",
+        "timestamp": "2025-06-22 10:40",
         "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
+        "action": "Update record TNSC023022842",
+        "details": "mr_received = '1', mr_rec_all = '0', mr_rec_needs(6) = checked, mr_rec_needs(7) = checked, mr_rec_needs(10) = checked, mr_rec_needs_inf(4) = checked, mr_rec_needs_inf(5) = checked, mr_rec_needs_inf(7) = checked, mr_rec_needs_inf(9) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-22', mr_request_days_2 = '0'",
+        "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-21 09:24",
+        "timestamp": "2025-06-22 10:36",
         "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API Playground)",
-        "record": ""
+        "action": "Update record TNSC023022842",
+        "details": "mr_req_for = '2', mr_request = '1', mr_request_dt = '2025-06-22', mr_request_days = '0'",
+        "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-21 09:21",
+        "timestamp": "2025-06-22 10:35",
         "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
+        "action": "Update record TNSC023022842",
+        "details": "mr_request = '0', mr_request_dt = '', mr_request_days = '', mr_received = '', mr_rec_all = '', mr_rec_needs(4) = unchecked, mr_rec_needs(6) = unchecked, mr_rec_needs(10) = unchecked, mr_rec_needs(13) = unchecked, mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
+        "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-21 09:20",
+        "timestamp": "2025-06-22 10:35",
         "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API Playground)",
-        "record": ""
+        "action": "Update record TNSC023022842",
+        "details": "mr_req_for = '1'",
+        "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-21 09:20",
+        "timestamp": "2025-06-22 10:30",
         "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API Playground)",
-        "record": ""
+        "action": "Update record TNSC023022842",
+        "details": "",
+        "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-21 09:16",
+        "timestamp": "2025-06-22 10:29",
         "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
+        "action": "Update record TNSC023022842",
+        "details": "mr_request_2 = '1', mr_request_dt_2 = '2025-06-22', mr_request_days_2 = '0'",
+        "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-20 00:45",
+        "timestamp": "2025-06-22 10:29",
         "username": "dc49dqw",
-        "action": "Update record TNSC023084754",
-        "details": "mr_request_days = '93', mr_received = '', mr_rec_all = '', mr_rec_needs(4) = unchecked, mr_rec_needs(6) = unchecked, mr_rec_needs(7) = unchecked, mr_rec_needs(8) = unchecked, mr_rec_needs(9) = unchecked, mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
-        "record": "TNSC023084754"
+        "action": "Update record TNSC023022842",
+        "details": "",
+        "record": "TNSC023022842"
     },
     {
-        "timestamp": "2025-06-20 00:44",
+        "timestamp": "2025-06-22 10:28",
         "username": "dc49dqw",
-        "action": "Update record TNSC022001146",
-        "details": "mr_request_days = '227', mr_rec_all = '0', mr_rec_needs(4) = checked, mr_rec_needs(6) = checked, mr_rec_needs(7) = checked, mr_rec_needs(8) = checked, mr_rec_needs(9) = checked, mr_rec_needs(10) = checked, mr_rec_needs(11) = checked, mr_rec_needs(12) = checked, mr_rec_needs(13) = checked, mr_rec_needs(14) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-20', mr_request_days_2 = '0'",
-        "record": "TNSC022001146"
+        "action": "Update record TNSC023022842",
+        "details": "mr_rec_all = '0', mr_rec_needs(4) = checked, mr_rec_needs(6) = checked, mr_rec_needs(10) = checked, mr_rec_needs(13) = checked",
+        "record": "TNSC023022842"
+    },
+    {
+        "timestamp": "2025-06-22 10:26",
+        "username": "dc49dqw",
+        "action": "Update record TNSC023022842",
+        "details": "mr_req_for = '2', mr_request_days = '1'",
+        "record": "TNSC023022842"
     }
 ]

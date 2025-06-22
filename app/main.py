@@ -25,6 +25,9 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
 
     result = get_log_data_from_api()
+    print(f'records{result}')
+    print(f'totl records:{len(result)}')
+
     # Get latest records
     latest_records = get_latest_records(result)
 
@@ -39,6 +42,7 @@ if __name__ == "__main__":
                 "status": "processing",
                 "details": ", ".join(f"{key} = {value}" for key, value in record.details.items()) + ","
             })
+
             if is_first_request(record):
                 process_first_request(record,counter)
             elif is_second_request_manual_not_received(record):
