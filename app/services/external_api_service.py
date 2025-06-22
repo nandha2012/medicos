@@ -64,6 +64,7 @@ details_data = {
     'fields[40]': 'mr_rec_needs___12',
     'fields[41]': 'mr_rec_needs___13',
     'fields[42]': 'mr_request_days',
+    'fields[43]': 'inf_dob_mom_tr',
     'rawOrLabel': 'raw',
     'rawOrLabelHeaders': 'raw',
     'exportCheckboxLabel': 'false',

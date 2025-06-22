@@ -13,7 +13,7 @@
     "dob_inf": "",
     "mr_request_dt": "2025-06-21",
     "mr_request_days": "60",
-    "mr_req_for": "1"
+    "mr_req_for": "3"
   },
   {
     "mg_idpreg": "TNSC023022842",
@@ -93,6 +93,7 @@
     "mr_rec_needs___12": "1",
     "mr_rec_needs___13": "0",
     "mr_rec_needs___14": "1",
-    "mr_rec_needs___15": "1"
+    "mr_rec_needs___15": "1",
+    "inf_dob_mom_tr": "2023-04-06"
   }
 ]

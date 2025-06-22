@@ -685,6 +685,9 @@ class RedcapResponseSecond:
             "bc_momnamelast": self.bc_momnamelast,
             "bc_mom_dob":self.bc_mom_dob,
             "bc_momssn": self.bc_momssn[-4:] if self.bc_momssn else "",
+            "bc_childnamefirst": self.bc_childnamefirst,
+            "bc_childnamelast": self.bc_childnamelast,
+            "bc_childssn": self.bc_childssn[-4:] if self.bc_childssn else "",
             "inf_dob_mom_tr": self.inf_dob_mom_tr,
             "hos_name_cat_2": self.hos_name_cat_2,
 
