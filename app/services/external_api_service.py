@@ -37,20 +37,20 @@ details_data = {
     'fields[12]': 'bc_childssn',
     'fields[14]': 'bc_momnamemaidenlast',
     'fields[15]': 'mr_req_for',
-    'fields[16]': 'mr_emr_needs_inf___1',
-    'fields[17]': 'mr_emr_needs_inf___2',
-    'fields[18]': 'mr_emr_needs_inf___3',
-    'fields[19]': 'mr_emr_needs_inf___4',
-    'fields[20]': 'mr_emr_needs_inf___5',
-    'fields[21]': 'mr_emr_needs_inf___6',
-    'fields[22]': 'mr_emr_needs_inf___7',
-    'fields[23]': 'mr_emr_needs_inf___8',
-    'fields[24]': 'mr_emr_needs_inf___9',
-    'fields[25]': 'mr_emr_needs_inf___10',
-    'fields[26]': 'mr_emr_needs_inf___11',
-    'fields[27]': 'mr_emr_needs_inf___12',
-    'fields[28]': 'mr_emr_needs_inf___13',
-    'fields[29]': 'mr_emr_needs_inf___88',
+    'fields[16]': 'mr_rec_needs_inf___1',
+    'fields[17]': 'mr_rec_needs_inf___2',
+    'fields[18]': 'mr_rec_needs_inf___3',
+    'fields[19]': 'mr_rec_needs_inf___4',
+    'fields[20]': 'mr_rec_needs_inf___5',
+    'fields[21]': 'mr_rec_needs_inf___6',
+    'fields[22]': 'mr_rec_needs_inf___7',
+    'fields[23]': 'mr_rec_needs_inf___8',
+    'fields[24]': 'mr_rec_needs_inf___9',
+    'fields[25]': 'mr_rec_needs_inf___10',
+    'fields[26]': 'mr_rec_needs_inf___11',
+    'fields[27]': 'mr_rec_needs_inf___12',
+    'fields[28]': 'mr_rec_needs_inf___13',
+    'fields[29]': 'mr_rec_needs_inf___88',
     'fields[30]': 'mr_rec_needs___1',
     'fields[31]': 'mr_rec_needs___2',
     'fields[32]': 'mr_rec_needs___3',
@@ -63,6 +63,7 @@ details_data = {
     'fields[39]': 'mr_rec_needs___11',
     'fields[40]': 'mr_rec_needs___12',
     'fields[41]': 'mr_rec_needs___13',
+    'fields[42]': 'mr_request_days',
     'rawOrLabel': 'raw',
     'rawOrLabelHeaders': 'raw',
     'exportCheckboxLabel': 'false',
@@ -114,7 +115,6 @@ def get_record_data_from_api(record:RedcapResponseFirst):
         if env == 'local':
             json_data = json.load(open('app/response_2_sample.json'))
             result = [x for x in json_data if x['mg_idpreg'] == record.record]
-            print(f"🔍 Result: {result}")
             return result
         response = requests.post(end_point,data=data)
         response.raise_for_status()

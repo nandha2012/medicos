@@ -326,7 +326,6 @@ def has_medical_record_needs(data: RedcapResponseFirst) -> bool:
         active_needs = []
         
         for field_name, field_value in details.items():
-            print(f"🔍 field_name: {field_name} field_value: {field_value}")
             # Check if field matches mr_rec_needs pattern
             if "needs" in field_name and _is_truthy_value(field_value):
                     has_needs = True
