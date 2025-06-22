@@ -86,6 +86,7 @@ def get_log_data_from_api():
     }
     try:
         if env == 'local':
+            print(f'logs fetching from local...')
             return json.load(open('app/response_1_sample.json'))
         response = requests.post(f'{end_point}',data=data)
         response.raise_for_status()
@@ -114,6 +115,7 @@ def get_record_data_from_api(record:RedcapResponseFirst):
     try:
         if env == 'local':
             json_data = json.load(open('app/response_2_sample.json'))
+            print(f'details fetching from local...')
             result = [x for x in json_data if x['mg_idpreg'] == record.record]
             return result
         response = requests.post(end_point,data=data)

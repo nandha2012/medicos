@@ -29,7 +29,6 @@ if __name__ == "__main__":
     filtered = [entry for entry in result if entry["details"].strip()]
     # Get latest records
     latest_records = get_latest_records(filtered)
-    print(f"🔍 latest_records: {latest_records}")
     if latest_records:
         print(f"🔎 {len(latest_records)} records found.")
         filtered_records:list[RedcapResponseFirst] = filter_records(latest_records, RedcapResponseFirst)
