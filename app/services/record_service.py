@@ -122,6 +122,7 @@ def handle_pdf_generation(data,request_type,first_data,j):
     try:
         request_for = data.mr_req_for
         mg_idpreg = data.mg_idpreg
+        print(f"data-dict {data}")
         print(f"📄 Generating PDF for {mg_idpreg}_{j}")
         template_path = get_template_path(request_for)
         template_service = TemplateService(template_path)

@@ -50,6 +50,7 @@ class TemplateService:
             for run in para.runs:
                 for key, value in data.items():
                     if f"#{key}#" in run.text:
+                        print(f'replaceing #{key}# with {value}')
                         run.text = run.text.replace(f"#{key}#", str(value))
 
         # Replace in tables
