@@ -422,7 +422,7 @@ class RedcapResponseSecond:
     mr_emr_needs___14: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_emr_needs___15: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_emr_needs___88: Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_emr_needs_oth: Optional[Any] = field(default="", metadata={"checkbox": True})
+    mr_emr_needs_oth: Optional[str] = ""
 
     # Infant Medical Record Needs
     mr_emr_needs_inf___1: Optional[Any] = field(default="", metadata={"checkbox": True})
@@ -439,7 +439,7 @@ class RedcapResponseSecond:
     mr_emr_needs_inf___12: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_emr_needs_inf___13: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_emr_needs_inf___88: Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_emr_needs_oth_inf: Optional[Any] = field(default="", metadata={"checkbox": True})
+    mr_emr_needs_oth_inf: Optional[str] = ""
 
     mr_req_for: Optional[str] = ""
     # First Medical Record Request
@@ -483,7 +483,7 @@ class RedcapResponseSecond:
     mr_rec_needs_inf___12:  Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf___13:  Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf___88:  Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_needs_oth_inf:  Optional[Any] = field(default="", metadata={"checkbox": True})
+    mr_needs_oth_inf:  Optional[str] = ""
     attestation:  Optional[Any] = field(default="", metadata={"checkbox": True})
 
     # Second Medical Record Request
@@ -510,7 +510,7 @@ class RedcapResponseSecond:
     mr_rec_needs_2___14: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_2___15: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_2___88: Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_needs_oth_2: Optional[Any] = field(default="", metadata={"checkbox": True})
+    mr_needs_oth_2: Optional[str] = ""
     
     # Second Request - Infant Records Received
     mr_rec_needs_inf_2___1: Optional[Any] = field(default="", metadata={"checkbox": True})
@@ -527,7 +527,7 @@ class RedcapResponseSecond:
     mr_rec_needs_inf_2___12: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf_2___13: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf_2___88: Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_needs_oth_inf_2: Optional[Any] = field(default="", metadata={"checkbox": True})
+    mr_needs_oth_inf_2: Optional[str] = ""
     
     # Final tracking fields
     ltfu: Optional[str] = ""            # Lost to follow-up
