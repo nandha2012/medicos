@@ -34,6 +34,7 @@ class TemplateService:
 
     def fill_template(self, output_path: str, data: dict,j):
         print(f"📄 Using template: {self.template_path}")
+        print(f'data ->{data}')
         mg_idpreg = data.get('mg_idpreg')
         if mg_idpreg is None:
             raise KeyError("❌ 'mg_idpreg' key not found in data dictionary")
