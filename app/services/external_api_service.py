@@ -90,7 +90,6 @@ def get_log_detail_data_from_api(record:RedcapResponseFirst):
 def get_record_data_from_api(record:RedcapResponseFirst):
     data = details_data.copy()
     data[f'records[{0}]'] = record.record
-    print(f'requesting data -> {data}')
     try:
         if env == 'local':
             json_data = json.load(open('app/response_2_sample.json'))

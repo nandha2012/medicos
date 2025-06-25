@@ -35,3 +35,8 @@ def get_start_of_today_str(fmt: Optional[str] = None) -> str:
     fmt = fmt or DEFAULT_TIME_FORMAT
     start_of_day = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     return start_of_day.strftime(fmt)
+
+def generate_dir_name():
+    now = datetime.now()
+    return now.strftime("%Y_%m_%d")
+
