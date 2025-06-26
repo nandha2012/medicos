@@ -466,7 +466,7 @@ class RedcapResponseSecond:
     mr_rec_needs___14: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs___15: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs___88: Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_needs_oth: Optional[str] = field(default=" ", metadata={"prefix": True, "prefix_str": "others :"})
+    mr_needs_oth: Optional[str] = field(default="", metadata={"prefix": True, "prefix_str": ""})
 
     # First Request - Infant Records Received
     mr_rec_needs_inf___1:  Optional[Any] = field(default="", metadata={"checkbox": True})
@@ -483,7 +483,7 @@ class RedcapResponseSecond:
     mr_rec_needs_inf___12:  Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf___13:  Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf___88:  Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_needs_oth_inf:  Optional[str] = field(default=" ", metadata={"prefix": True, "prefix_str": "others :"})
+    mr_needs_oth_inf:  Optional[str] = field(default="", metadata={"prefix": True, "prefix_str": ""})
     attestation:  Optional[Any] = field(default="", metadata={"checkbox": True})
 
     # Second Medical Record Request
