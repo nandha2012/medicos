@@ -41,6 +41,8 @@ details_data = {
     'fields[16]': 'inf_dob_mom_tr',
     'fields[17]': 'mr_rec_needs',
     'fields[18]': 'mr_rec_needs_inf',
+    'fields[19]': 'mr_needs_oth',
+    'fields[20]': 'mr_needs_oth_inf',
     'rawOrLabel': 'raw',
     'rawOrLabelHeaders': 'raw',
     'exportCheckboxLabel': 'false',
@@ -55,8 +57,8 @@ def get_log_data_from_api():
         'content': 'log',
         'logtype': 'record',
         'user': '',
-        'record': '',
-        'beginTime': get_start_of_today_str(),
+        'record': 'TNSC023086609',
+        'beginTime': '2025-06-24 07:43',
         'endTime': get_current_time_str(),
         'format': 'json',
         'returnFormat': 'json'
@@ -66,15 +68,20 @@ def get_log_data_from_api():
         if env == 'local':
             print(f'logs fetching from local...')
             return json.load(open('app/response_1_sample.json'))
-        response = requests.post(f'{end_point}',data=data)
+        print(f"Hitting logs api....")
+        response = requests.post(f'{end_point}',data=data,timeout=60)
         response.raise_for_status()
         return response.json()
+    except requests.exceptions.Timeout:
+        print(f'❌ api timeout...')
+        return []
     except Exception as e:
         print(f"❌ Error getting log data from API: {e}")
         return []
 
 def get_log_detail_data_from_api(record:RedcapResponseFirst):
         data = get_record_data_from_api(record)
+        print(f'dta from api {data}')
         data = merge_records(data)
         if len(data) == 0:
             print(f"❌ no record data found for {record.record}")
@@ -99,6 +106,9 @@ def get_record_data_from_api(record:RedcapResponseFirst):
         response = requests.post(end_point,data=data)
         response.raise_for_status()
         return response.json()
+    except requests.exceptions.Timeout:
+        print(f'❌ api timeout...')
+        return []
     except Exception as e:
         print(f"❌ Error getting log detail data from API: {e}")
         return []

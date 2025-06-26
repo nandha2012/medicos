@@ -51,7 +51,6 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
             item.mr_rec_needs_inf___11 = "1"
             item.mr_rec_needs_inf___12 = "1"
             item.mr_rec_needs_inf___13 = "1"
-            item.mr_rec_needs_inf___88 = "1"
             item = replace(item)
             handle_pdf_generation(item,"first",data,j)
             counter.inc()
@@ -99,7 +98,6 @@ def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
             item.mr_rec_needs_inf___11 = "1"
             item.mr_rec_needs_inf___12 = "1"
             item.mr_rec_needs_inf___13 = "1"
-            item.mr_rec_needs_inf___88 = "1"
             item = replace(item)
             handle_pdf_generation(item,"second",data,j)
             counter.inc()
