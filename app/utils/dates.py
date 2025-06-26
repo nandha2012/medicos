@@ -38,5 +38,5 @@ def get_start_of_today_str(fmt: Optional[str] = None) -> str:
 
 def generate_dir_name():
     now = datetime.now()
-    return now.strftime("%Y_%m_%d")
+    return now.strftime("%m_%d_%Y")
 
