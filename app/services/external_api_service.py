@@ -57,8 +57,8 @@ def get_log_data_from_api():
         'content': 'log',
         'logtype': 'record',
         'user': '',
-        'record': 'TNSC023086609',
-        'beginTime': '2025-06-24 07:43',
+        'record': '',
+        'beginTime': get_one_hour_before_str(),
         'endTime': get_current_time_str(),
         'format': 'json',
         'returnFormat': 'json'
