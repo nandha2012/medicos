@@ -166,9 +166,7 @@ def is_second_request_partial_received(data: RedcapResponseFirst) -> bool:
         
         print(f"ℹ️ is_second_request_partial_received: mr_request_2={details.get('mr_request_2')}, "
                     f"mr_request_dt_2={details.get('mr_request_dt_2')}, "
-                    f"mr_received={details.get('mr_received')}, "
-                    f"mr_rec_all={details.get('mr_rec_all')}, "
-                    f"result={result}")
+                    f"has_medical_record_needs={mr_needs_valid}")
         
         return result
         
@@ -329,8 +327,7 @@ def has_medical_record_needs(data: RedcapResponseFirst) -> bool:
         
         for field_name, field_value in details.items():
             # Check if field matches mr_rec_needs pattern
-            if field_name.startswith('mr_rec_needs(') and field_name.endswith(')'):
-                if _is_truthy_value(field_value):
+            if "needs" in field_name and _is_truthy_value(field_value):
                     has_needs = True
                     active_needs.append(field_name)
         

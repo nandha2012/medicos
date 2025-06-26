@@ -25,18 +25,14 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
 
     result = get_log_data_from_api()
-    # Load result
-    #result = json.load(open('app/response_1_sample.json'))
-    print(len(result))
-
+    # Filter records with non-empty details
+    filtered = [entry for entry in result if entry["details"].strip()]
     # Get latest records
-    latest_records = get_latest_records(result)
-
+    latest_records = get_latest_records(filtered)
     if latest_records:
         print(f"🔎 {len(latest_records)} records found.")
         filtered_records:list[RedcapResponseFirst] = filter_records(latest_records, RedcapResponseFirst)
         for record in filtered_records:
-            print(record.details)
             logger.log({
                 "record": record.record,
                 "timestamp": record.timestamp,
@@ -44,6 +40,7 @@ if __name__ == "__main__":
                 "status": "processing",
                 "details": ", ".join(f"{key} = {value}" for key, value in record.details.items()) + ","
             })
+
             if is_first_request(record):
                 process_first_request(record,counter)
             elif is_second_request_manual_not_received(record):

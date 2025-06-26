@@ -1,79 +1,9 @@
 [
     {
-        "timestamp": "2025-06-21 09:32",
+        "timestamp": "2025-06-22 14:30",
         "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:27",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:27",
-        "username": "dc49dqw",
-        "action": "Update record TNSC023022842",
-        "details": "mr_request = '1', mr_request_dt = '2025-06-21', mr_request_days = '0', mr_received = '1', mr_rec_all = '1'",
-        "record": "TNSC023022842"
-    },
-    {
-        "timestamp": "2025-06-21 09:25",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:24",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API Playground)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:21",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:20",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API Playground)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:20",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API Playground)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-21 09:16",
-        "username": "dc49dqw",
-        "action": "Manage/Design ",
-        "details": "Export Logging (API)",
-        "record": ""
-    },
-    {
-        "timestamp": "2025-06-20 00:45",
-        "username": "dc49dqw",
-        "action": "Update record TNSC023084754",
-        "details": "mr_request_days = '93', mr_received = '', mr_rec_all = '', mr_rec_needs(4) = unchecked, mr_rec_needs(6) = unchecked, mr_rec_needs(7) = unchecked, mr_rec_needs(8) = unchecked, mr_rec_needs(9) = unchecked, mr_request_2 = '', mr_request_dt_2 = '', mr_request_days_2 = ''",
-        "record": "TNSC023084754"
-    },
-    {
-        "timestamp": "2025-06-20 00:44",
-        "username": "dc49dqw",
-        "action": "Update record TNSC022001146",
-        "details": "mr_request_days = '227', mr_rec_all = '0', mr_rec_needs(4) = checked, mr_rec_needs(6) = checked, mr_rec_needs(7) = checked, mr_rec_needs(8) = checked, mr_rec_needs(9) = checked, mr_rec_needs(10) = checked, mr_rec_needs(11) = checked, mr_rec_needs(12) = checked, mr_rec_needs(13) = checked, mr_rec_needs(14) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-20', mr_request_days_2 = '0'",
-        "record": "TNSC022001146"
+        "action": "Update record TNSC023087781",
+        "details": "mr_emr = '0', mr_req_for = '3', mr_request = '1', mr_request_dt = '2025-06-22', mr_request_days = '0', mr_received = '1', mr_rec_all = '0', mr_rec_needs(6) = checked, mr_rec_needs(9) = checked, mr_rec_needs(10) = checked, mr_rec_needs(11) = checked, mr_rec_needs(13) = checked, mr_rec_needs(14) = checked, mr_rec_needs_inf(4) = checked, mr_rec_needs_inf(5) = checked, mr_rec_needs_inf(7) = checked, mr_rec_needs_inf(9) = checked, mr_rec_needs_inf(11) = checked, mr_rec_needs_inf(12) = checked, mr_rec_needs_inf(13) = checked, mr_request_2 = '1', mr_request_dt_2 = '2025-06-22', mr_request_days_2 = '0', medical_records_request_for_pregnancy_and_birth_complete = '0'",
+        "record": "TNSC023087781"
     }
 ]
