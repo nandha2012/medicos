@@ -81,7 +81,6 @@ def get_log_data_from_api():
 
 def get_log_detail_data_from_api(record:RedcapResponseFirst):
         data = get_record_data_from_api(record)
-        print(f'dta from api {data}')
         data = merge_records(data)
         if len(data) == 0:
             print(f"❌ no record data found for {record.record}")
