@@ -466,7 +466,7 @@ class RedcapResponseSecond:
     mr_rec_needs___14: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs___15: Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs___88: Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_needs_oth: Optional[str] = "other"
+    mr_needs_oth: Optional[str] = field(default="others________", metadata={"prefix": True, "prefix_str": "others :"})
 
     # First Request - Infant Records Received
     mr_rec_needs_inf___1:  Optional[Any] = field(default="", metadata={"checkbox": True})
@@ -483,7 +483,7 @@ class RedcapResponseSecond:
     mr_rec_needs_inf___12:  Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf___13:  Optional[Any] = field(default="", metadata={"checkbox": True})
     mr_rec_needs_inf___88:  Optional[Any] = field(default="", metadata={"checkbox": True})
-    mr_needs_oth_inf:  Optional[str] = "other"
+    mr_needs_oth_inf:  Optional[str] = field(default="others :", metadata={"prefix": True, "prefix_str": "others :"})
     attestation:  Optional[Any] = field(default="", metadata={"checkbox": True})
 
     # Second Medical Record Request
@@ -547,6 +547,10 @@ class RedcapResponseSecond:
                     setattr(self, f.name, "☑")
                 else:
                     setattr(self, f.name, "☐")
+            if f.metadata.get("prefix"):
+                val = getattr(self, f.name)
+                if val:
+                    setattr(self, f.name, f'{f.metadata.get("prefix_str")} {val}')
 
     def to_dict(self):
         """Convert the dataclass instance to a dictionary."""
