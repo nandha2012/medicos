@@ -4,16 +4,30 @@ from dotenv import load_dotenv
 import os
 from models.redcap_response_first import RedcapResponseFirst
 from models.redcap_response_second import RedcapResponseSecond
+from models.datavant_request import DatavantRequest
 from utils.filters import filter_records, get_latest_records, merge_records
-from utils.dates import get_current_time_str, get_one_hour_before_str, get_start_of_today_str
+from utils.dates import get_current_time_str, get_one_hour_before_str, get_start_of_today_str, subtract_time_from_str
 from fake_responses import generate_fake_detail_record
-from typing import List
-import json
+from typing import List, Literal
 
+import json
+import sys
+
+def parse_arg(flag_name: str, default_value: str):
+    for arg in sys.argv:
+        if arg.startswith(f"--{flag_name}="):
+            return arg.split("=", 1)[1]
+    return default_value
+
+time_delta = parse_arg("time_delta", "1")
+time_delta_period = parse_arg("time_delta_period", "hours")
 load_dotenv()
 end_point = os.getenv("EXTERNAL_API_END_POINT") or "https://localhost/redcap/api/"
 token = os.getenv("EXTERNAL_API_TOKEN") or "E*************7"
 env = os.getenv("ENV") or 'local'
+
+datavant_api_url = os.getenv("DATAVANT_API_URL") or "https://sandbox-api.datavant.com/v1/request"
+datavant_token = os.getenv("DATAVANT_TOKEN") or ""
 
 details_data = {
     'token': token,
@@ -58,7 +72,7 @@ def get_log_data_from_api():
         'logtype': 'record',
         'user': '',
         'record': '',
-        'beginTime': get_one_hour_before_str(),
+        'beginTime': subtract_time_from_str(get_current_time_str(), int(time_delta), time_delta_period),
         'endTime': get_current_time_str(),
         'format': 'json',
         'returnFormat': 'json'
@@ -96,6 +110,7 @@ def get_log_detail_data_from_api(record:RedcapResponseFirst):
 def get_record_data_from_api(record:RedcapResponseFirst):
     data = details_data.copy()
     data[f'records[{0}]'] = record.record
+    print(f"data {data}")
     try:
         if env == 'local':
             json_data = json.load(open('app/response_2_sample.json'))
@@ -111,4 +126,44 @@ def get_record_data_from_api(record:RedcapResponseFirst):
     except Exception as e:
         print(f"❌ Error getting log detail data from API: {e}")
         return []
+
+
+def submit_datavant_request(request_data: DatavantRequest):
+    """
+    Submit a medical records request to Datavant API
+    
+    Args:
+        request_data: DatavantRequest object containing all required fields
+    
+    Returns:
+        dict: API response or empty dict on error
+    """
+    headers = {
+        "Authorization": f"Bearer {datavant_token}",
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        print(f"🔄 Submitting request to Datavant API...")
+        response = requests.post(
+            datavant_api_url,
+            json=request_data.model_dump(),
+            headers=headers,
+            timeout=60
+        )
+        response.raise_for_status()
+        
+        result = response.json()
+        print(f"✅ Datavant request submitted successfully")
+        return result
+        
+    except requests.exceptions.Timeout:
+        print(f"❌ Datavant API timeout...")
+        return {}
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Error submitting to Datavant API: {e}")
+        return {}
+    except Exception as e:
+        print(f"❌ Unexpected error with Datavant API: {e}")
+        return {}
     

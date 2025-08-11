@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Literal, Optional
 
 DEFAULT_TIME_FORMAT = "%Y-%m-%d %H:%M"
 
@@ -18,6 +18,18 @@ def get_current_time_str(fmt: Optional[str] = None) -> str:
     """
     fmt = fmt or DEFAULT_TIME_FORMAT
     return datetime.now().strftime(fmt)
+
+def add_time_to_str(time_str: str, time_delta: int, period: Literal['hours', 'minutes', 'seconds']) -> str:
+    """
+    Adds a specified number of hours to a time string.
+    """
+    return (datetime.strptime(time_str, DEFAULT_TIME_FORMAT) + timedelta(**{period: time_delta})).strftime(DEFAULT_TIME_FORMAT)
+
+def subtract_time_from_str(time_str: str, time_delta: int, period: Literal['hours', 'minutes', 'seconds', 'days']) -> str:
+    """
+    Subtracts a specified number of hours from a time string.
+    """
+    return (datetime.strptime(time_str, DEFAULT_TIME_FORMAT) - timedelta(**{period: time_delta})).strftime(DEFAULT_TIME_FORMAT)
 
 def get_one_hour_before_str(fmt: Optional[str] = None) -> str:
     """

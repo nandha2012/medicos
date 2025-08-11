@@ -1,5 +1,6 @@
 import time
-from services.external_api_service import get_log_detail_data_from_api
+from app.models.datavant_request import DatavantRequest, Facility, RequesterInfo, Patient, Reason, RequestCriteria, CallbackDetails, CallbackHeaders
+from services.external_api_service import get_log_detail_data_from_api, submit_datavant_request
 from utils.filters import filter_records
 from models.redcap_response_second import RedcapResponseSecond
 from typing import List
@@ -22,6 +23,11 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing first request for {data.record}")
     try:
         data_to_process = get_log_detail_data_from_api(data)
+        if len(data_to_process) == 0:
+            print(f"❌ No data to process for {data.record}")
+            return
+        datavant_request_data = get_datavant_request_data(data)
+        submit_datavant_request(datavant_request_data)
         for j, item in enumerate(data_to_process):
             print(f"📄 Processing {j+1} of {item.mg_idpreg}")
             item.mr_rec_needs___1 = "1"
@@ -69,6 +75,11 @@ def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing complete second request for {data.record}")
     try:
         data_to_process = get_log_detail_data_from_api(data)
+        if len(data_to_process) == 0:
+            print(f"❌ No data to process for {data.record}")
+            return
+        datavant_request_data = get_datavant_request_data(data)
+        submit_datavant_request(datavant_request_data)
         for j, item in enumerate(data_to_process):
             print(f"📄 Processing {j+1} of {item.mg_idpreg}")
             item.mr_rec_needs___1 = "0"
@@ -109,6 +120,11 @@ def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
 def process_partial_second_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing partial second request for {data.record}")
     data_to_process = get_log_detail_data_from_api(data)
+    if len(data_to_process) == 0:
+        print(f"❌ No data to process for {data.record}")
+        return
+    datavant_request_data = get_datavant_request_data(data)
+    submit_datavant_request(datavant_request_data)
     for j, item in enumerate(data_to_process):
         print(f"📄 Processing {j+1} of {item.mg_idpreg}")
         handle_pdf_generation(item,"second_request",data,j)
@@ -178,3 +194,48 @@ def request_for_to_template_name(request_for):
         return "infant"
     else:
         return "combined"
+
+def get_datavant_request_data(data:RedcapResponseFirst):
+    return DatavantRequest(
+        facility=Facility(
+            addressLine1=data.mr_address_line_1,
+            city=data.mr_city,
+            state=data.mr_state,
+            zip=data.mr_zip,
+            healthSystem=data.mr_health_system,
+            siteName=data.mr_site_name,     
+            phone=data.mr_phone,
+            fax=data.mr_fax
+        ),
+        requesterInfo=RequesterInfo(
+            companyId=data.mr_company_id,
+            companyName=data.mr_company_name,
+            name=data.mr_name,
+            email=data.mr_email
+        ),
+        patient=Patient(
+            firstName=data.mr_first_name,
+            lastName=data.mr_last_name,
+            dateOfBirth=data.mr_date_of_birth,
+            ssn=data.mr_ssn,
+            customId=data.mr_custom_id
+        ),
+        reason=Reason(
+            businessType=data.mr_business_type,
+            apiCode=data.mr_api_code
+        ),
+        requestCriteria=RequestCriteria(
+            recordTypes=data.mr_record_types,
+            startDate=data.mr_start_date,
+            endDate=data.mr_end_date
+        ),
+        certificationRequired=data.mr_certification_required,
+        authorizationForms=data.mr_authorization_forms,
+        callbackDetails=CallbackDetails(
+            method=data.mr_callback_method,
+            url=data.mr_callback_url,
+            headers=CallbackHeaders(
+                Authorization=data.mr_callback_authorization
+            )
+        )
+    )
