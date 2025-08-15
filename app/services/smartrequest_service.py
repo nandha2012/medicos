@@ -225,6 +225,7 @@ class SmartRequestService:
         
         try:
             print(f"🔄 Creating SmartRequest...")
+            print(f'datavant payload {request_data}')
             response = requests.post(url, json=request_data, headers=headers, timeout=60)
             response.raise_for_status()
             

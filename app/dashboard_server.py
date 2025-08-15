@@ -415,8 +415,8 @@ def api_smartrequest_status(request_id):
 def main():
     """Main function to run the dashboard server"""
     print("🌐 Starting Medicos Dashboard Server...")
-    print(f"📊 Dashboard will be available at: http://localhost:5000")
-    print(f"🔗 API endpoint: http://localhost:5000/api/dashboard-data")
+    print(f"📊 Dashboard will be available at: http://localhost:5001")
+    print(f"🔗 API endpoint: http://localhost:5001/api/dashboard-data")
     
     # Check templates directory (try multiple possible locations)
     possible_template_paths = [
@@ -450,7 +450,7 @@ def main():
         print(f"🔧 Flask template folder set to: {app.template_folder}")
     
     # Run the Flask app
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
 
 
 if __name__ == "__main__":
