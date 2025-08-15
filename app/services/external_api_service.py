@@ -58,6 +58,7 @@ details_data = {
     'fields[18]': 'mr_rec_needs_inf',
     'fields[19]': 'mr_needs_oth',
     'fields[20]': 'mr_needs_oth_inf',
+    'fields[21]': 'mr_dv',
     'rawOrLabel': 'raw',
     'rawOrLabelHeaders': 'raw',
     'exportCheckboxLabel': 'false',
@@ -109,6 +110,7 @@ def get_log_data_from_api():
 def get_log_detail_data_from_api(record:RedcapResponseFirst):
         data = get_record_data_from_api(record)
         data = merge_records(data)
+        print(f'details response {data}')
         if len(data) == 0:
             print(f"❌ no record data found for {record.record}")
             return []
