@@ -538,6 +538,7 @@ class RedcapResponseSecond:
     mr_upload_4: Optional[str] = ""
     mr_upload_5: Optional[str] = ""
     medical_records_request_for_pregnancy_and_birth_complete:Optional[str] = ""
+    mr_dv: Optional[str] = ""
 
     def __post_init__(self):
         for f in fields(self):
@@ -773,6 +774,7 @@ class RedcapResponseSecond:
             "hos_name": self.hos_name,
             "dob_inf" :self.dob_inf,
             "bc_childssn":self.bc_childssn[-4:] if self.bc_childssn else "" ,
-            "bc_momnamemaidenlast":self.bc_momnamemaidenlast
+            "bc_momnamemaidenlast":self.bc_momnamemaidenlast,
+            "mr_dev":self.mr_dv
 }
     

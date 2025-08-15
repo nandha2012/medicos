@@ -289,6 +289,9 @@ def generate_fake_detail_record(mg_idpreg, count=1) -> List[RedcapResponseSecond
             "pregnant_person_information_complete": str(random.randint(0, 2)),
             "infant_information_complete": str(random.randint(0, 2)),
             "medical_records_request_for_pregnancy_and_birth_complete": str(random.randint(0, 2)),
+            
+            # Datavant flag for testing
+            "mr_dv": str(random.choice([0, 1])),  # Randomly enable/disable datavant requests
         }
         
         details.append(record)

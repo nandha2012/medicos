@@ -29,7 +29,8 @@ pdf_logger = PandasCSVLogger(f"logs/pdfs/logs_{datetime.now().strftime('%Y%m%d')
 extended_record_logger = PandasCSVLogger(f"logs/extended_records/logs_{datetime.now().strftime('%Y%m%d')}.csv", ["record", "timestamp", "username", "request_type","process_type", "status", "details"])
 logger = PandasCSVLogger(f"logs/logs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv", ["record", "timestamp", "username", "status", "details"])
 
-
+PATIENT_AUTH_ENCODED = "PATIENT_AUTH_ENCODED"
+REPRESENTATION_LETTER_ENCODED = "REPRESENTATION_LETTER_ENCODED"
 
 def process_first_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing first request for {data.record}")
@@ -38,7 +39,7 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
         if len(data_to_process) == 0:
             print(f"❌ No data to process for {data.record}")
             return
-    
+        
         
         for j, item in enumerate(data_to_process):
             print(f"📄 Processing {j+1} of {item.mg_idpreg}")
@@ -71,42 +72,10 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
             item.mr_rec_needs_inf___13 = "1"
             item = replace(item)
             handle_pdf_generation(item,"first_request",data,j)
-            try:
-                datavant_request_data = get_datavant_request_data(item)
-                api_response = submit_datavant_request(datavant_request_data)
-                print(f"🔄 SmartRequest API response: {api_response}")
-                
-                # Track SmartRequest in dashboard
-                if api_response and api_response.get('requestId'):
-                    request_id = api_response['requestId']
-                    patient_name = f"{getattr(item, 'mr_first_name', '')} {getattr(item, 'mr_last_name', '')}" .strip()
-                    facility_name = getattr(item, 'mr_site_name', '')
-                
-                    # Dashboard tracking - Success case
-                    track_smartrequest_sent(f"{item.mg_idpreg}_{j}", request_id, datavant_request_data.model_dump() if hasattr(datavant_request_data, 'model_dump') else None)
-                    track_smartrequest_success(f"{item.mg_idpreg}_{j}", request_id)
-                    print(f"✅ SmartRequest tracked as successful for {item.mg_idpreg}_{j}")
-                    
-                    # Original tracking (for backward compatibility)
-                    track_smartrequest(
-                        request_id=request_id,
-                        record_id=item.mg_idpreg,
-                        document_type="first_request",
-                        patient_name=patient_name if patient_name else None,
-                        facility_name=facility_name if facility_name else None
-                    )
-                else:
-                    # Dashboard tracking - Failure case
-                    error_msg = "SmartRequest API call failed or returned no requestId"
-                    if api_response:
-                        error_msg += f": {api_response}"
-                    track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
-                    print(f"❌ SmartRequest failed for {item.mg_idpreg}_{j}: {error_msg}")
-            except Exception as e:
-                # Track unexpected SmartRequest errors
-                error_msg = f"Unexpected error during SmartRequest: {str(e)}"
-                track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
-                print(f"❌ SmartRequest exception for {item.mg_idpreg}_{j}: {error_msg}")
+            if(item.mr_dv == "1"):
+                handle_datavant_request(item, j, "first_request")
+            else:
+                print(f"🔄 skipping datavant request for {item.mg_idpreg}_{j}")
             counter.inc()
     except Exception as e:
         logger.log({
@@ -160,42 +129,7 @@ def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
             item = replace(item)
             handle_pdf_generation(item,"second_request",data,j)
             counter.inc()
-            try:
-                datavant_request_data = get_datavant_request_data(item)
-                api_response = submit_datavant_request(datavant_request_data)
-                print(f"🔄 SmartRequest API response: {api_response}")
-                
-                # Track SmartRequest in dashboard
-                if api_response and api_response.get('requestId'):
-                    request_id = api_response['requestId']
-                    patient_name = f"{getattr(item, 'mr_first_name', '')} {getattr(item, 'mr_last_name', '')}" .strip()
-                    facility_name = getattr(item, 'mr_site_name', '')
-                
-                    # Dashboard tracking - Success case
-                    track_smartrequest_sent(f"{item.mg_idpreg}_{j}", request_id, datavant_request_data.model_dump() if hasattr(datavant_request_data, 'model_dump') else None)
-                    track_smartrequest_success(f"{item.mg_idpreg}_{j}", request_id)
-                    print(f"✅ SmartRequest tracked as successful for {item.mg_idpreg}_{j}")
-                    
-                    # Original tracking (for backward compatibility)
-                    track_smartrequest(
-                        request_id=request_id,
-                        record_id=item.mg_idpreg,
-                        document_type="second_request_complete",
-                        patient_name=patient_name if patient_name else None,
-                        facility_name=facility_name if facility_name else None
-                    )
-                else:
-                    # Dashboard tracking - Failure case
-                    error_msg = "SmartRequest API call failed or returned no requestId"
-                    if api_response:
-                        error_msg += f": {api_response}"
-                    track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
-                    print(f"❌ SmartRequest failed for {item.mg_idpreg}_{j}: {error_msg}")
-            except Exception as e:
-                # Track unexpected SmartRequest errors
-                error_msg = f"Unexpected error during SmartRequest: {str(e)}"
-                track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
-                print(f"❌ SmartRequest exception for {item.mg_idpreg}_{j}: {error_msg}")
+            handle_datavant_request(item, j, "second_request_complete")
     except Exception as e:
         print(f"❌ Error processing {data.record}: {e}")
         return
@@ -213,42 +147,7 @@ def process_partial_second_request(data:RedcapResponseFirst,counter:Counter):
         print(f"📄 Processing {j+1} of {item.mg_idpreg}")
         handle_pdf_generation(item,"second_request",data,j)
         counter.inc()
-        try:
-            datavant_request_data = get_datavant_request_data(item)
-            api_response = submit_datavant_request(datavant_request_data)
-            print(f"🔄 SmartRequest API response: {api_response}")
-            
-            # Track SmartRequest in dashboard
-            if api_response and api_response.get('requestId'):
-                request_id = api_response['requestId']
-                patient_name = f"{getattr(item, 'mr_first_name', '')} {getattr(item, 'mr_last_name', '')}" .strip()
-                facility_name = getattr(item, 'mr_site_name', '')
-                
-                # Dashboard tracking - Success case
-                track_smartrequest_sent(f"{item.mg_idpreg}_{j}", request_id, datavant_request_data.model_dump() if hasattr(datavant_request_data, 'model_dump') else None)
-                track_smartrequest_success(f"{item.mg_idpreg}_{j}", request_id)
-                print(f"✅ SmartRequest tracked as successful for {item.mg_idpreg}_{j}")
-                
-                # Original tracking (for backward compatibility)
-                track_smartrequest(
-                    request_id=request_id,
-                    record_id=item.mg_idpreg,
-                    document_type="second_request_partial",
-                    patient_name=patient_name if patient_name else None,
-                    facility_name=facility_name if facility_name else None
-                )
-            else:
-                # Dashboard tracking - Failure case
-                error_msg = "SmartRequest API call failed or returned no requestId"
-                if api_response:
-                    error_msg += f": {api_response}"
-                track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
-                print(f"❌ SmartRequest failed for {item.mg_idpreg}_{j}: {error_msg}")
-        except Exception as e:
-            # Track unexpected SmartRequest errors
-            error_msg = f"Unexpected error during SmartRequest: {str(e)}"
-            track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
-            print(f"❌ SmartRequest exception for {item.mg_idpreg}_{j}: {error_msg}")
+        handle_datavant_request(item, j, "second_request_partial")
 
 
 
@@ -360,10 +259,10 @@ def get_datavant_request_data(data: RedcapResponseFirst) -> DatavantRequest:
                 fax=getattr(data, 'mr_fax', '')
             ),
             requesterInfo=RequesterInfo(
-                companyId=getattr(data, 'mr_company_id', 0),
-                companyName=getattr(data, 'mr_company_name', ''),
-                name=getattr(data, 'mr_name', ''),
-                email=getattr(data, 'mr_email', '')
+                companyId="1792190",
+                companyName="TN DEPT OF HEALTH",
+                name="Bhanu Gaddam",
+                email="bhanu.prathap.gaddam@tn.gov"
             ),
             patient=Patient(
                 firstName=getattr(data, 'mr_first_name', ''),
@@ -383,7 +282,10 @@ def get_datavant_request_data(data: RedcapResponseFirst) -> DatavantRequest:
                 endDate=getattr(data, 'mr_end_date', '')
             )],
             certificationRequired=getattr(data, 'mr_certification_required', False),
-            authorizationForms=getattr(data, 'mr_authorization_forms', []),
+            authorizationForms=[
+                PATIENT_AUTH_ENCODED,
+                REPRESENTATION_LETTER_ENCODED
+            ],
             callbackDetails=_create_callback_details(data)
         )
     except Exception as e:
@@ -404,3 +306,50 @@ def _create_callback_details(data: RedcapResponseFirst) -> Optional[CallbackDeta
             Authorization=getattr(data, 'mr_callback_authorization', '')
         ) if getattr(data, 'mr_callback_authorization', '') else None
     )
+
+def handle_datavant_request(item, j: int, document_type: str):
+    """
+    Handle datavant request submission with error tracking
+    
+    Args:
+        item: Data item to process
+        j: Item index
+        document_type: Type of document request (first_request, second_request_complete, etc.)
+    """
+    try:
+        datavant_request_data = get_datavant_request_data(item)
+        print(f"🔄 Datavant request data: {datavant_request_data}")
+        api_response = submit_datavant_request(datavant_request_data)
+        print(f"🔄 SmartRequest API response: {api_response}")
+        
+        # Track SmartRequest in dashboard
+        if api_response and api_response.get('requestId'):
+            request_id = api_response['requestId']
+            patient_name = f"{getattr(item, 'mr_first_name', '')} {getattr(item, 'mr_last_name', '')}".strip()
+            facility_name = getattr(item, 'mr_site_name', '')
+            
+            # Dashboard tracking - Success case
+            track_smartrequest_sent(f"{item.mg_idpreg}_{j}", request_id, datavant_request_data.model_dump() if hasattr(datavant_request_data, 'model_dump') else None)
+            track_smartrequest_success(f"{item.mg_idpreg}_{j}", request_id)
+            print(f"✅ SmartRequest tracked as successful for {item.mg_idpreg}_{j}")
+            
+            # Original tracking (for backward compatibility)
+            track_smartrequest(
+                request_id=request_id,
+                record_id=item.mg_idpreg,
+                document_type=document_type,
+                patient_name=patient_name if patient_name else None,
+                facility_name=facility_name if facility_name else None
+            )
+        else:
+            # Dashboard tracking - Failure case
+            error_msg = "SmartRequest API call failed or returned no requestId"
+            if api_response:
+                error_msg += f": {api_response}"
+            track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
+            print(f"❌ SmartRequest failed for {item.mg_idpreg}_{j}: {error_msg}")
+    except Exception as e:
+        # Track unexpected SmartRequest errors
+        error_msg = f"Unexpected error during SmartRequest: {str(e)}"
+        track_smartrequest_error(f"{item.mg_idpreg}_{j}", error_msg)
+        print(f"❌ SmartRequest exception for {item.mg_idpreg}_{j}: {error_msg}")
