@@ -17,4 +17,7 @@ class PDFService:
         path = os.path.join(file_path, f"{output_filename}.pdf")
         print(f"📄 Output PDF path: {path}")
         convert(docx_path, path)
-        return path
+        
+        # Normalize path for cross-platform compatibility (use forward slashes)
+        normalized_path = path.replace(os.sep, '/')
+        return normalized_path

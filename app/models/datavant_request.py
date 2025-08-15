@@ -1,9 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import date
 
 class Facility(BaseModel):
     addressLine1: str
+    addressLine2: Optional[str] = None
     city: str
     state: str
     zip: str
@@ -39,9 +40,9 @@ class CallbackHeaders(BaseModel):
     Content_Type: str = "application/json"
 
 class CallbackDetails(BaseModel):
-    method: str
+    method: str = Field(default="POST", description="HTTP method for callback")
     url: str
-    headers: CallbackHeaders
+    headers: Optional[CallbackHeaders] = None
 
 class DatavantRequest(BaseModel):
     facility: Facility
@@ -49,6 +50,6 @@ class DatavantRequest(BaseModel):
     patient: Patient
     reason: Reason
     requestCriteria: List[RequestCriteria]
-    certificationRequired: bool
+    certificationRequired: bool = False
     authorizationForms: List[str]
-    callbackDetails: CallbackDetails
+    callbackDetails: Optional[CallbackDetails] = None

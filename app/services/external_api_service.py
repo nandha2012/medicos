@@ -8,7 +8,8 @@ from models.datavant_request import DatavantRequest
 from utils.filters import filter_records, get_latest_records, merge_records
 from utils.dates import get_current_time_str, get_one_hour_before_str, get_start_of_today_str, subtract_time_from_str
 from fake_responses import generate_fake_detail_record
-from typing import List, Literal
+from services.smartrequest_service import SmartRequestService
+from typing import List, Literal, Optional
 
 import json
 import sys
@@ -26,8 +27,8 @@ end_point = os.getenv("EXTERNAL_API_END_POINT") or "https://localhost/redcap/api
 token = os.getenv("EXTERNAL_API_TOKEN") or "E*************7"
 env = os.getenv("ENV") or 'local'
 
-datavant_api_url = os.getenv("DATAVANT_API_URL") or "https://sandbox-api.datavant.com/v1/request"
-datavant_token = os.getenv("DATAVANT_TOKEN") or ""
+# Initialize SmartRequest service
+smartrequest_service = SmartRequestService()
 
 details_data = {
     'token': token,
@@ -81,7 +82,19 @@ def get_log_data_from_api():
     try:
         if env == 'local':
             print(f'logs fetching from local...')
-            return json.load(open('app/response_1_sample.json'))
+            # Try different possible paths for the sample file
+            sample_paths = [
+                'app/response_1_sample.json',  # When run from project root
+                'response_1_sample.json',      # When run from app directory
+                '../app/response_1_sample.json'  # When run from subdirectory
+            ]
+            
+            for path in sample_paths:
+                if os.path.exists(path):
+                    return json.load(open(path))
+            
+            print(f"⚠️ Sample data file not found in any of: {sample_paths}")
+            return []
         print(f"Hitting logs api....")
         response = requests.post(f'{end_point}',data=data,timeout=60)
         response.raise_for_status()
@@ -113,10 +126,22 @@ def get_record_data_from_api(record:RedcapResponseFirst):
     print(f"data {data}")
     try:
         if env == 'local':
-            json_data = json.load(open('app/response_2_sample.json'))
-            print(f'details fetching from local...')
-            result = [x for x in json_data if x['mg_idpreg'] == record.record]
-            return result
+            # Try different possible paths for the sample file
+            sample_paths = [
+                'app/response_2_sample.json',  # When run from project root
+                'response_2_sample.json',      # When run from app directory
+                '../app/response_2_sample.json'  # When run from subdirectory
+            ]
+            
+            for path in sample_paths:
+                if os.path.exists(path):
+                    json_data = json.load(open(path))
+                    print(f'details fetching from local...')
+                    result = [x for x in json_data if x['mg_idpreg'] == record.record]
+                    return result
+            
+            print(f"⚠️ Sample data file response_2_sample.json not found in any of: {sample_paths}")
+            return []
         response = requests.post(end_point,data=data)
         response.raise_for_status()
         return response.json()
@@ -128,42 +153,75 @@ def get_record_data_from_api(record:RedcapResponseFirst):
         return []
 
 
-def submit_datavant_request(request_data: DatavantRequest):
+def submit_datavant_request(request_data: DatavantRequest) -> Optional[dict]:
     """
-    Submit a medical records request to Datavant API
+    Submit a medical records request to SmartRequest API
     
     Args:
         request_data: DatavantRequest object containing all required fields
     
     Returns:
-        dict: API response or empty dict on error
+        dict: API response or None on error
     """
-    headers = {
-        "Authorization": f"Bearer {datavant_token}",
-        "Content-Type": "application/json"
-    }
-    
     try:
-        print(f"🔄 Submitting request to Datavant API...")
-        response = requests.post(
-            datavant_api_url,
-            json=request_data.model_dump(),
-            headers=headers,
-            timeout=60
-        )
-        response.raise_for_status()
+        # Convert Pydantic model to dict for API submission
+        request_dict = request_data.model_dump(exclude_none=True)
         
-        result = response.json()
-        print(f"✅ Datavant request submitted successfully")
+        # Submit request using SmartRequest service
+        result = smartrequest_service.create_request(request_dict)
+        
+        if result:
+            request_id = result.get("requestId")
+            print(f"✅ SmartRequest submitted successfully with ID: {request_id}")
+            
+            # Log the request ID for tracking
+            if request_id:
+                print(f"📝 Track this request with ID: {request_id}")
+        
         return result
         
-    except requests.exceptions.Timeout:
-        print(f"❌ Datavant API timeout...")
-        return {}
-    except requests.exceptions.RequestException as e:
-        print(f"❌ Error submitting to Datavant API: {e}")
-        return {}
     except Exception as e:
-        print(f"❌ Unexpected error with Datavant API: {e}")
-        return {}
+        print(f"❌ Unexpected error submitting SmartRequest: {e}")
+        return None
+
+
+def get_smartrequest_status(request_id: str) -> Optional[dict]:
+    """
+    Get status of a SmartRequest
+    
+    Args:
+        request_id: ID of the request to check
+        
+    Returns:
+        Status dictionary or None on error
+    """
+    return smartrequest_service.get_request_status(request_id)
+
+
+def get_smartrequest_download_url(request_id: str, document_type: str = "ALL") -> Optional[str]:
+    """
+    Get download URL for SmartRequest documents
+    
+    Args:
+        request_id: ID of the request
+        document_type: Type of document (REQUEST_LETTER, INVOICE, MEDICAL_RECORD, CORRESPONDENCE, ALL)
+        
+    Returns:
+        Download URL or None on error
+    """
+    return smartrequest_service.get_download_url(request_id, document_type)
+
+
+def cancel_smartrequest(request_id: str, reason: str) -> bool:
+    """
+    Cancel a SmartRequest
+    
+    Args:
+        request_id: ID of the request to cancel
+        reason: Reason for cancellation
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    return smartrequest_service.cancel_request(request_id, reason)
     

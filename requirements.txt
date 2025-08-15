@@ -7,3 +7,5 @@ faker
 pydantic
 pandas
 pytz
+flask
+python-dateutil

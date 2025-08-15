@@ -17,7 +17,7 @@ base_output = os.path.join(os.getcwd(), "output")
 
 if __name__ == "__main__":
     counter = Counter()
-    print("🚀 Starting invoice PDF generation...")
+    print("🚀 Starting PDF generation...")
 
     # Setup
     template_path = os.path.join(os.getcwd(), "assets/templates/infant_template.docx")
