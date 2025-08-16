@@ -52,3 +52,34 @@ def generate_dir_name():
     now = datetime.now()
     return now.strftime("%m_%d_%Y")
 
+def get_datavant_date_range() -> tuple[str, str]:
+    """
+    Get date range for Datavant requests: current date to current date + 5 days
+    
+    Returns:
+        Tuple of (start_date, end_date) in YYYY-MM-DD format
+    """
+    today = datetime.now()
+    start_date = today.strftime("%Y-%m-%d")
+    end_date = (today + timedelta(days=5)).strftime("%Y-%m-%d")
+    return start_date, end_date
+
+def get_current_date_str() -> str:
+    """
+    Returns the current date as YYYY-MM-DD string.
+    """
+    return datetime.now().strftime("%Y-%m-%d")
+
+def get_date_plus_days(days: int) -> str:
+    """
+    Returns a date string that is 'days' from today in YYYY-MM-DD format.
+    
+    Args:
+        days: Number of days to add (positive for future, negative for past)
+        
+    Returns:
+        Date string in YYYY-MM-DD format
+    """
+    target_date = datetime.now() + timedelta(days=days)
+    return target_date.strftime("%Y-%m-%d")
+

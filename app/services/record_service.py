@@ -25,6 +25,7 @@ from utils.dashboard_tracker import (
     track_processing_start, track_pdf_success, track_pdf_error,
     track_smartrequest_sent, track_smartrequest_success, track_smartrequest_error
 )
+from utils.dates import get_datavant_date_range
 
 pdf_logger = PandasCSVLogger(f"logs/pdfs/logs_{datetime.now().strftime('%Y%m%d')}.csv", ["record", "timestamp", "username", "request_type","process_type", "status", "details"])
 extended_record_logger = PandasCSVLogger(f"logs/extended_records/logs_{datetime.now().strftime('%Y%m%d')}.csv", ["record", "timestamp", "username", "request_type","process_type", "status", "details"])
@@ -443,6 +444,10 @@ def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None
         DatavantRequest: Properly formatted request object
     """
     try:
+        # Get date range for the request
+        date_range = get_datavant_date_range()
+        print(f"🗓️ Using Datavant date range: {date_range[0]} to {date_range[1]}")
+        
         return DatavantRequest(
             facility=_get_facility_for_datavant_request(data),
             requesterInfo=RequesterInfo(
@@ -464,8 +469,8 @@ def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None
             ),
             requestCriteria=[RequestCriteria(
                 recordTypes=_get_record_types_for_datavant_request(data, request_for),
-                startDate=getattr(data, 'mr_start_date', ''),
-                endDate=getattr(data, 'mr_end_date', '')
+                startDate=date_range[0],
+                endDate=date_range[1]
             )],
             certificationRequired=getattr(data, 'mr_certification_required', False),
             authorizationForms=[
