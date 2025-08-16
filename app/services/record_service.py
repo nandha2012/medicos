@@ -448,6 +448,10 @@ def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None
         date_range = get_datavant_date_range()
         print(f"🗓️ Using Datavant date range: {date_range[0]} to {date_range[1]}")
         
+        # Log patient data being used
+        patient_name = f"{getattr(data, 'bc_momnamefirst', '')} {getattr(data, 'bc_momnamelast', '')}".strip()
+        print(f"👤 Using patient data: {patient_name} (DOB: {getattr(data, 'bc_mom_dob', 'N/A')})")
+        
         return DatavantRequest(
             facility=_get_facility_for_datavant_request(data),
             requesterInfo=RequesterInfo(
@@ -457,10 +461,10 @@ def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None
                 email="bhanu.prathap.gaddam@tn.gov"
             ),
             patient=Patient(
-                firstName=getattr(data, 'mr_first_name', ''),
-                lastName=getattr(data, 'mr_last_name', ''),
-                dateOfBirth=getattr(data, 'mr_date_of_birth', ''),
-                ssn=getattr(data, 'mr_ssn', ''),
+                firstName=getattr(data, 'bc_momnamefirst', ''),
+                lastName=getattr(data, 'bc_momnamelast', ''),
+                dateOfBirth=getattr(data, 'bc_mom_dob', ''),
+                ssn=getattr(data, 'bc_momssn', ''),
                 customId=getattr(data, 'mr_custom_id', data.mg_idpreg)
             ),
             reason=Reason(
