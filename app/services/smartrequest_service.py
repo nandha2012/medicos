@@ -359,3 +359,50 @@ class SmartRequestService:
         except Exception as e:
             print(f"❌ Error encoding file {file_path}: {e}")
             return None
+    
+    def get_infant_record_types(self) -> List[str]:
+        """
+        Get record type names specifically for infant requests
+        
+        Returns:
+            List of record type names for infant requests
+        """
+        if self.use_faker:
+            return smartrequest_faker.get_infant_record_types()
+        
+        # For production, these would be the actual Datavant record types for infants
+        return [
+            "Cardiology Reports", "Laboratory and Hematology", "Labor and Delivery Records", 
+            "Audiology Report", "Admission Report", "Scanned Documents", 
+            "Medication Information", "History and Physical", "Radiology Report", 
+            "Coding Summary", "Flowsheets", "Occupational Therapy", "Physician Orders", 
+            "Speech Therapy", "Ultrasound", "Demographic", "Orders and Results", 
+            "Facesheet", "Operative Report", "Pathology Report", "Physician Progress Notes", 
+            "Physical Therapy Rehab records", "Transfer Report", "Medication Orders", 
+            "Consults", "Problem List", "Discharge Instructions", "Prenatal Care", 
+            "Discharge Summary", "Birth Letter Confirmation", "Continuity of Care Document", 
+            "Nursing Notes", "Toxicology Reports"
+        ]
+    
+    def get_mom_record_types(self) -> List[str]:
+        """
+        Get record type names specifically for mom requests
+        
+        Returns:
+            List of record type names for mom requests
+        """
+        if self.use_faker:
+            return smartrequest_faker.get_mom_record_types()
+        
+        # For production, these would be the actual Datavant record types for moms
+        return [
+            "Laboratory and Hematology", "Labor and Delivery Records", "Admission Report", 
+            "Scanned Documents", "Medication Information", "History and Physical", 
+            "Coding Summary", "Flowsheets", "Physician Orders", "Ultrasound", 
+            "Demographic", "Orders and Results", "Facesheet", "ED Records", 
+            "Operative Report", "Pathology Report", "Physician Progress Notes", 
+            "Transfer Report", "Medication Orders", "Consults", "Problem List", 
+            "Discharge Instructions", "Prenatal Care", "Discharge Summary", 
+            "Birth Letter Confirmation", "Continuity of Care Document", "Nursing Notes", 
+            "Toxicology Reports"
+        ]

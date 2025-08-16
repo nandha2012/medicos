@@ -100,32 +100,112 @@ class SmartRequestFaker:
         }
     
     def get_record_types(self) -> Dict[str, Any]:
-        """Generate fake record types response"""
-        record_types = [
-            {"name": "Abstract", "digitalFulfillment": True},
-            {"name": "Admission Records", "digitalFulfillment": True},
-            {"name": "Billing Records", "digitalFulfillment": False},
+        """Generate fake record types response with Datavant-compliant record types"""
+        # Record types for infant requests
+        infant_record_types = [
+            {"name": "Cardiology Reports", "digitalFulfillment": True},
+            {"name": "Laboratory and Hematology", "digitalFulfillment": True},
+            {"name": "Labor and Delivery Records", "digitalFulfillment": True},
+            {"name": "Audiology Report", "digitalFulfillment": True},
+            {"name": "Admission Report", "digitalFulfillment": True},
+            {"name": "Scanned Documents", "digitalFulfillment": True},
+            {"name": "Medication Information", "digitalFulfillment": True},
+            {"name": "History and Physical", "digitalFulfillment": True},
+            {"name": "Radiology Report", "digitalFulfillment": True},
+            {"name": "Coding Summary", "digitalFulfillment": True},
+            {"name": "Flowsheets", "digitalFulfillment": True},
+            {"name": "Occupational Therapy", "digitalFulfillment": True},
+            {"name": "Physician Orders", "digitalFulfillment": True},
+            {"name": "Speech Therapy", "digitalFulfillment": True},
+            {"name": "Ultrasound", "digitalFulfillment": True},
+            {"name": "Demographic", "digitalFulfillment": True},
+            {"name": "Orders and Results", "digitalFulfillment": True},
+            {"name": "Facesheet", "digitalFulfillment": True},
+            {"name": "Operative Report", "digitalFulfillment": True},
+            {"name": "Pathology Report", "digitalFulfillment": True},
+            {"name": "Physician Progress Notes", "digitalFulfillment": True},
+            {"name": "Physical Therapy Rehab records", "digitalFulfillment": True},
+            {"name": "Transfer Report", "digitalFulfillment": True},
+            {"name": "Medication Orders", "digitalFulfillment": True},
+            {"name": "Consults", "digitalFulfillment": True},
+            {"name": "Problem List", "digitalFulfillment": True},
+            {"name": "Discharge Instructions", "digitalFulfillment": True},
+            {"name": "Prenatal Care", "digitalFulfillment": True},
             {"name": "Discharge Summary", "digitalFulfillment": True},
-            {"name": "Emergency Department Records", "digitalFulfillment": True},
-            {"name": "Imaging Reports", "digitalFulfillment": True},
-            {"name": "Laboratory Results", "digitalFulfillment": True},
-            {"name": "Medication Records", "digitalFulfillment": True},
-            {"name": "Nursing Notes", "digitalFulfillment": False},
-            {"name": "Operative Reports", "digitalFulfillment": True},
-            {"name": "Pathology Reports", "digitalFulfillment": True},
-            {"name": "Physical Therapy Records", "digitalFulfillment": False},
-            {"name": "Physician Notes", "digitalFulfillment": True},
-            {"name": "Radiology Reports", "digitalFulfillment": True},
-            {"name": "Toxicology Reports", "digitalFulfillment": True},
-            {"name": "Complete Medical Record", "digitalFulfillment": False}
+            {"name": "Birth Letter Confirmation", "digitalFulfillment": True},
+            {"name": "Continuity of Care Document", "digitalFulfillment": True},
+            {"name": "Nursing Notes", "digitalFulfillment": True},
+            {"name": "Toxicology Reports", "digitalFulfillment": True}
         ]
         
-        # Randomly include some record types
-        included_types = random.sample(record_types, random.randint(8, len(record_types)))
+        # Record types for mom requests (subset of infant types)
+        mom_record_types = [
+            {"name": "Laboratory and Hematology", "digitalFulfillment": True},
+            {"name": "Labor and Delivery Records", "digitalFulfillment": True},
+            {"name": "Admission Report", "digitalFulfillment": True},
+            {"name": "Scanned Documents", "digitalFulfillment": True},
+            {"name": "Medication Information", "digitalFulfillment": True},
+            {"name": "History and Physical", "digitalFulfillment": True},
+            {"name": "Coding Summary", "digitalFulfillment": True},
+            {"name": "Flowsheets", "digitalFulfillment": True},
+            {"name": "Physician Orders", "digitalFulfillment": True},
+            {"name": "Ultrasound", "digitalFulfillment": True},
+            {"name": "Demographic", "digitalFulfillment": True},
+            {"name": "Orders and Results", "digitalFulfillment": True},
+            {"name": "Facesheet", "digitalFulfillment": True},
+            {"name": "ED Records", "digitalFulfillment": True},
+            {"name": "Operative Report", "digitalFulfillment": True},
+            {"name": "Pathology Report", "digitalFulfillment": True},
+            {"name": "Physician Progress Notes", "digitalFulfillment": True},
+            {"name": "Transfer Report", "digitalFulfillment": True},
+            {"name": "Medication Orders", "digitalFulfillment": True},
+            {"name": "Consults", "digitalFulfillment": True},
+            {"name": "Problem List", "digitalFulfillment": True},
+            {"name": "Discharge Instructions", "digitalFulfillment": True},
+            {"name": "Prenatal Care", "digitalFulfillment": True},
+            {"name": "Discharge Summary", "digitalFulfillment": True},
+            {"name": "Birth Letter Confirmation", "digitalFulfillment": True},
+            {"name": "Continuity of Care Document", "digitalFulfillment": True},
+            {"name": "Nursing Notes", "digitalFulfillment": True},
+            {"name": "Toxicology Reports", "digitalFulfillment": True}
+        ]
+        
+        # Return all available record types (union of infant and mom types)
+        all_record_types = {record["name"]: record for record in infant_record_types + mom_record_types}
+        unique_record_types = list(all_record_types.values())
         
         return {
-            "recordTypes": included_types
+            "recordTypes": unique_record_types
         }
+    
+    def get_infant_record_types(self) -> List[str]:
+        """Get record type names specifically for infant requests"""
+        return [
+            "Cardiology Reports", "Laboratory and Hematology", "Labor and Delivery Records", 
+            "Audiology Report", "Admission Report", "Scanned Documents", 
+            "Medication Information", "History and Physical", "Radiology Report", 
+            "Coding Summary", "Flowsheets", "Occupational Therapy", "Physician Orders", 
+            "Speech Therapy", "Ultrasound", "Demographic", "Orders and Results", 
+            "Facesheet", "Operative Report", "Pathology Report", "Physician Progress Notes", 
+            "Physical Therapy Rehab records", "Transfer Report", "Medication Orders", 
+            "Consults", "Problem List", "Discharge Instructions", "Prenatal Care", 
+            "Discharge Summary", "Birth Letter Confirmation", "Continuity of Care Document", 
+            "Nursing Notes", "Toxicology Reports"
+        ]
+    
+    def get_mom_record_types(self) -> List[str]:
+        """Get record type names specifically for mom requests"""
+        return [
+            "Laboratory and Hematology", "Labor and Delivery Records", "Admission Report", 
+            "Scanned Documents", "Medication Information", "History and Physical", 
+            "Coding Summary", "Flowsheets", "Physician Orders", "Ultrasound", 
+            "Demographic", "Orders and Results", "Facesheet", "ED Records", 
+            "Operative Report", "Pathology Report", "Physician Progress Notes", 
+            "Transfer Report", "Medication Orders", "Consults", "Problem List", 
+            "Discharge Instructions", "Prenatal Care", "Discharge Summary", 
+            "Birth Letter Confirmation", "Continuity of Care Document", "Nursing Notes", 
+            "Toxicology Reports"
+        ]
     
     def create_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate fake request creation response"""
@@ -249,7 +329,7 @@ def create_fake_smartrequest_payload() -> Dict[str, Any]:
         },
         "requestCriteria": [
             {
-                "recordTypes": ["Abstract", "Laboratory Results"],
+                "recordTypes": ["Laboratory and Hematology", "Nursing Notes", "Discharge Summary"],
                 "startDate": fake.date_between(start_date='-2y', end_date='-1y').strftime("%Y-%m-%d"),
                 "endDate": fake.date_between(start_date='-1y', end_date='today').strftime("%Y-%m-%d")
             }

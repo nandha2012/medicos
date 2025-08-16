@@ -73,7 +73,8 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
             item = replace(item)
             handle_pdf_generation(item,"first_request",data,j)
             if(item.mr_dv == "1"):
-                handle_datavant_request(item, j, "first_request")
+                request_for = getattr(data, 'mr_req_for', None)
+                handle_datavant_request(item, j, "first_request", request_for)
             else:
                 print(f"🔄 skipping datavant request for {item.mg_idpreg}_{j}")
             counter.inc()
@@ -129,7 +130,8 @@ def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
             item = replace(item)
             handle_pdf_generation(item,"second_request",data,j)
             counter.inc()
-            handle_datavant_request(item, j, "second_request_complete")
+            request_for = getattr(data, 'mr_req_for', None)
+            handle_datavant_request(item, j, "second_request_complete", request_for)
     except Exception as e:
         print(f"❌ Error processing {data.record}: {e}")
         return
@@ -147,7 +149,8 @@ def process_partial_second_request(data:RedcapResponseFirst,counter:Counter):
         print(f"📄 Processing {j+1} of {item.mg_idpreg}")
         handle_pdf_generation(item,"second_request",data,j)
         counter.inc()
-        handle_datavant_request(item, j, "second_request_partial")
+        request_for = getattr(data, 'mr_req_for', None)
+        handle_datavant_request(item, j, "second_request_partial", request_for)
 
 
 
@@ -235,12 +238,69 @@ def request_for_to_template_name(request_for):
     else:
         return "combined"
 
-def get_datavant_request_data(data: RedcapResponseFirst) -> DatavantRequest:
+def get_record_types_for_request(request_for) -> List[str]:
+    """
+    Get appropriate Datavant record types based on request type
+    
+    Args:
+        request_for: Request type ("1" for mother, "2" for infant, other for combined)
+        
+    Returns:
+        List of record type names appropriate for the request type
+    """
+    from .smartrequest_service import SmartRequestService
+    
+    service = SmartRequestService()
+    
+    if request_for == "1":
+        print("🔍 Using Mom record types for Datavant request")
+        return service.get_mom_record_types()
+    elif request_for == "2":
+        print("🔍 Using Infant record types for Datavant request")
+        return service.get_infant_record_types()
+    else:
+        print("🔍 Using Combined record types for Datavant request")
+        # For combined requests, use all available record types
+        mom_types = service.get_mom_record_types()
+        infant_types = service.get_infant_record_types()
+        # Combine and deduplicate
+        combined_types = list(set(mom_types + infant_types))
+        return sorted(combined_types)
+
+def _get_record_types_for_datavant_request(data: RedcapResponseFirst, request_for: str = None) -> List[str]:
+    """
+    Get record types for Datavant request, prioritizing request_for logic over manual selection
+    
+    Args:
+        data: RedcapResponseFirst object containing form data
+        request_for: Request type ("1" for mother, "2" for infant, other for combined)
+        
+    Returns:
+        List of appropriate record type names
+    """
+    # If request_for is provided, use it to determine record types
+    if request_for is not None:
+        return get_record_types_for_request(request_for)
+    
+    # Fallback to manual record types if specified in the data
+    manual_types = getattr(data, 'mr_record_types', None)
+    if manual_types:
+        if isinstance(manual_types, list):
+            return manual_types
+        else:
+            return [manual_types]
+    
+    # Final fallback: use combined record types (safest option)
+    print("⚠️ No request_for or manual record types specified, using combined record types")
+    return get_record_types_for_request("combined")
+
+def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None) -> DatavantRequest:
     """
     Convert RedCap response data to SmartRequest format
     
     Args:
         data: RedcapResponseFirst object containing form data
+        request_for: Request type ("1" for mother, "2" for infant, other for combined)
         
     Returns:
         DatavantRequest: Properly formatted request object
@@ -276,8 +336,7 @@ def get_datavant_request_data(data: RedcapResponseFirst) -> DatavantRequest:
                 apiCode=getattr(data, 'mr_api_code', 'STATE_ATTY_OFFICE')
             ),
             requestCriteria=[RequestCriteria(
-                recordTypes=getattr(data, 'mr_record_types', ['Abstract']) if isinstance(getattr(data, 'mr_record_types', []), list) 
-                           else [getattr(data, 'mr_record_types', 'Abstract')],
+                recordTypes=_get_record_types_for_datavant_request(data, request_for),
                 startDate=getattr(data, 'mr_start_date', ''),
                 endDate=getattr(data, 'mr_end_date', '')
             )],
@@ -307,7 +366,7 @@ def _create_callback_details(data: RedcapResponseFirst) -> Optional[CallbackDeta
         ) if getattr(data, 'mr_callback_authorization', '') else None
     )
 
-def handle_datavant_request(item, j: int, document_type: str):
+def handle_datavant_request(item, j: int, document_type: str, request_for: str = None):
     """
     Handle datavant request submission with error tracking
     
@@ -315,9 +374,10 @@ def handle_datavant_request(item, j: int, document_type: str):
         item: Data item to process
         j: Item index
         document_type: Type of document request (first_request, second_request_complete, etc.)
+        request_for: Request type ("1" for mother, "2" for infant, other for combined)
     """
     try:
-        datavant_request_data = get_datavant_request_data(item)
+        datavant_request_data = get_datavant_request_data(item, request_for)
         print(f"🔄 Datavant request data: {datavant_request_data}")
         api_response = submit_datavant_request(datavant_request_data)
         print(f"🔄 SmartRequest API response: {api_response}")
