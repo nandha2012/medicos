@@ -1,7 +1,8 @@
 import time
 import os
 import sys
-from typing import List, Optional
+import csv
+from typing import List, Optional, Dict, Any
 from dataclasses import replace 
 from datetime import datetime
 
@@ -31,6 +32,142 @@ logger = PandasCSVLogger(f"logs/logs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.
 
 PATIENT_AUTH_ENCODED = "PATIENT_AUTH_ENCODED"
 REPRESENTATION_LETTER_ENCODED = "REPRESENTATION_LETTER_ENCODED"
+
+# Facility data cache
+_facility_cache = None
+
+def load_datavant_facilities() -> List[Dict[str, Any]]:
+    """
+    Load facility data from Datavant facility CSV file
+    
+    Returns:
+        List of facility dictionaries with standardized field names
+    """
+    global _facility_cache
+    
+    if _facility_cache is not None:
+        return _facility_cache
+    
+    facilities = []
+    csv_path = os.path.join(os.getcwd(), "Datavant_ Facility_List.csv")
+    
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # Standardize the facility data to match Datavant API format
+                facility = {
+                    'site': row.get('SITE', '').strip(),
+                    'healthSystem': row.get('Health System ', '').strip(),  # Note the space after "System"
+                    'siteName': row.get('SiteName', '').strip(),
+                    'addressLine1': row.get('Address', '').strip(),
+                    'addressLine2': row.get('Address2', '').strip() or None,
+                    'city': row.get('City', '').strip(),
+                    'state': row.get('State', '').strip(),
+                    'zip': row.get('ZIP', '').strip(),
+                    'phone': row.get('PHONE', '').strip(),
+                    'fax': row.get('Fax', '').strip(),
+                    # Additional fields for reference
+                    'itemizedBills': row.get('ITEMIZED BILLS', '').strip(),
+                    'records': row.get('RECORDS', '').strip(),
+                    'radiology': row.get('RADIOLOGY', '').strip(),
+                    'subpoena': row.get('SUBPOENA', '').strip()
+                }
+                facilities.append(facility)
+        
+        _facility_cache = facilities
+        print(f"✅ Loaded {len(facilities)} facilities from Datavant CSV")
+        return facilities
+        
+    except Exception as e:
+        print(f"❌ Error loading Datavant facilities CSV: {e}")
+        return []
+
+def get_facility_by_site(site_number: str) -> Optional[Dict[str, Any]]:
+    """
+    Get facility data by site number
+    
+    Args:
+        site_number: Site number to lookup (e.g., "00101")
+        
+    Returns:
+        Facility dictionary or None if not found
+    """
+    facilities = load_datavant_facilities()
+    
+    for facility in facilities:
+        if facility['site'] == site_number.strip():
+            return facility
+    
+    print(f"⚠️ Facility with site number '{site_number}' not found in CSV")
+    return None
+
+def get_first_facility() -> Optional[Dict[str, Any]]:
+    """
+    Get the first facility from the CSV (for default use)
+    
+    Returns:
+        First facility dictionary or None if CSV is empty
+    """
+    facilities = load_datavant_facilities()
+    
+    if facilities:
+        first_facility = facilities[0]
+        print(f"🔍 Using first facility: {first_facility['siteName']} (Site: {first_facility['site']})")
+        return first_facility
+    
+    print("❌ No facilities found in CSV")
+    return None
+
+def _get_facility_for_datavant_request(data: RedcapResponseFirst) -> Facility:
+    """
+    Get facility data for Datavant request, prioritizing CSV lookup over form data
+    
+    Args:
+        data: RedcapResponseFirst object containing form data
+        
+    Returns:
+        Facility object with appropriate data
+    """
+    # TODO: In future, match facility number from redcap detail response with CSV SITE
+    # Example usage when facility matching is implemented:
+    # facility_number = getattr(data, 'facility_number', None) or getattr(data, 'site_id', None)
+    # if facility_number:
+    #     csv_facility = get_facility_by_site(str(facility_number).zfill(5))  # Pad to 5 digits like 00101
+    #     if csv_facility:
+    #         return create_facility_from_csv_data(csv_facility)
+    
+    # For now, use the first facility from CSV as requested
+    
+    csv_facility = get_first_facility()
+    
+    if csv_facility:
+        print(f"🔍 Using CSV facility: {csv_facility['siteName']} (Site: {csv_facility['site']})")
+        return Facility(
+            addressLine1=csv_facility['addressLine1'],
+            addressLine2=csv_facility['addressLine2'],
+            city=csv_facility['city'],
+            state=csv_facility['state'],
+            zip=csv_facility['zip'],
+            healthSystem=csv_facility['healthSystem'],
+            siteName=csv_facility['siteName'],
+            phone=csv_facility['phone'],
+            fax=csv_facility['fax']
+        )
+    else:
+        # Fallback to form data if CSV loading fails
+        print("⚠️ CSV facility not available, falling back to form data")
+        return Facility(
+            addressLine1=getattr(data, 'mr_address_line_1', ''),
+            addressLine2=getattr(data, 'mr_address_line_2', None),
+            city=getattr(data, 'mr_city', ''),
+            state=getattr(data, 'mr_state', ''),
+            zip=getattr(data, 'mr_zip', ''),
+            healthSystem=getattr(data, 'mr_health_system', ''),
+            siteName=getattr(data, 'mr_site_name', ''),     
+            phone=getattr(data, 'mr_phone', ''),
+            fax=getattr(data, 'mr_fax', '')
+        )
 
 def process_first_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing first request for {data.record}")
@@ -307,17 +444,7 @@ def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None
     """
     try:
         return DatavantRequest(
-            facility=Facility(
-                addressLine1=getattr(data, 'mr_address_line_1', ''),
-                addressLine2=getattr(data, 'mr_address_line_2', None),
-                city=getattr(data, 'mr_city', ''),
-                state=getattr(data, 'mr_state', ''),
-                zip=getattr(data, 'mr_zip', ''),
-                healthSystem=getattr(data, 'mr_health_system', ''),
-                siteName=getattr(data, 'mr_site_name', ''),     
-                phone=getattr(data, 'mr_phone', ''),
-                fax=getattr(data, 'mr_fax', '')
-            ),
+            facility=_get_facility_for_datavant_request(data),
             requesterInfo=RequesterInfo(
                 companyId="1792190",
                 companyName="TN DEPT OF HEALTH",
