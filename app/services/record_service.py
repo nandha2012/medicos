@@ -458,7 +458,7 @@ def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None
                 companyId="1792190",
                 companyName="TN DEPT OF HEALTH",
                 name="Bhanu Gaddam",
-                email="bhanu.prathap.gaddam@tn.gov"
+                email="bhanu.prathap.gaddam@tn.gov",
             ),
             patient=Patient(
                 firstName=getattr(data, 'bc_momnamefirst', ''),
@@ -473,8 +473,8 @@ def get_datavant_request_data(data: RedcapResponseFirst, request_for: str = None
             ),
             requestCriteria=[RequestCriteria(
                 recordTypes=_get_record_types_for_datavant_request(data, request_for),
-                startDate=date_range[0],
-                endDate=date_range[1]
+                startDate="2025-08-14",
+                endDate="2025-08-15"
             )],
             certificationRequired=getattr(data, 'mr_certification_required', False),
             authorizationForms=[
