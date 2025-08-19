@@ -17,7 +17,7 @@ from utils.filters import filter_records
 from models.redcap_response_second import RedcapResponseSecond
 from services.template_service import TemplateService
 from services.pdf_service import PDFService
-from services.email_service import EmailService
+from services.sas_email_service import SASEmailService
 from models.redcap_response_first import RedcapResponseFirst
 from utils.counter import Counter
 from utils.logger import PandasCSVLogger
@@ -216,11 +216,11 @@ def process_first_request(data:RedcapResponseFirst,counter:Counter):
                 handle_datavant_request(item, j, "first_request", request_for)
             else:
                 print(f"🔄 skipping datavant request for {item.mg_idpreg}_{j}")
-                # Send email notification when mr_dv is not 1
-                email_service = EmailService()
+                # Send SAS email notification when mr_dv is not 1
+                sas_email_service = SASEmailService()
                 patient_name = f"{getattr(item, 'bc_momnamefirst', '')} {getattr(item, 'bc_momnamelast', '')}".strip()
                 facility_name = getattr(item, 'hos_name', '')
-                email_service.send_mr_dv_notification(
+                sas_email_service.send_mr_dv_notification(
                     record_id=f"{item.mg_idpreg}_{j}",
                     patient_name=patient_name if patient_name else None,
                     facility_name=facility_name if facility_name else None
