@@ -277,29 +277,55 @@ def process_complete_second_request(data:RedcapResponseFirst,counter:Counter):
             item.mr_rec_needs_inf___13 = "1"
             item = replace(item)
             handle_pdf_generation(item,"second_request",data,j)
+            if(item.mr_dv == "1"):
+                handle_datavant_request(item, j, "second_request_complete", request_for)
+            else:
+                print(f"🔄 skipping datavant request for {item.mg_idpreg}_{j}")
+                # Send SAS email notification when mr_dv is not 1
+                sas_email_service = SASEmailService()
+                patient_name = f"{getattr(item, 'bc_momnamefirst', '')} {getattr(item, 'bc_momnamelast', '')}".strip()
+                facility_name = getattr(item, 'hos_name', '')
+                sas_email_service.send_mr_dv_notification(
+                    record_id=f"{item.mg_idpreg}_{j}",
+                    patient_name=patient_name if patient_name else None,
+                    facility_name=facility_name if facility_name else None
+                )
             counter.inc()
-            request_for = getattr(data, 'mr_req_for', None)
-            handle_datavant_request(item, j, "second_request_complete", request_for)
     except Exception as e:
+        logger.log({
+            "record": data.record,
+            "timestamp": data.timestamp,
+            "username": data.username,
+            "status": "error",
+            "details": f"Error processing {data.record}: {e}"
+        })
         print(f"❌ Error processing {data.record}: {e}")
         return
 
-
 def process_partial_second_request(data:RedcapResponseFirst,counter:Counter):
     print(f"Processing partial second request for {data.record}")
-    data_to_process = get_log_detail_data_from_api(data)
-    if len(data_to_process) == 0:
-        print(f"❌ No data to process for {data.record}")
+    try:
+        data_to_process = get_log_detail_data_from_api(data)
+        if len(data_to_process) == 0:
+            print(f"❌ No data to process for {data.record}")
+            return
+
+        for j, item in enumerate(data_to_process):
+            print(f"📄 Processing {j+1} of {item.mg_idpreg}")
+            handle_pdf_generation(item,"second_request",data,j)
+            counter.inc()
+            request_for = getattr(data, 'mr_req_for', None)
+            handle_datavant_request(item, j, "second_request_partial", request_for)
+    except Exception as e:
+        logger.log({
+            "record": data.record,
+            "timestamp": data.timestamp,
+            "username": data.username,
+            "status": "error",
+            "details": f"Error processing {data.record}: {e}"
+        })
+        print(f"❌ Error processing {data.record}: {e}")
         return
-
-    
-    for j, item in enumerate(data_to_process):
-        print(f"📄 Processing {j+1} of {item.mg_idpreg}")
-        handle_pdf_generation(item,"second_request",data,j)
-        counter.inc()
-        request_for = getattr(data, 'mr_req_for', None)
-        handle_datavant_request(item, j, "second_request_partial", request_for)
-
 
 
 def handle_pdf_generation(data,request_type,first_data,j):
