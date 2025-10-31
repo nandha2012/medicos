@@ -58,7 +58,7 @@ class SmartRequestFaker:
                 "zip": fake.zipcode(),
                 "stdZip": fake.zipcode(),
                 "phone": fake.phone_number().replace('-', '').replace('(', '').replace(')', '').replace(' ', '')[:10],
-                "fax": fake.phone_number().replace('-', '').replace('(', '').replace(')', '').replace(' ', '')[:10]
+                # "fax": fake.phone_number().replace('-', '').replace('(', '').replace(')', '').replace(' ', '')[:10]  # REMOVED: Fax no longer needed
             }
             
             # Apply city filter if specified
@@ -292,7 +292,7 @@ def get_fake_facility_data() -> Dict[str, Any]:
         "healthSystem": f"{fake.company()} Health System",
         "siteName": f"{fake.company()} Medical Center",
         "phone": fake.phone_number().replace('-', '').replace('(', '').replace(')', '').replace(' ', '')[:10],
-        "fax": fake.phone_number().replace('-', '').replace('(', '').replace(')', '').replace(' ', '')[:10]
+        # "fax": fake.phone_number().replace('-', '').replace('(', '').replace(')', '').replace(' ', '')[:10]  # REMOVED: Fax no longer needed
     }
 
 

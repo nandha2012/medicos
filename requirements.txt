@@ -10,3 +10,4 @@ pytz
 flask
 python-dateutil
 pywin32
+pyyaml

@@ -45,7 +45,7 @@ def test_facility_loading():
             print(f"            {first_facility['addressLine2']}")
         print(f"            {first_facility['city']}, {first_facility['state']} {first_facility['zip']}")
         print(f"   Phone: {first_facility['phone']}")
-        print(f"   Fax: {first_facility['fax']}")
+        # print(f"   Fax: {first_facility['fax']}")  # REMOVED: Fax no longer in facility data
     else:
         print("   ❌ First facility lookup failed")
     
@@ -77,7 +77,8 @@ def test_facility_loading():
     print("-" * 24)
     
     if first_facility:
-        required_fields = ['site', 'siteName', 'healthSystem', 'addressLine1', 'city', 'state', 'zip', 'phone', 'fax']
+        required_fields = ['site', 'siteName', 'healthSystem', 'addressLine1', 'city', 'state', 'zip', 'phone']
+        # Note: 'fax' field removed - no longer required for Datavant requests
         missing_fields = []
         
         for field in required_fields:

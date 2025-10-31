@@ -11,7 +11,7 @@ class Facility(BaseModel):
     healthSystem: str
     siteName: str
     phone: str
-    fax: str
+    # fax: str  # REMOVED: Fax is no longer needed for Datavant requests
 
 class RequesterInfo(BaseModel):
     companyId: int

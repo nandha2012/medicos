@@ -1,0 +1,195 @@
+# Medical Records Template Configuration
+# This file defines all available templates for medical record requests
+
+templates:
+  mother:
+    id: "1"
+    name: "Mother Template"
+    description: "Medical records request template for maternal records"
+    template_path: "assets/templates/mother_template.docx"
+    active: true
+    record_types:
+      - "Laboratory and Hematology"
+      - "Labor and Delivery Records"
+      - "Admission Report"
+      - "Scanned Documents"
+      - "Medication Information"
+      - "History and Physical"
+      - "Coding Summary"
+      - "Flowsheets"
+      - "Physician Orders"
+      - "Ultrasound"
+      - "Demographic"
+      - "Orders and Results"
+      - "Facesheet"
+      - "ED Records"
+      - "Operative Report"
+      - "Pathology Report"
+      - "Physician Progress Notes"
+      - "Transfer Report"
+      - "Medication Orders"
+      - "Consults"
+      - "Problem List"
+      - "Discharge Instructions"
+      - "Prenatal Care"
+      - "Discharge Summary"
+      - "Birth Letter Confirmation"
+      - "Continuity of Care Document"
+      - "Nursing Notes"
+      - "Toxicology Reports"
+
+    # Datavant-specific parameters
+    datavant_params:
+      certification_required: false
+      business_type: "ATTY"
+      api_code: "STATE_ATTY_OFFICE"
+
+    # Validation rules for this template
+    validation_rules:
+      required_fields:
+        - "bc_momnamefirst"
+        - "bc_momnamelast"
+        - "bc_mom_dob"
+        - "hos_name"
+      optional_fields:
+        - "bc_momssn"
+        - "bc_momnamemaidenlast"
+
+  infant:
+    id: "2"
+    name: "Infant Template"
+    description: "Medical records request template for infant/newborn records"
+    template_path: "assets/templates/infant_template.docx"
+    active: true
+    record_types:
+      - "Cardiology Reports"
+      - "Laboratory and Hematology"
+      - "Labor and Delivery Records"
+      - "Audiology Report"
+      - "Admission Report"
+      - "Scanned Documents"
+      - "Medication Information"
+      - "History and Physical"
+      - "Radiology Report"
+      - "Coding Summary"
+      - "Flowsheets"
+      - "Occupational Therapy"
+      - "Physician Orders"
+      - "Speech Therapy"
+      - "Ultrasound"
+      - "Demographic"
+      - "Orders and Results"
+      - "Facesheet"
+      - "Operative Report"
+      - "Pathology Report"
+      - "Physician Progress Notes"
+      - "Physical Therapy Rehab records"
+      - "Transfer Report"
+      - "Medication Orders"
+      - "Consults"
+      - "Problem List"
+      - "Discharge Instructions"
+      - "Prenatal Care"
+      - "Discharge Summary"
+      - "Birth Letter Confirmation"
+      - "Continuity of Care Document"
+      - "Nursing Notes"
+      - "Toxicology Reports"
+
+    datavant_params:
+      certification_required: false
+      business_type: "ATTY"
+      api_code: "STATE_ATTY_OFFICE"
+
+    validation_rules:
+      required_fields:
+        - "bc_childnamefirst"
+        - "bc_childnamelast"
+        - "dob_inf"
+        - "hos_name"
+      optional_fields:
+        - "bc_childssn"
+
+  combined:
+    id: "3"
+    name: "Combined Template"
+    description: "Medical records request template for both mother and infant records"
+    template_path: "assets/templates/combined_template.docx"
+    active: true
+    record_types:
+      # Combined set from both mother and infant (deduplicated)
+      - "Cardiology Reports"
+      - "Laboratory and Hematology"
+      - "Labor and Delivery Records"
+      - "Audiology Report"
+      - "Admission Report"
+      - "Scanned Documents"
+      - "Medication Information"
+      - "History and Physical"
+      - "Radiology Report"
+      - "Coding Summary"
+      - "Flowsheets"
+      - "Occupational Therapy"
+      - "Physician Orders"
+      - "Speech Therapy"
+      - "Ultrasound"
+      - "Demographic"
+      - "Orders and Results"
+      - "Facesheet"
+      - "ED Records"
+      - "Operative Report"
+      - "Pathology Report"
+      - "Physician Progress Notes"
+      - "Physical Therapy Rehab records"
+      - "Transfer Report"
+      - "Medication Orders"
+      - "Consults"
+      - "Problem List"
+      - "Discharge Instructions"
+      - "Prenatal Care"
+      - "Discharge Summary"
+      - "Birth Letter Confirmation"
+      - "Continuity of Care Document"
+      - "Nursing Notes"
+      - "Toxicology Reports"
+
+    datavant_params:
+      certification_required: false
+      business_type: "ATTY"
+      api_code: "STATE_ATTY_OFFICE"
+
+    validation_rules:
+      required_fields:
+        - "bc_momnamefirst"
+        - "bc_momnamelast"
+        - "bc_mom_dob"
+        - "bc_childnamefirst"
+        - "bc_childnamelast"
+        - "dob_inf"
+        - "hos_name"
+      optional_fields:
+        - "bc_momssn"
+        - "bc_childssn"
+        - "bc_momnamemaidenlast"
+
+# Future templates can be added here
+# Example:
+#  newborn_screening:
+#    id: "4"
+#    name: "Newborn Screening"
+#    description: "Specialized template for newborn screening records"
+#    template_path: "assets/templates/newborn_screening_template.docx"
+#    active: true
+#    record_types:
+#      - "Laboratory and Hematology"
+#      - "Newborn Screening Reports"
+#      - "Genetic Testing"
+#    datavant_params:
+#      certification_required: false
+#      business_type: "ATTY"
+#      api_code: "STATE_ATTY_OFFICE"
+#    validation_rules:
+#      required_fields:
+#        - "bc_childnamefirst"
+#        - "bc_childnamelast"
+#        - "dob_inf"

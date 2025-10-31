@@ -68,7 +68,7 @@ def load_datavant_facilities() -> List[Dict[str, Any]]:
                     'state': row.get('State', '').strip(),
                     'zip': row.get('ZIP', '').strip(),
                     'phone': row.get('PHONE', '').strip(),
-                    'fax': row.get('Fax', '').strip(),
+                    # 'fax': row.get('Fax', '').strip(),  # REMOVED: Fax no longer needed for Datavant
                     # Additional fields for reference
                     'itemizedBills': row.get('ITEMIZED BILLS', '').strip(),
                     'records': row.get('RECORDS', '').strip(),
@@ -153,8 +153,8 @@ def _get_facility_for_datavant_request(data: RedcapResponseFirst) -> Facility:
             zip=csv_facility['zip'],
             healthSystem=csv_facility['healthSystem'],
             siteName=csv_facility['siteName'],
-            phone=csv_facility['phone'],
-            fax=csv_facility['fax']
+            phone=csv_facility['phone']
+            # fax field removed - no longer needed for Datavant
         )
     else:
         # Fallback to form data if CSV loading fails
@@ -166,9 +166,9 @@ def _get_facility_for_datavant_request(data: RedcapResponseFirst) -> Facility:
             state=getattr(data, 'mr_state', ''),
             zip=getattr(data, 'mr_zip', ''),
             healthSystem=getattr(data, 'mr_health_system', ''),
-            siteName=getattr(data, 'mr_site_name', ''),     
-            phone=getattr(data, 'mr_phone', ''),
-            fax=getattr(data, 'mr_fax', '')
+            siteName=getattr(data, 'mr_site_name', ''),
+            phone=getattr(data, 'mr_phone', '')
+            # fax field removed - no longer needed for Datavant
         )
 
 def process_first_request(data:RedcapResponseFirst,counter:Counter):
