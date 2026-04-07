@@ -51,8 +51,8 @@ def _parse_arg(flag_name: str, default_value: str) -> str:
 
 begin_time_arg: str = _parse_arg("begin_time", "")
 end_time_arg: str = _parse_arg("end_time", "")
-time_delta: int = int(_parse_arg("time_delta", "1"))
-time_delta_period: str = _parse_arg("time_delta_period", "hours")
+time_delta: int = int(_parse_arg("time_delta", os.getenv("NAS_TIME_DELTA") or "1"))
+time_delta_period: str = _parse_arg("time_delta_period", os.getenv("NAS_TIME_DELTA_PERIOD") or "hours")
 
 # Resolve begin/end times
 _now = get_current_time_str()

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Literal, Optional
+from dateutil.relativedelta import relativedelta
 
 DEFAULT_TIME_FORMAT = "%Y-%m-%d %H:%M"
 
@@ -25,11 +26,14 @@ def add_time_to_str(time_str: str, time_delta: int, period: Literal['hours', 'mi
     """
     return (datetime.strptime(time_str, DEFAULT_TIME_FORMAT) + timedelta(**{period: time_delta})).strftime(DEFAULT_TIME_FORMAT)
 
-def subtract_time_from_str(time_str: str, time_delta: int, period: Literal['hours', 'minutes', 'seconds', 'days']) -> str:
+def subtract_time_from_str(time_str: str, time_delta: int, period: Literal['hours', 'minutes', 'seconds', 'days', 'months']) -> str:
     """
-    Subtracts a specified number of hours from a time string.
+    Subtracts a time delta from a time string. Supports hours, minutes, seconds, days, and months.
     """
-    return (datetime.strptime(time_str, DEFAULT_TIME_FORMAT) - timedelta(**{period: time_delta})).strftime(DEFAULT_TIME_FORMAT)
+    dt = datetime.strptime(time_str, DEFAULT_TIME_FORMAT)
+    if period == 'months':
+        return (dt - relativedelta(months=time_delta)).strftime(DEFAULT_TIME_FORMAT)
+    return (dt - timedelta(**{period: time_delta})).strftime(DEFAULT_TIME_FORMAT)
 
 def get_one_hour_before_str(fmt: Optional[str] = None) -> str:
     """

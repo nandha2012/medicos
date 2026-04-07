@@ -70,7 +70,6 @@ htmlcov/
 
 # dotenv
 .env
-.env.*
 
 # Sphinx documentation
 docs/_build/
