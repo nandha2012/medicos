@@ -23,8 +23,8 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 # Configuration (shared with external_api_service.py pattern)
 # ---------------------------------------------------------------------------
-end_point: str = os.getenv("NAS_API_END_POINT") or os.getenv("EXTERNAL_API_END_POINT") or "https://localhost/redcap/api/"
-token: str = os.getenv("NAS_API_TOKEN") or os.getenv("EXTERNAL_API_TOKEN") or ""
+end_point: str = os.getenv("NAS_API_END_POINT") or "https://localhost/redcap/api/"
+token: str = os.getenv("NAS_API_TOKEN") or ""
 env: str = os.getenv("ENV") or "local"
 
 # Fields requested from the second (record export) API
