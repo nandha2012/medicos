@@ -84,8 +84,8 @@ def _get_record_type(nas_record) -> str | None:
       - request_second  = "1"                           → second_request
       - Neither condition met                           → skip (return None)
     """
-    request_type = str(nas_record.request_type or "").strip().lower()
-    if "fax" not in request_type:
+    # request_type_fax is True (bool) or "1" when request_type(3) was checked in REDCap
+    if not nas_record.request_type_fax:
         return None
 
     request_second  = str(nas_record.request_second  or "").strip()
@@ -136,6 +136,8 @@ def _flatten_log_record(rec: dict) -> dict:
     """
     Merge top-level log fields (record, timestamp, username) with the parsed
     details dict into a single flat dict suitable for filter_records().
+    REDCap checkbox field request_type(3) is remapped to request_type_fax
+    because parentheses are not valid in Python identifiers.
     """
     flat = {
         "record":    rec.get("record", ""),
@@ -145,6 +147,9 @@ def _flatten_log_record(rec: dict) -> dict:
     details = rec.get("details", {})
     if isinstance(details, dict):
         flat.update(details)
+        # request_type(3) = fax checkbox; remap to a valid field name
+        if "request_type(3)" in flat:
+            flat["request_type_fax"] = flat.pop("request_type(3)")
     return flat
 
 

@@ -35,7 +35,8 @@ class NASLogRecord:
     hospital_fax_num: Any = ""
 
     # Request routing
-    request_type: Any = ""       # "fax" → PDF generation required; other values → skip
+    # request_type(3) in REDCap log = fax checkbox; remapped to request_type_fax in _flatten_log_record
+    request_type_fax: Any = ""   # True/"1" → PDF generation required
     request_initial: Any = ""    # "1" = first request
     request_second: Any = ""     # "1" = second request; blank = first request
 
