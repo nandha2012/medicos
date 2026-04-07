@@ -234,9 +234,6 @@ if __name__ == "__main__":
         # Determine request type; skip records that don't require a fax PDF
         record_type = _get_record_type(nas_record)
         if record_type is None:
-            print(f"\n⏭️  Skipping {record_id2} — request_type={nas_record.request_type!r}, "
-                  f"request_initial={nas_record.request_initial!r}, "
-                  f"request_second={nas_record.request_second!r}")
             continue
 
         print(f"\n📋 Processing NAS record: {record_id2} [{record_type}]")
