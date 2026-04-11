@@ -143,6 +143,7 @@ def get_nas_detail_data(record_id2: str) -> Dict[str, Any]:
         return {}
 
     payload = _build_detail_payload(record_id2)
+    print(f"🔍 NAS detail API payload for {record_id2}: {payload}")
     try:
         response = requests.post(end_point, data=payload, timeout=60)
         response.raise_for_status()
