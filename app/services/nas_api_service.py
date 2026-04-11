@@ -118,14 +118,14 @@ def get_nas_log_data(begin_time: str, end_time: str) -> List[Dict[str, Any]]:
         return []
 
 
-def get_nas_detail_data(record_id2: str) -> Dict[str, Any]:
+def get_nas_detail_data(record_id2: str) -> Dict[str, Any] | None:
     """
     Fetch full record fields for a single record_id2 from the NAS REDCap project.
 
     In local ENV, reads from app/nas_response_2_sample.json and filters by record_id2.
 
     Returns:
-        Merged flat dict of all exported fields for the record (empty dict if not found).
+        Merged flat dict of all exported fields for the record, or None if API fails.
     """
     if env == "local":
         sample_paths = [
@@ -139,11 +139,13 @@ def get_nas_detail_data(record_id2: str) -> Dict[str, Any]:
                     data = json.load(f)
                 matching = [r for r in data if str(r.get("record_id2", "")) == str(record_id2)]
                 return _merge_rows(matching)
-        print(f"⚠️ NAS sample detail file not found for {record_id2} — returning empty dict")
-        return {}
+        print(f"⚠️ NAS sample detail file not found for {record_id2} — returning None")
+        return None
 
     payload = _build_detail_payload(record_id2)
-    print(f"🔍 NAS detail API payload for {record_id2}: {payload}")
+    print(f"🔍 NAS detail API payload for {record_id2}:")
+    for key, value in payload.items():
+        print(f"  {key}: {value}")
     try:
         response = requests.post(end_point, data=payload, timeout=60)
         response.raise_for_status()
@@ -151,10 +153,10 @@ def get_nas_detail_data(record_id2: str) -> Dict[str, Any]:
         return _merge_rows(rows)
     except requests.exceptions.Timeout:
         print(f"❌ NAS detail API timeout for {record_id2}")
-        return {}
+        return None
     except Exception as e:
         print(f"❌ Error fetching NAS detail data for {record_id2}: {e}")
-        return {}
+        return None
 
 
 def _merge_rows(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
