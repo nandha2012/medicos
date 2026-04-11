@@ -247,6 +247,17 @@ if __name__ == "__main__":
 
         # Fetch second-API detail data
         detail = get_nas_detail_data(record_id2)
+        if detail is None:
+            print(f"❌ Skipping PDF generation for {record_id2} — detail API failed")
+            logger.log({
+                "record_id2": record_id2,
+                "timestamp":  nas_record.timestamp,
+                "username":   nas_record.username,
+                "template":   "both",
+                "status":     "skipped",
+                "details":    "Detail API failed",
+            })
+            continue
 
         # Merge all data
         data = _build_data(nas_record, detail)
