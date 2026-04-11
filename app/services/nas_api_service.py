@@ -61,6 +61,7 @@ def _build_detail_payload(record_id2: str) -> dict:
         "exportDataAccessGroups": "false",
         "returnFormat": "json",
         f"records[0]": record_id2,
+        "forms[0]": "medical_records_request_form",
     }
     for i, field in enumerate(_DETAIL_FIELDS):
         payload[f"fields[{i}]"] = field
