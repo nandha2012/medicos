@@ -88,12 +88,14 @@ def _get_record_type(nas_record) -> str | None:
     if not nas_record.request_type_fax:
         return None
 
+    # Convert to string and strip, treating None/missing as empty string
     request_second  = str(nas_record.request_second  or "").strip()
     request_initial = str(nas_record.request_initial or "").strip()
 
     if request_second == "1":
         return NAS_SECOND_REQUEST
-    if request_initial == "1" and request_second == "":
+    # First request: request_initial="1" AND request_second is blank/missing
+    if request_initial == "1" and not request_second:
         return NAS_FIRST_REQUEST
 
     return None
