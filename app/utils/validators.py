@@ -1,6 +1,9 @@
+import os
 from typing import Dict, Any, Optional, Union
 #import logging
 from models.redcap_response_first import RedcapResponseFirst
+
+SECOND_REQUEST_DAY_THRESHOLD = int(os.getenv("SECOND_REQUEST_DAY_THRESHOLD", "16"))
 
 #logger = logging.getLogger(__name__)
 #logger.setLevel(logging.DEBUG)
@@ -174,6 +177,76 @@ def is_second_request_partial_received(data: RedcapResponseFirst) -> bool:
         print(f"❌ Error in is_second_request_partial_received: {e}")
         raise ValueError(f"Failed to validate second request partial received: {e}")
 
+def is_second_request_auto_not_received(data: RedcapResponseFirst) -> bool:
+    """
+    Auto-trigger: stale first request, nothing received, no manual second request.
+
+    Conditions:
+    - mr_request_dt is set (first request was made)
+    - mr_request_days is numeric and >= SECOND_REQUEST_DAY_THRESHOLD
+    - mr_received != "1" (records not yet received)
+    - mr_request_2 is blank (manual second request not yet triggered)
+    """
+    try:
+        details = _extract_details(data)
+
+        mr_request_dt_valid = _is_truthy_value(details.get("mr_request_dt"))
+        mr_request_2_blank = _is_falsy_value(details.get("mr_request_2"))
+        mr_received_not_yes = details.get("mr_received") != "1"
+
+        days_raw = details.get("mr_request_days")
+        days_meets_threshold = (
+            isinstance(days_raw, str)
+            and days_raw.strip().isdigit()
+            and int(days_raw.strip()) >= SECOND_REQUEST_DAY_THRESHOLD
+        )
+
+        result = (
+            mr_request_dt_valid
+            and days_meets_threshold
+            and mr_received_not_yes
+            and mr_request_2_blank
+        )
+
+        print(f"ℹ️ is_second_request_auto_not_received: mr_request_dt={details.get('mr_request_dt')}, "
+              f"mr_request_days={days_raw}, threshold={SECOND_REQUEST_DAY_THRESHOLD}, "
+              f"mr_received={details.get('mr_received')}, mr_request_2={details.get('mr_request_2')}, "
+              f"result={result}")
+
+        return result
+
+    except Exception as e:
+        print(f"❌ Error in is_second_request_auto_not_received: {e}")
+        raise ValueError(f"Failed to validate second request auto not received: {e}")
+
+def is_second_request_auto_partial(data: RedcapResponseFirst) -> bool:
+    """
+    Auto-trigger: records partially received, not all received, no manual second request.
+
+    Conditions:
+    - mr_received == "1" (some records received)
+    - mr_rec_all is not "1" (not all received)
+    - mr_request_2 is blank (manual second request not yet triggered)
+    """
+    try:
+        details = _extract_details(data)
+
+        mr_received_yes = details.get("mr_received") == "1"
+        mr_rec_all_not_complete = details.get("mr_rec_all") != "1"
+        mr_request_2_blank = _is_falsy_value(details.get("mr_request_2"))
+
+        result = mr_received_yes and mr_rec_all_not_complete and mr_request_2_blank
+
+        print(f"ℹ️ is_second_request_auto_partial: mr_received={details.get('mr_received')}, "
+              f"mr_rec_all={details.get('mr_rec_all')}, mr_request_2={details.get('mr_request_2')}, "
+              f"result={result}")
+
+        return result
+
+    except Exception as e:
+        print(f"❌ Error in is_second_request_auto_partial: {e}")
+        raise ValueError(f"Failed to validate second request auto partial: {e}")
+
 def is_all_records_received(data: RedcapResponseFirst) -> bool:
     """
     Check if all records have been received.
@@ -226,6 +299,10 @@ def get_request_status(data: RedcapResponseFirst) -> str:
             return "Second request - partial records received"
         elif is_second_request_manual_not_received(data):
             return "Second request - no records received"
+        elif is_second_request_auto_not_received(data):
+            return "Second request (auto) - no records received"
+        elif is_second_request_auto_partial(data):
+            return "Second request (auto) - partial records received"
         elif is_first_request(data):
             return "First request made"
         else:

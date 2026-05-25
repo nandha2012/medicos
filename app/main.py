@@ -5,7 +5,13 @@ from models.redcap_response_first import RedcapResponseFirst
 from utils.filters import filter_records, get_latest_records
 from services.record_service import process_first_request, process_complete_second_request, process_partial_second_request
 from utils.counter import Counter
-from utils.validators import is_first_request, is_second_request_manual_not_received, is_second_request_partial_received
+from utils.validators import (
+    is_first_request,
+    is_second_request_manual_not_received,
+    is_second_request_partial_received,
+    is_second_request_auto_not_received,
+    is_second_request_auto_partial,
+)
 from utils.logger import PandasCSVLogger
 from services.external_api_service import get_log_data_from_api
 # Initialize logger
@@ -46,6 +52,10 @@ if __name__ == "__main__":
             elif is_second_request_manual_not_received(record):
                 process_complete_second_request(record,counter)
             elif is_second_request_partial_received(record):
+                process_partial_second_request(record,counter)
+            elif is_second_request_auto_not_received(record):
+                process_complete_second_request(record,counter)
+            elif is_second_request_auto_partial(record):
                 process_partial_second_request(record,counter)
             else:
                 print(f"❌ No action needed for {record.record}")
