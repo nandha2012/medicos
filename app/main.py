@@ -12,6 +12,7 @@ from utils.validators import (
     is_second_request_auto_not_received,
     is_second_request_auto_partial,
 )
+from utils.auto_request_tracker import track_auto_second_request
 from utils.logger import PandasCSVLogger
 from services.external_api_service import get_log_data_from_api
 # Initialize logger
@@ -47,16 +48,18 @@ if __name__ == "__main__":
                 "details": ", ".join(f"{key} = {value}" for key, value in record.details.items()) + ","
             })
 
-            if is_first_request(record):
-                process_first_request(record,counter)
-            elif is_second_request_manual_not_received(record):
+            if is_second_request_manual_not_received(record):
                 process_complete_second_request(record,counter)
             elif is_second_request_partial_received(record):
                 process_partial_second_request(record,counter)
             elif is_second_request_auto_not_received(record):
-                process_complete_second_request(record,counter)
+                track_auto_second_request(record.record, "auto_not_received")
+                print(f"📝 Tracked auto second request candidate: {record.record} (auto_not_received)")
             elif is_second_request_auto_partial(record):
-                process_partial_second_request(record,counter)
+                track_auto_second_request(record.record, "auto_partial")
+                print(f"📝 Tracked auto second request candidate: {record.record} (auto_partial)")
+            elif is_first_request(record):
+                process_first_request(record,counter)
             else:
                 print(f"❌ No action needed for {record.record}")
         print(f"✅ PDF Generation Completed {counter.value()}")

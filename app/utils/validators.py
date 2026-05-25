@@ -3,7 +3,7 @@ from typing import Dict, Any, Optional, Union
 #import logging
 from models.redcap_response_first import RedcapResponseFirst
 
-SECOND_REQUEST_DAY_THRESHOLD = int(os.getenv("SECOND_REQUEST_DAY_THRESHOLD", "16"))
+SECOND_REQUEST_DAY_THRESHOLD = int(os.getenv("SECOND_REQUEST_DAY_THRESHOLD", "15"))
 
 #logger = logging.getLogger(__name__)
 #logger.setLevel(logging.DEBUG)

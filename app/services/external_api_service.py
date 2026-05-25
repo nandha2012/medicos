@@ -20,8 +20,8 @@ def parse_arg(flag_name: str, default_value: str):
             return arg.split("=", 1)[1]
     return default_value
 
-time_delta = parse_arg("time_delta", "1")
-time_delta_period = parse_arg("time_delta_period", "hours")
+time_delta = parse_arg("time_delta", "50")
+time_delta_period = parse_arg("time_delta_period", "days")
 load_dotenv()
 end_point = os.getenv("EXTERNAL_API_END_POINT") or "https://localhost/redcap/api/"
 token = os.getenv("EXTERNAL_API_TOKEN") or "E*************7"
