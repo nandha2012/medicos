@@ -14,6 +14,7 @@ from utils.validators import (
 )
 from utils.auto_request_tracker import track_auto_second_request
 from utils.logger import PandasCSVLogger
+from utils.dates import generate_dir_name
 from services.external_api_service import get_log_data_from_api
 # Initialize logger
 logger = PandasCSVLogger(f"logs/logs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv", ["record", "timestamp", "username", "status", "details"])
@@ -63,6 +64,16 @@ if __name__ == "__main__":
             else:
                 print(f"❌ No action needed for {record.record}")
         print(f"✅ PDF Generation Completed {counter.value()}")
+
+        # Write a summary log file into the dated output folder
+        dated_output_dir = os.path.join(output_dir, generate_dir_name())
+        os.makedirs(dated_output_dir, exist_ok=True)
+        summary_path = os.path.join(dated_output_dir, "generation_log.txt")
+        with open(summary_path, "w") as summary_file:
+            summary_file.write(f"Generated at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            summary_file.write(f"Records found: {len(latest_records)}\n")
+            summary_file.write(f"Total records generated: {counter.value()}\n")
+        print(f"📄 Summary log written to {summary_path}")
     else:
         print("⚠️ No records received from API.")
 
